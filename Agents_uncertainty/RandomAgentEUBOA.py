@@ -33,7 +33,7 @@ class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
         :return: Bid
         """
         state_info = protocol.get_state_info()
-        self.__elicitation_strategy.is_asking_time_from_use(state_info=state_info)
+        self.__elicitation_strategy.is_asking_time_from_user(state_info=state_info)
 
         parties = protocol.get_parties()
         opponent = list(filter(lambda party: party is not self, parties))[0]

@@ -13,7 +13,8 @@ class GUIContent:
     def fetch_users(self):
         user_list = [f for f in listdir(
             USER_PATH) if isfile(join(USER_PATH, f))]
-        user_list.remove('__init__.py')
+        if user_list.count('__init__.py') > 0:
+            user_list.remove('__init__.py')
         if user_list.count('__pycache__') > 0:
             user_list.remove('__pycache_')
         return user_list
@@ -21,7 +22,8 @@ class GUIContent:
     def fetch_protocols(self):
         protocol_list = [f for f in listdir(
             PROTOCOL_PATH) if isfile(join(PROTOCOL_PATH, f))]
-        protocol_list.remove('__init__.py')
+        if protocol_list.count('__init__.py') > 0:
+            protocol_list.remove('__init__.py')
         if protocol_list.count('__pycache__') > 0:
             protocol_list.remove('__pycache_')
         return protocol_list
@@ -29,7 +31,8 @@ class GUIContent:
     def fetch_agents(self):
         party_list = [f for f in listdir(
             PARTY_PATH) if isfile(join(PARTY_PATH, f))]
-        party_list.remove('__init__.py')
+        if party_list.count('__init__.py') > 0:
+            party_list.remove('__init__.py')
         if party_list.count('__pycache__') > 0:
             party_list.remove('__pycache_')
         return party_list
@@ -50,7 +53,8 @@ class GUIContent:
     def fetch_elicitation_strategies(self):
         if isdir(ELICITATION_STRATEGIES_PATH):
             elicitation_strategies_list = [name for name in os.listdir(ELICITATION_STRATEGIES_PATH)]
-            elicitation_strategies_list.remove('__init__.py')
+            if elicitation_strategies_list.count('__init__.py') > 0:
+                elicitation_strategies_list.remove('__init__.py')
             if elicitation_strategies_list.count('__pycache__') > 0:
                 elicitation_strategies_list.remove('__pycache__')
             return elicitation_strategies_list
@@ -59,16 +63,18 @@ class GUIContent:
     def fetch_user_models(self):
         if isdir(USER_MODEL_PATH):
             user_models_list = [name for name in os.listdir(USER_MODEL_PATH)]
-            user_models_list.remove('__init__.py')
+            if user_models_list.count('__init__.py') > 0:
+                user_models_list.remove('__init__.py')
             if user_models_list.count('__pycache__') > 0:
-                user_models_list.remove('__pycache_')
+                user_models_list.remove('__pycache__')
             return user_models_list
         return None
 
     def fetch_bidding_strategies(self):
         if isdir(BIDDING_STRATEGIES_PATH):
             bidding_strategies_list = [name for name in os.listdir(BIDDING_STRATEGIES_PATH)]
-            bidding_strategies_list.remove('__init__.py')
+            if bidding_strategies_list.count('__init__.py') > 0:
+                bidding_strategies_list.remove('__init__.py')
             if bidding_strategies_list.count('__pycache__') > 0:
                 bidding_strategies_list.remove('__pycache__')
             return bidding_strategies_list
@@ -77,7 +83,8 @@ class GUIContent:
     def fetch_opponent_models(self):
         if isdir(ELICITATION_STRATEGIES_PATH):
             opponent_models_list = [name for name in os.listdir(ELICITATION_STRATEGIES_PATH)]
-            opponent_models_list.remove('__init__.py')
+            if opponent_models_list.count('__init__.py') > 0:
+                opponent_models_list.remove('__init__.py')
             if opponent_models_list.count('__pycache__') > 0:
                 opponent_models_list.remove('__pycache__')
             return opponent_models_list
@@ -86,7 +93,8 @@ class GUIContent:
     def fetch_acceptance_strategies(self):
         if isdir(ACCEPTANCE_STRATEGIES_PATH):
             acceptance_strategies_list = [name for name in os.listdir(ACCEPTANCE_STRATEGIES_PATH)]
-            acceptance_strategies_list.remove('__init__.py')
+            if acceptance_strategies_list.count('__init__.py') > 0:
+                acceptance_strategies_list.remove('__init__.py')
             if acceptance_strategies_list.count('__pycache__') > 0:
                 acceptance_strategies_list.remove('__pycache__')
             return acceptance_strategies_list
@@ -95,7 +103,8 @@ class GUIContent:
     def fetch_analysis_men(self):
         if isdir(ANALYSIS_PATH):
             analysis_men_list = [name for name in os.listdir(ANALYSIS_PATH)]
-            analysis_men_list.remove('__init__.py')
+            if analysis_men_list.count('__init__.py') > 0:
+                analysis_men_list.remove('__init__.py')
             if analysis_men_list.count('__pycache__') > 0:
                 analysis_men_list.remove('__pycache__')
             return analysis_men_list
@@ -103,29 +112,33 @@ class GUIContent:
 
     def fetch_Tournament_analysis_men(self):
         if isdir(ANALYSIS_PATH):
-            analysis_men_list = [name for name in os.listdir(ANALYSIS_TOURNAMENT_PATH)]
-            analysis_men_list.remove('__init__.py')
-            if analysis_men_list.count('__pycache__') > 0:
-                analysis_men_list.remove('__pycache__')
-            return analysis_men_list
+            tournament_analysis_men = [name for name in os.listdir(ANALYSIS_TOURNAMENT_PATH)]
+            if tournament_analysis_men.count('__init__.py') > 0:
+                tournament_analysis_men.remove('__init__.py')
+            if tournament_analysis_men.count('__pycache__') > 0:
+                tournament_analysis_men.remove('__pycache__')
+            return tournament_analysis_men
         return None
 
-    def fetch_tournament_gui_segments(self):
-        if isdir(TOURNAMENT_GUI_SEGMENT_PATH):
-            tournament_gui_segments = [name for name in os.listdir(TOURNAMENT_GUI_SEGMENT_PATH)]
-            tournament_gui_segments.remove('__init__.py')
+    # def fetch_tournament_gui_segments(self, path):
+    #     if isdir(path):
+    #         tournament_gui_segments = [name for name in os.listdir(path)]
+    #         tournament_gui_segments.remove('__init__.py')
+    #         if tournament_gui_segments.count('__pycache__') > 0:
+    #             tournament_gui_segments.remove('__pycache__')
+    #         return tournament_gui_segments
+    #     return None
+
+    def fetch_gui_segments(self, path):
+        if isdir(path):
+            tournament_gui_segments = [name for name in os.listdir(path)]
+            if tournament_gui_segments.count('__init__.py') > 0:
+                tournament_gui_segments.remove('__init__.py')
             if tournament_gui_segments.count('__pycache__') > 0:
                 tournament_gui_segments.remove('__pycache__')
             return tournament_gui_segments
-        return None
-
-    def fetch_session_gui_segments(self):
-        if isdir(SESSION_GUI_SEGMENT_PATH):
-            tournament_gui_segments = [name for name in os.listdir(SESSION_GUI_SEGMENT_PATH)]
-            tournament_gui_segments.remove('__init__.py')
-            if tournament_gui_segments.count('__pycache__') > 0:
-                tournament_gui_segments.remove('__pycache__')
-            return tournament_gui_segments
+        else:
+            raise ValueError('There is no package_name')
         return None
 
 

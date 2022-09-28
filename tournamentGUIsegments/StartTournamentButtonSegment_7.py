@@ -20,7 +20,7 @@ class StartTournamentButtonSegment_7(AbstractGUISegment):
         return btn_start,
 
     def get_name(self):
-        return 'StartTournamentButtonSegment_7.py'
+        return 'StartTournamentButtonSegment_7'
 
     def start_tournament(self):
 

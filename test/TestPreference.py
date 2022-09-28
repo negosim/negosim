@@ -5,8 +5,8 @@ from core.Preference import Preference
 class TestPreference(unittest.TestCase):
 
     def setUp(self) -> None:
-        # self.preference = Preference('laptop', 'laptop_buyer_utility.xml')
-        self.preference = Preference('partydomain', 'party6_utility.xml')
+        self.preference = Preference('laptop', 'laptop_buyer_utility.xml')
+        # self.preference = Preference('partydomain', 'party6_utility.xml')
 
     # def test_get_preference_data_structure(self):
     #     print(self.preference.get_preference_data_structure())
@@ -24,7 +24,7 @@ class TestPreference(unittest.TestCase):
         # print(self.preference.get_issue_ItemValue('Laptop'))
         print(self.preference)
         # print(self.preference.get_initial_preference())
-        print(self.preference.get_worst_bid())
+        # print(self.preference.get_worst_bid())
 
 if __name__ == '__main__':
     unittest.main()

@@ -26,4 +26,4 @@ class DeadlineSegment_5(AbstractGUISegment, ABC):
         return lebel1, spinbox_deadline, time_type
 
     def get_name(self):
-        return 'DeadlineSegment_5.py'
+        return 'DeadlineSegment_5'

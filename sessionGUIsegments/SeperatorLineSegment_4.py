@@ -11,4 +11,4 @@ class SeperatorLineSegment_4(AbstractGUISegment, ABC):
         return my_seperator,
 
     def get_name(self):
-        return 'SeperatorLineSegment_4.py'
+        return 'SeperatorLineSegment_4'

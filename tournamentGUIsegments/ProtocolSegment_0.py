@@ -18,4 +18,4 @@ class ProtocolSegment_0(AbstractGUISegment, ABC):
         return lable, optionMenu_protocol
 
     def get_name(self):
-        return 'ProtocolSegment_0.py'
+        return 'ProtocolSegment_0'

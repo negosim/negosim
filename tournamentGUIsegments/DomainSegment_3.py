@@ -21,4 +21,4 @@ class DomainSegment_3(AbstractGUISegment, ABC):
         return lebel_Vs, listbox_domain, scroll_bar
 
     def get_name(self):
-        return 'DomainSegment_3.py'
+        return 'DomainSegment_3'

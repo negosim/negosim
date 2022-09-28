@@ -18,4 +18,4 @@ class PartySegment_5(AbstractGUISegment, ABC):
         return lable, optionMenu_party
 
     def get_name(self):
-        return 'PartySegment_5.py'
+        return 'PartySegment_5'

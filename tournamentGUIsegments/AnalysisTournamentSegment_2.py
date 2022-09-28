@@ -13,9 +13,9 @@ class AnalysisTournamentSegment_2(AbstractGUISegment):
         string_var.set('Select a Tournament Analysis')
         optionMenu_Analysis = OptionMenu(frame, string_var, *analysis_list)
 
-        lablel = Label(master=frame, text='Tournament Analysis ')
+        label = Label(master=frame, text='Tournament Analysis ')
 
-        return lablel, optionMenu_Analysis
+        return label, optionMenu_Analysis
 
     def get_name(self):
-        return 'AnalysisTournamentSegment_2.py'
+        return 'AnalysisTournamentSegment_2'

@@ -9,7 +9,7 @@ from core.Preference import Preference
 
 class DefaultElicitationStrategy(AbstractElicitationStrategy, ABC):
 
-    def is_asking_time_from_use(self, state_info: StateInfo):
+    def is_asking_time_from_user(self, state_info: StateInfo):
         """
         This method decides about when and which bid elicit from user
         :param state_info:
@@ -25,15 +25,16 @@ class DefaultElicitationStrategy(AbstractElicitationStrategy, ABC):
             if len(offers_must_be_asked) > 0:
                 for offer in offers_must_be_asked:
                     self.ask_offer_rank_from_user(offer=offer)
-                ranked_offers = self.get_ranked_bids()
-                ranked_bids = [offer.get_bid() for offer in ranked_offers]
+                # ranked_offers = self.get_ranked_bids()
+                # ranked_bids = [offer.get_bid() for offer in ranked_offers]
+                ranked_bids = self.get_ranked_bids()
                 user_model.update_preference(ranked_bids=ranked_bids)
 
             offers_from_elicitation_strategy = self.simple_elicitation_strategy(user=self.get_user(), user_model=self.get_user_model(), state_info=state_info)
             for offer in offers_from_elicitation_strategy:
                 self.ask_offer_rank_from_user(offer=offer)
-            ranked_offers = self.get_ranked_bids()
-            ranked_bids = [offer.get_bid() for offer in ranked_offers]
+            ranked_bids = self.get_ranked_bids()
+            # ranked_bids = [offer for offer in ranked_offers]
             user_model.update_preference(ranked_bids=ranked_bids)
 
     def simple_elicitation_strategy(self, user: UserInterface, user_model: UserModelInterface,

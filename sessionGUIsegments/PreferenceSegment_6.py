@@ -30,5 +30,5 @@ class PreferenceSegment_6(AbstractGUISegment, ABC):
         return lable,
 
     def get_name(self):
-        return 'PreferenceSegment_6.py'
+        return 'PreferenceSegment_6'
 

@@ -26,6 +26,7 @@ class AbstractGUISegment(ABC):
         self.add_horizontal_frame(index, frame)
 
     def add_horizontal_frame(self, index: int, frame: Frame):
+        frame.pack(side='left')
         self.__all_horizontal_frames.insert(index, frame)
 
     def get_root(self):
@@ -36,7 +37,6 @@ class AbstractGUISegment(ABC):
         frames[index].destroy()
         frames.pop(index)
         self.add_new_frame(index, frame)
-
 
     def add_new_frame(self, index: int, frame: Frame):
         '''
@@ -101,6 +101,6 @@ class AbstractGUISegment(ABC):
         '''
         raise NotImplementedError
 
-    @abstractmethod
-    def get_name(self):
-        raise NotImplementedError
+    # @abstractmethod
+    # def get_name(self):
+    #     raise NotImplementedError

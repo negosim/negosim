@@ -66,12 +66,12 @@ class Controller:
         tournament_analysis_men = self.model.fetch_Tournament_analysis_men()
         return tournament_analysis_men
 
-    def fetch_tournament_gui_segments(self):
-        tournament_gui_segments = self.model.fetch_tournament_gui_segments()
+    def fetch_tournament_gui_segments(self, path):
+        tournament_gui_segments = self.model.fetch_gui_segments(path=path)
         return tournament_gui_segments
 
-    def fetch_session_gui_segments(self):
-        session_gui_segments = self.model.fetch_session_gui_segments()
+    def fetch_gui_segments(self, path):
+        session_gui_segments = self.model.fetch_gui_segments(path=path)
         return session_gui_segments
 
 if __name__ == '__main__':

@@ -54,16 +54,30 @@ class BtnStartSession_11(AbstractGUISegment):
                                                   party1_name=self.party1_name,
                                                   party2_name=self.party2_name,
                                                   domain_name=self.domain_name)
-        self.first_clicked = True
+
 
         self.bilateral_session.start_session()
-        h_frame1 = self.get_special_horizontal_frame(1)
+
+        index = len(self.get_all_horizontal_frames())
         if not self.first_clicked:
-            self.create_visualization_window(h_frame1)
+            self.first_clicked = True
+            new_horizontal_frame = tk.Frame(master=self.get_root())
+            new_horizontal_frame.pack(side='left')
+            self.add_horizontal_frame(index=index, frame=new_horizontal_frame)
+            self.create_visualization_window(new_horizontal_frame)
         else:
             h_frame_alternative1 = tk.Frame(master=self.get_root())
-            self.replace_special_horizontal_frame(1, h_frame_alternative1)
+            self.replace_special_horizontal_frame(index=index-1, frame=h_frame_alternative1)
             self.create_visualization_window(h_frame_alternative1)
+
+
+        # h_frame1 = self.get_special_horizontal_frame(1)
+        # if not self.first_clicked:
+        #     self.create_visualization_window(h_frame1)
+        # else:
+        #     h_frame_alternative1 = tk.Frame(master=self.get_root())
+        #     self.replace_special_horizontal_frame(1, h_frame_alternative1)
+        #     self.create_visualization_window(h_frame_alternative1)
 
     def check_errors(self):
         message = 'Please select '
@@ -160,4 +174,4 @@ class BtnStartSession_11(AbstractGUISegment):
         listbox_party2_bids.insert(tk.END, analysis_data)
 
     def get_name(self):
-        return 'BtnStartSession_11.py'
+        return 'BtnStartSession_11'

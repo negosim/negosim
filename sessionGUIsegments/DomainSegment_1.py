@@ -38,4 +38,4 @@ class DomainSegment_1(AbstractGUISegment, ABC):
 
 
     def get_name(self):
-        return 'DomainSegment_1.py'
+        return 'DomainSegment_1'

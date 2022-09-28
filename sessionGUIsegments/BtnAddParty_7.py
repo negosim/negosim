@@ -28,4 +28,4 @@ class BtnAddParty_7(AbstractGUISegment):
         listbox_party_and_preference.insert(tk.END, party_name+PARTY_PREFERENCE_SEPERATOR+preference_name)
 
     def get_name(self):
-        return 'BtnAddParty_7.py'
+        return 'BtnAddParty_7'

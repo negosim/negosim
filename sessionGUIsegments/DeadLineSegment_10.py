@@ -23,4 +23,4 @@ class DeadLineSegment_10(AbstractGUISegment):
         return lable, spinbox_deadline, time_type
 
     def get_name(self):
-        return 'DeadLineSegment_10.py'
+        return 'DeadLineSegment_10'

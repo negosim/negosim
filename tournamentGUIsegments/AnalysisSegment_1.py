@@ -19,4 +19,4 @@ class AnalysisSegment_1(AbstractGUISegment, ABC):
         return lable, optionMenu_Analysis
 
     def get_name(self):
-        return 'AnalysisSegment_1.py'
+        return 'AnalysisSegment_1'

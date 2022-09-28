@@ -24,7 +24,6 @@ class BilateralTournament:
         self.__tournament_repetition = int(tournament_repetition)
         self.__avg_all_tournament_analysis_data = {}
 
-
     def get_tournament_analysis_man(self):
         return self.__tournament_analysis_man
 
@@ -61,9 +60,6 @@ class BilateralTournament:
             #         self.__avg_all_tournament_analysis_data[key] = \
             #             (((self.__avg_all_tournament_analysis_data[key]*count) + value)/(count+1))
             #         count += 1
-
-
-
 
         print('**************************** Final Result ****************************')
         print(self.__avg_all_tournament_analysis_data)

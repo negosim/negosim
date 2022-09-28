@@ -21,4 +21,5 @@ TOURNAMENT_GUI_SEGMENT_PATH = '../tournamentGUIsegments'
 TOURNAMENT_GUI_PACKAGE_NAME = 'tournamentGUIsegments'
 SESSION_GUI_SEGMENT_PATH = '../sessionGUIsegments'
 SESSION_GUI_PACKAGE_NAME = 'sessionGUIsegments'
+NUMBER_OF_STRINGVAR = 5
 

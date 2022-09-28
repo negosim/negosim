@@ -9,4 +9,4 @@ class ParticipantsListbox_8(AbstractGUISegment):
         return listbox_participant,
 
     def get_name(self):
-        return 'ParticipantsListbox_8.py'
+        return 'ParticipantsListbox_8'

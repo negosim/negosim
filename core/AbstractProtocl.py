@@ -30,6 +30,7 @@ class AbstractProtocol(ProtocolInterface):
         """
         raise NotImplementedError()
 
+    @abstractmethod
     def get_offers_on_table(self, party_name: str) -> tuple:
         """This method gets a party name in string type and returns a tuple of offers
         related to the party name that has got through the object that has called the

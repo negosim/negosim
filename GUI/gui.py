@@ -6,39 +6,63 @@ from controller import Controller
 
 class GUIsegments:
 
-    def __init__(self, window, segments_path: str):
+    def __init__(self, window, y: int):
+        """
+        :param y: refer to number of segment that we need
+        :return:
+        """
+        if y < 1:
+            raise ValueError("x and y should be grater than 0 and y should be grater than x")
+
+        self.__y = y
         self.window = window
         self.controller = Controller()
-        package_name = segments_path.split("./")[1]
-        self.create_sessionGUI(segments_path, package_name)
 
-
-    def create_sessionGUI(self, segments_path, package_name):
-
-        # 5 horizontal frame reserved
-        horizontal_frame1 = tk.Frame(master=self.window)
-        horizontal_frame1.pack(side='left')
-        horizontal_frame2 = tk.Frame(master=self.window)
-        horizontal_frame2.pack(side='left')
-        horizontal_frame3 = tk.Frame(master=self.window)
-        horizontal_frame3.pack(side='left')
-        horizontal_frame4 = tk.Frame(master=self.window)
-        horizontal_frame4.pack(side='left')
-        horizontal_frame5 = tk.Frame(master=self.window)
-        horizontal_frame5.pack(side='left')
         self.__all_horizontal_frames = []
-        self.__all_horizontal_frames.append(horizontal_frame1)
-        self.__all_horizontal_frames.append(horizontal_frame2)
-        self.__all_horizontal_frames.append(horizontal_frame3)
-        self.__all_horizontal_frames.append(horizontal_frame4)
-        self.__all_horizontal_frames.append(horizontal_frame5)
+        for i in range(self.__y):
+            frame = tk.Frame(master=self.window)
+            frame.pack(side='left')
+            self.__all_horizontal_frames.append(frame)
 
-        if package_name == SESSION_GUI_PACKAGE_NAME:
-            segments_names = self.controller.fetch_session_gui_segments()
-        elif package_name == TOURNAMENT_GUI_PACKAGE_NAME:
-            segments_names = self.controller.fetch_tournament_gui_segments()
-        else:
-            raise ValueError('There is no package_name')
+
+    def create_sessionGUI(self, segments_path, x: int):
+
+        if x > self.__y:
+            raise ValueError(f"y (y={self.__y}) should be grater than x")
+
+        # package_name = segments_path.split("./")[1]
+
+        # all_horizontal_frames = []
+        # for i in range(self.__y):
+        #     frame = tk.Frame(master=self.window)
+        #     frame.pack(side='left')
+        #     all_horizontal_frames.append(frame)
+
+
+        # # 5 horizontal frame reserved
+        # horizontal_frame1 = tk.Frame(master=self.window)
+        # horizontal_frame1.pack(side='left')
+        # horizontal_frame2 = tk.Frame(master=self.window)
+        # horizontal_frame2.pack(side='left')
+        # horizontal_frame3 = tk.Frame(master=self.window)
+        # horizontal_frame3.pack(side='left')
+        # horizontal_frame4 = tk.Frame(master=self.window)
+        # horizontal_frame4.pack(side='left')
+        # horizontal_frame5 = tk.Frame(master=self.window)
+        # horizontal_frame5.pack(side='left')
+        #
+        # self.__all_horizontal_frames.append(horizontal_frame1)
+        # self.__all_horizontal_frames.append(horizontal_frame2)
+        # self.__all_horizontal_frames.append(horizontal_frame3)
+        # self.__all_horizontal_frames.append(horizontal_frame4)
+        # self.__all_horizontal_frames.append(horizontal_frame5)
+
+        # if package_name == SESSION_GUI_PACKAGE_NAME:
+        segments_names = self.controller.fetch_gui_segments(path=segments_path)
+        # elif package_name == TOURNAMENT_GUI_PACKAGE_NAME:
+        #     segments_names = self.controller.fetch_gui_segments(path=segments_path)
+        # else:
+        #     raise ValueError('There is no package_name')
         widgets = []
         frames = []
         var_dict = {}
@@ -55,13 +79,13 @@ class GUIsegments:
         segments_names = [s[0] for s in segments_names_num_list]
 
         for segments_name in segments_names:
-            var_dict[segments_name] = tuple(tk.StringVar() for x in range(10))
-            frame = tk.Frame(master=horizontal_frame1)
+            var_dict[segments_name[:-3]] = tuple(tk.StringVar() for x in range(NUMBER_OF_STRINGVAR))
+            frame = tk.Frame(master=self.__all_horizontal_frames[x])
             frames.append(frame)
 
             i = 0
         for segments_name in segments_names:
-            obj = CreateObjectByPath.get_object(segments_path, segments_name, self.window, frames[i], frames, self.__all_horizontal_frames,var_dict)
+            obj = CreateObjectByPath.get_object(segments_path, segments_name, self.window, frames[i], frames, self.__all_horizontal_frames, var_dict)
             segments.append(obj)
             widgets_row = obj.get_widget()
             widgets.append(widgets_row)

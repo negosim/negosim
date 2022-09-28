@@ -10,12 +10,9 @@ class ProtocolSegment_0(AbstractGUISegment, ABC):
         ctrl = Controller()
         protocol_list = ctrl.fetch_protocols()
         my_dict = self.get_var_dict()
-        my_dict[self.get_name()][0].set('Select a protocol')
-        optionMenu_protocol = tk.OptionMenu(self.get_frame(), my_dict[self.get_name()][0], *protocol_list)
+        my_dict['ProtocolSegment_0'][0].set('Select a protocol')
+        optionMenu_protocol = tk.OptionMenu(self.get_frame(), my_dict['ProtocolSegment_0'][0], *protocol_list)
         optionMenu_protocol.configure(width=25)
-        lable = tk.Label(master=self.get_frame(), text='Protocol                ')
+        label = tk.Label(master=self.get_frame(), text='Protocol                ')
 
-        return lable, optionMenu_protocol
-
-    def get_name(self):
-        return 'ProtocolSegment_0.py'
+        return label, optionMenu_protocol

@@ -11,7 +11,8 @@ from core.Preference import Preference
 EUBOA_SEPERATOR = ' ---> '
 SELECT_PREFERENCE_2 = 'Please Select Preference 2'
 SELECT_PREFERENCE_1 = 'Please Select Preference 1'
-
+session_gui_segment_path = SESSION_GUI_SEGMENT_PATH
+tournament_gui_segment_path = TOURNAMENT_GUI_SEGMENT_PATH
 
 class View:
     def __init__(self, parent, controller):
@@ -144,20 +145,23 @@ class View:
         if len(selection) > 0:
             index = selection[0]
             self.selected_domain_name = event.widget.get(index)
-            preference_list = self.controller.fetch_preferences_of_domain(self.selected_domain_name)
+            preference_list = self.controller.fetch_preferences_of_domain(
+                self.selected_domain_name)
             if len(preference_list) > 0:
                 self.create_visualization_tools(preference_list)
 
     def create_visualization_tools(self, preference_lists):
         self.frame_visualization_tools.destroy()
-        self.frame_visualization_tools = tk.Frame(master=self.frame_domain, width=100, height=10)
+        self.frame_visualization_tools = tk.Frame(
+            master=self.frame_domain, width=100, height=10)
         self.frame_visualization_tools.pack(side='bottom')
 
         btn_preference_visualization = ttk.Button(master=self.frame_visualization_tools, text='Visualize', width=67,
                                                   command=lambda: self.create_chart(
                                                       btn_preference_visualization))
 
-        btn_preference_visualization.pack(side='bottom', pady=2, padx=2, ipady=5)
+        btn_preference_visualization.pack(
+            side='bottom', pady=2, padx=2, ipady=5)
 
         self.var_selected_preference2_name = tk.StringVar()
         self.var_selected_preference2_name.set(SELECT_PREFERENCE_2)
@@ -191,8 +195,10 @@ class View:
             listbox_domain.insert(i, item)
             i += 1
         listbox_domain.pack(fill='both')
-        listbox_domain.bind('<<ListboxSelect>>', self.listbox_domain_clickEvent)
-        self.frame_visualization_tools = tk.Frame(master=self.frame_domain, width=100, height=10)
+        listbox_domain.bind('<<ListboxSelect>>',
+                            self.listbox_domain_clickEvent)
+        self.frame_visualization_tools = tk.Frame(
+            master=self.frame_domain, width=100, height=10)
         self.frame_visualization_tools.pack(side='bottom')
 
         listbox_user = tk.Listbox(frame_user)
@@ -205,19 +211,22 @@ class View:
         listbox_euboa = tk.Listbox(frame_euboa)
         i = 1
         for item in self.controller.fetch_elicitation_strategies():
-            listbox_euboa.insert(i, 'Elicitation Strategy' + EUBOA_SEPERATOR + item)
+            listbox_euboa.insert(
+                i, 'Elicitation Strategy' + EUBOA_SEPERATOR + item)
             i += 1
         for item in self.controller.fetch_user_models():
             listbox_euboa.insert(i, 'User Model' + EUBOA_SEPERATOR + item)
             i += 1
         for item in self.controller.fetch_bidding_strategies():
-            listbox_euboa.insert(i, 'Bidding Strategy' + EUBOA_SEPERATOR + item)
+            listbox_euboa.insert(i, 'Bidding Strategy' +
+                                 EUBOA_SEPERATOR + item)
             i += 1
         for item in self.controller.fetch_opponent_models():
             listbox_euboa.insert(i, 'Opponent Model' + EUBOA_SEPERATOR + item)
             i += 1
         for item in self.controller.fetch_acceptance_strategies():
-            listbox_euboa.insert(i, 'Acceptance Strategy' + EUBOA_SEPERATOR + item)
+            listbox_euboa.insert(
+                i, 'Acceptance Strategy' + EUBOA_SEPERATOR + item)
             i += 1
         listbox_euboa.pack(fill='both')
 
@@ -235,13 +244,13 @@ class View:
 
         listbox_plugins = tk.Listbox(frame_plugins)
         i = 1
-        for item in self.controller.fetch_session_gui_segments():
+        for item in self.controller.fetch_gui_segments(session_gui_segment_path):
             listbox_plugins.insert(i, item)
         listbox_plugins.pack(fill='both')
 
         listbox_tournament_plugins = tk.Listbox(frame_tournament_plugins)
         i = 1
-        for item in self.controller.fetch_tournament_gui_segments():
+        for item in self.controller.fetch_gui_segments(tournament_gui_segment_path):
             listbox_tournament_plugins.insert(i, item)
         listbox_tournament_plugins.pack(fill='both')
 
@@ -252,7 +261,8 @@ class View:
         notebook_component.add(frame_protocol, text=' Protocols ')
         notebook_component.add(frame_analyses, text=' Analyses ')
         notebook_component.add(frame_plugins, text='Session theme plugins')
-        notebook_component.add(frame_tournament_plugins, text='Tournament theme plugins')
+        notebook_component.add(frame_tournament_plugins,
+                               text='Tournament theme plugins')
 
     def close_diagram(self, btn_preference_visualization, frame_right):
         frame_right.destroy()
@@ -276,9 +286,10 @@ class View:
         # preference2 = self.controller.fetch_preference(self.selected_domain_name,
         #                                                self.var_selected_preference2_name.get())
 
-        preference1 = Preference(self.selected_domain_name, self.var_selected_preference1_name.get())
-        preference2 = Preference(self.selected_domain_name, self.var_selected_preference2_name.get())
-
+        preference1 = Preference(
+            self.selected_domain_name, self.var_selected_preference1_name.get())
+        preference2 = Preference(
+            self.selected_domain_name, self.var_selected_preference2_name.get())
 
         bid_space1 = BidSpace(preference1)
         bid_space2 = BidSpace(preference2)

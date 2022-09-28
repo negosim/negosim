@@ -9,4 +9,4 @@ class ParticipantLabel_3(AbstractGUISegment, ABC):
         return lable,
 
     def get_name(self):
-        return 'ParticipantLabel_3.py'
+        return 'ParticipantLabel_3'

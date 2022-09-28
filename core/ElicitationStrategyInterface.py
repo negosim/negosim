@@ -23,7 +23,7 @@ class ElicitationStrategyInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def is_asking_time_from_use(self, state_info: StateInfo):
+    def is_asking_time_from_user(self, state_info: StateInfo):
         """
         This method decides about when and which bid elicit from user
         :param state_info:

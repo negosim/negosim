@@ -16,4 +16,4 @@ class RepetitionSegment_6(AbstractGUISegment):
         return label1, spinbox_deadline, label2
 
     def get_name(self):
-        return 'RepetitionSegment_6.py'
+        return 'RepetitionSegment_6'

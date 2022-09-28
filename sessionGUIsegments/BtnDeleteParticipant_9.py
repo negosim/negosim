@@ -14,4 +14,4 @@ class BtnDeleteParticipant_9(AbstractGUISegment):
         listbox_party_and_preference.delete(tk.ANCHOR)
 
     def get_name(self):
-        return 'BtnDeleteParticipant_9.py'
+        return 'BtnDeleteParticipant_9'

@@ -36,4 +36,4 @@ class AgentsSegment_4(AbstractGUISegment, ABC):
         return lebel1, listbox_agents1, scroll_bar1, lebel_Vs, listbox_agents2, scroll_bar2
 
     def get_name(self):
-        return 'AgentsSegment_4.py'
+        return 'AgentsSegment_4'
