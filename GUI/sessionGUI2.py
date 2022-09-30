@@ -5,8 +5,8 @@ from GUI.gui import GUIsegments
 
 class SessionGUI2:
     def __init__(self, window):
-        gui_segments = GUIsegments(window=window, y=1)
-        gui_segments.create_sessionGUI(segments_path=SESSION_GUI_SEGMENT_PATH, x=0)
+        gui_segments = GUIsegments(window=window, segments_path=SESSION_GUI_SEGMENT_PATH)
+        gui_segments.create_sessionGUI()
 
 
 if __name__ == '__main__':
