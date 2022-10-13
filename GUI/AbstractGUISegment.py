@@ -5,7 +5,7 @@ from tkinter import Frame
 class AbstractGUISegment(ABC):
 
     def __init__(self, root: Frame, frame: Frame, all_horizontal_frames: list, all_var_dict: dict,
-                 current_horizontal_frame_index: int, all_vertical_frames):
+                 current_horizontal_frame_index: int, all_vertical_frames, all_segments: dict):
         self.__root = root
         self.__frame = frame
         # self.__all_frames = frames
@@ -14,14 +14,14 @@ class AbstractGUISegment(ABC):
         self.__all_horizontal_frames = all_horizontal_frames
         self.__current_horizontal_frame_index = current_horizontal_frame_index
         self.__all_vertical_frames = all_vertical_frames
-
+        self.__all_segments = all_segments
         self.__all_widgets_in_GUI = {}
 
     def get_all_vertical_frames(self):
         return self.__all_vertical_frames
 
     def get_all_vertical_frames_of_special_horizontal_frame(self, horizontal_frame_index):
-        return self.__all_vertical_frames[str(horizontal_frame_index)]
+        return self.__all_vertical_frames[horizontal_frame_index]
 
     def get_special_vertical_frame(self, horizontal_frame_index, vertical_frame_index):
         return self.__all_vertical_frames[horizontal_frame_index][vertical_frame_index]
@@ -55,7 +55,7 @@ class AbstractGUISegment(ABC):
     def replace_special_vertical_frame(self, horizontal_frame_index, vertical_frame_index, new_frame):
         old_frame = self.get_special_vertical_frame(horizontal_frame_index=horizontal_frame_index, vertical_frame_index=vertical_frame_index)
         old_frame.destroy()
-        self.__all_vertical_frames[str(horizontal_frame_index)].pop(vertical_frame_index)
+        self.__all_vertical_frames[horizontal_frame_index].pop(vertical_frame_index)
         self.add_new_frame(horizontal_frame_index, vertical_frame_index, new_frame)
 
     def add_new_frame(self, horizontal_index, vertical_index: int, new_frame: Frame):
@@ -89,8 +89,8 @@ class AbstractGUISegment(ABC):
             horizontal_frame_index = self.__current_horizontal_frame_index
         # special_segment_vars = self.get_special_segment_StringVars(segment_index, horizontal_frame_index)
         # special_segment_segment_special_var = special_segment_vars[col_index]
-        special_segment_segment_special_var = self.__all_var_dict[horizontal_frame_index][segment_index][index]
-        return special_segment_segment_special_var
+        special_segment_special_var = self.__all_var_dict[horizontal_frame_index][segment_index][index]
+        return special_segment_special_var
 
     def set_gui_widgets(self, hf_widgets_dict: dict, horizontal_index: int):
         '''
@@ -100,10 +100,14 @@ class AbstractGUISegment(ABC):
         # self.__gui_widgets_dict = hf_widgets_dict
         self.__all_widgets_in_GUI[horizontal_index] = hf_widgets_dict
 
-    def add_new_gui_widget(self, horizontal_index, index: int, widget):
-        # print(self.__all_widgets_in_GUI['0'][index])
-        # print(horizontal_index)
-        self.__all_widgets_in_GUI[horizontal_index][index].append(widget)
+    def add_new_gui_widget(self, horizontal_index, segment_index: int, widget):
+        self.__all_widgets_in_GUI[horizontal_index][segment_index].append(widget)
+
+    def get_all_segments(self):
+        return self.__all_segments
+
+    def get_all_segments_of_special_hf(self, horizontal_index: int):
+        return self.__all_segments[horizontal_index]
 
     # def get_special_segment_name(self, index):
     #     all_segment_names = list(self.__all_var_dict.keys())
@@ -129,6 +133,9 @@ class AbstractGUISegment(ABC):
         if horizontal_frame_index == None:
             horizontal_frame_index = self.__current_horizontal_frame_index
         return self.__all_var_dict[horizontal_frame_index]
+
+    def get_special_segment_var_tuple(self, horizontal_frame_index: int, segment_index: int):
+        return self.__all_var_dict[horizontal_frame_index][segment_index]
 
     @abstractmethod
     def get_widget(self) -> tuple:

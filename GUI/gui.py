@@ -26,6 +26,7 @@ class GUIsegments:
 
         all_var_dict = {}
         all_vertical_frames = {}
+        all_segments = {}
         for horizontal_frame_name in frame_dirs_names:
             horizontal_frame_index = int(horizontal_frame_name.split('_')[-1])
             segments_names = controller.fetch_gui_segments(path=f'{self.__segments_path}/{horizontal_frame_name}')
@@ -58,8 +59,9 @@ class GUIsegments:
 
             i = 0
             for segments_name in segments_names:
-                obj = CreateObjectByPath.get_object(f'{self.__segments_path}/{horizontal_frame_name}', segments_name, self.window, vertical_frames[i], all_horizontal_frames, all_var_dict, horizontal_frame_index, all_vertical_frames)
+                obj = CreateObjectByPath.get_object(f'{self.__segments_path}/{horizontal_frame_name}', segments_name, self.window, vertical_frames[i], all_horizontal_frames, all_var_dict, horizontal_frame_index, all_vertical_frames, all_segments)
                 segments.append(obj)
+                all_segments[horizontal_frame_index] = segments
                 widgets_row = obj.get_widget()
                 widgets.append(widgets_row)
                 i += 1
