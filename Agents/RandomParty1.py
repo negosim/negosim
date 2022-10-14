@@ -8,7 +8,7 @@ class RandomParty1(AbstractNegoParty):
     Bilateral Random Agent
     """
 
-    def send_bid(self, protocol, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid

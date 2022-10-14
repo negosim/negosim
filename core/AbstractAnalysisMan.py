@@ -19,37 +19,35 @@ class AbstractAnalysisMan(ABC):
     }
     '''
 
-    def __init__(self, party1, party2, nego_table,
-                 preference_of_party1, preference_of_party2,
-                 opponent_model_party1=None, opponent_model_party2=None,
-                 user_model_party1=None, user_model_party2=None):
-        if not isinstance(party1, NegoPartyInterface):
-            raise TypeError('party1 argument must be an instance of NegoPartyInterface')
-        if not isinstance(party2, NegoPartyInterface):
-            raise TypeError('party2 argument must be an instance of NegoPartyInterface')
+    def __init__(self, nego_table):
+        # if not isinstance(party1, NegoPartyInterface):
+        #     raise TypeError('party1 argument must be an instance of NegoPartyInterface')
+        # if not isinstance(party2, NegoPartyInterface):
+        #     raise TypeError('party2 argument must be an instance of NegoPartyInterface')
         if not isinstance(nego_table, NegoTable):
             raise TypeError('offers_on_table argument must be an instance of dict')
-        if not isinstance(preference_of_party1, Preference):
-            raise TypeError('preference_of_party1 argument must be an instance of NegoPartyInterface')
-        if not isinstance(preference_of_party2, Preference):
-            raise TypeError('preference_of_party2 argument must be an instance of NegoPartyInterface')
-        if not (isinstance(opponent_model_party1, OpponentModelInterface) or opponent_model_party1 == None):
-            raise TypeError('estimated_preference_of_party1 argument must be an instance of Preference')
-        if not (isinstance(opponent_model_party2, OpponentModelInterface) or opponent_model_party2 == None):
-            raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
-        if not (isinstance(user_model_party1, UserModelInterface) or user_model_party1 == None):
-            raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
-        if not (isinstance(user_model_party2, UserModelInterface) or user_model_party2 == None):
-            raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
-        self.__party1 = party1
-        self.__party2 = party2
+        # if not isinstance(preference_of_party1, Preference):
+        #     raise TypeError('preference_of_party1 argument must be an instance of NegoPartyInterface')
+        # if not isinstance(preference_of_party2, Preference):
+        #     raise TypeError('preference_of_party2 argument must be an instance of NegoPartyInterface')
+        # if not (isinstance(opponent_model_party1, OpponentModelInterface) or opponent_model_party1 == None):
+        #     raise TypeError('estimated_preference_of_party1 argument must be an instance of Preference')
+        # if not (isinstance(opponent_model_party2, OpponentModelInterface) or opponent_model_party2 == None):
+        #     raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
+        # if not (isinstance(user_model_party1, UserModelInterface) or user_model_party1 == None):
+        #     raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
+        # if not (isinstance(user_model_party2, UserModelInterface) or user_model_party2 == None):
+        #     raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
+
         self.__nego_table = nego_table
-        self.__preference_of_party1 = preference_of_party1
-        self.__preference_of_party2 = preference_of_party2
-        self.__opponent_model_party1 = opponent_model_party1
-        self.__opponent_model_party2 = opponent_model_party2
-        self.__user_model_party1 = user_model_party1
-        self.__user_model_party2 = user_model_party2
+        self.__party1: NegoPartyInterface = nego_table.get_parties()[0]
+        self.__party2: NegoPartyInterface = nego_table.get_parties()[1]
+        self.__preference_of_party1 = self.__party1.get_preference()
+        self.__preference_of_party2 = self.__party2.get_preference()
+        self.__opponent_model_party1 = self.__party1.get_opponent_model()
+        self.__opponent_model_party2 = self.__party2.get_opponent_model()
+        self.__user_model_party1 = self.__party1.get_user_model()
+        self.__user_model_party2 = self.__party2.get_user_model()
         self.estimation_analysis_data_structure = {}
         self.analysis_data_structure = {}
 

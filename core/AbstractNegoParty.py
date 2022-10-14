@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod, abstractclassmethod
 from core.NegoPartyInterface import NegoPartyInterface
 from core.Preference import Preference
 from core.UtilitySpace import UtilitySpace
-from core.TimeLine import TimeLine
+from core.ProtocolInterface import ProtocolInterface
 from core.Bid import Bid
 from core.BidSpace import BidSpace
 import random
@@ -40,7 +40,7 @@ class AbstractNegoParty(NegoPartyInterface, ABC):
         return bid
 
     @abstractmethod
-    def send_bid(self, protocol, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol: ProtocolInterface) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid

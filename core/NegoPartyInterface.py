@@ -9,13 +9,13 @@
 #######################################################
 from core.Bid import Bid
 from abc import ABC, abstractmethod
-from core.TimeLine import TimeLine
+from core.ProtocolInterface import ProtocolInterface
 
 
 class NegoPartyInterface(ABC):
 
     @abstractmethod
-    def send_bid(self, protocol, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol: ProtocolInterface) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
@@ -26,5 +26,33 @@ class NegoPartyInterface(ABC):
     def get_name(self):
         """
         :return: Party Name
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_preference(self):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_opponent_model(self):
+        """
+        This method can be used for analysing purpose
+        if this method returns opponent model this means the
+        analysis entity should analyze the opponent model otherwise
+        if it returns None means the analysis entity would not analyze
+        the opponent modeling
+        :return: opponent model
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_user_model(self):
+        """
+        This method can be used for analysing purpose
+        if this method returns user model this means the
+        analysis entity should analyze the user model otherwise
+        if it returns None means the analysis entity would not analyze
+        the opponent modeling
+        :return: user model
         """
         raise NotImplementedError()

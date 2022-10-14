@@ -19,7 +19,7 @@ class RandomParty2(AbstractNegoParty):
         self.bidding_strategy = RandomStrategy(opponent_model=self.opponent_model, preference=preference)
         self.acceptance_strategy = ACNext(utility_space=self.get_utility_space())
 
-    def send_bid(self, protocol, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
@@ -27,6 +27,7 @@ class RandomParty2(AbstractNegoParty):
         parties = protocol.get_parties()
         opponent = list(filter(lambda party: party is not self, parties))[0]
         opponen_offers = protocol.get_offers_on_table(opponent)
+        timeline = protocol.get_time_line()
         bid = self.bidding_strategy.send_bid(timeline)
         if len(opponen_offers) > 0:
             op_offer = opponen_offers[len(opponen_offers) - 1]

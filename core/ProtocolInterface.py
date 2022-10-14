@@ -9,7 +9,7 @@
 #######################################################
 from core.TimeLine import TimeLine
 from abc import ABC, abstractmethod
-from core.NegoPartyInterface import NegoPartyInterface
+import core.NegoPartyInterface as NegoPartyInterface
 
 
 class ProtocolInterface(ABC):

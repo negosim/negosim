@@ -23,7 +23,7 @@ class MyTestCase(unittest.TestCase):
         parties = (self.party1, party2)
         state_info = StateInfo(self.time_line, [], {})
         nego_table = NegoTable(parties, state_info)
-        self.analysis_man = Analysis_man0(self.party1, party2, nego_table, preference1, preference2)
+        self.analysis_man = Analysis_man0(nego_table)
         self.protocol = SOAP(self.time_line, nego_table, self.analysis_man)
 
     def test_something(self):

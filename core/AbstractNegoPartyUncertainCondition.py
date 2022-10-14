@@ -44,7 +44,7 @@ class AbstractNegoPartyUncertainCondition(NegoPartyInterface, ABC):
         return bid
 
     @abstractmethod
-    def send_bid(self, protocol, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
@@ -80,4 +80,8 @@ class AbstractNegoPartyUncertainCondition(NegoPartyInterface, ABC):
         the opponent modeling
         :return: user model
         """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_preference(self):
         raise NotImplementedError()

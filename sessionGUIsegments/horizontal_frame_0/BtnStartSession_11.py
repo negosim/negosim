@@ -49,8 +49,8 @@ class BtnStartSession_11(AbstractGUISegment):
                                                   analysis_man_name=self.analysis_name,
                                                   deadline=deadline,
                                                   deadline_type=deadline_type,
-                                                  first_preference_name=self.party1_preference_name,
-                                                  second_preference_name=self.party2_preference_name,
+                                                  first_preference=self.party1_preference_name,
+                                                  second_preference=self.party2_preference_name,
                                                   party1_name=self.party1_name,
                                                   party2_name=self.party2_name,
                                                   domain_name=self.domain_name)

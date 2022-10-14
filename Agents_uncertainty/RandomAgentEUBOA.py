@@ -27,7 +27,7 @@ class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
                                                  preference=self.initial_preference_user_model)
         self.__acceptance_strategy = ACNext(utility_space=UtilitySpace(self.initial_preference_user_model))
 
-    def send_bid(self, protocol: ProtocolInterface, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol: ProtocolInterface) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
@@ -38,7 +38,7 @@ class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
         parties = protocol.get_parties()
         opponent = list(filter(lambda party: party is not self, parties))[0]
         opponent_offers = protocol.get_offers_on_table(opponent)
-        bid = self.__bidding_strategy.send_bid(timeline)
+        bid = self.__bidding_strategy.send_bid(protocol.get_time_line())
         if len(opponent_offers) > 0:
             op_offer = opponent_offers[-1]
             self.__opponent_model.update_preference(op_offer)
@@ -74,3 +74,7 @@ class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
         :return: user model
         """
         return self.__user_model
+
+
+    def get_preference(self):
+        return self.get_user_model().get_preference()

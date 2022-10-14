@@ -9,8 +9,21 @@ from core.TimeLine import TimeLine
 class BilateralSession:
 
     def __init__(self, protocol_name: str, analysis_man_name: str, deadline, deadline_type: str,
-                 first_preference_name: str, second_preference_name: str,
+                 first_preference, second_preference,
                  party1_name: str, party2_name: str, domain_name: str):
+        """
+
+        :param protocol_name:
+        :param analysis_man_name:
+        :param deadline:
+        :param deadline_type:
+        :param first_preference: should be a name of preference or an preference object
+        :param second_preference: should be a name of preference or an preference object
+        :param party1_name:
+        :param party2_name:
+        :param domain_name:
+        """
+
 
         if not isinstance(protocol_name, str):
             raise TypeError('protocol_name must be string')
@@ -21,9 +34,9 @@ class BilateralSession:
         if not isinstance(deadline_type, str):
             print(type(deadline_type))
             raise TypeError('deadline_type must be string')
-        if not isinstance(first_preference_name, str):
+        if not (isinstance(first_preference, str) or isinstance(first_preference, Preference)):
             raise TypeError('first_preference_name must be string')
-        if not isinstance(second_preference_name, str):
+        if not (isinstance(second_preference, str) or isinstance(second_preference, Preference)):
             raise TypeError('second_preference_name must be string')
         if not isinstance(party1_name, str):
             raise TypeError('party1_name must be string')
@@ -33,10 +46,16 @@ class BilateralSession:
             raise TypeError('domain_name must be string')
 
         try:
-            self.preference1 = Preference(domain_name, first_preference_name)
+            if isinstance(first_preference, str):
+                self.preference1 = Preference(domain_name, first_preference)
+            else:
+                self.preference1 = first_preference
             self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, self.preference1)
 
-            self.preference2 = Preference(domain_name, second_preference_name)
+            if isinstance(second_preference, str):
+                self.preference2 = Preference(domain_name, second_preference)
+            else:
+                self.preference2 = second_preference
             self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, self.preference2)
 
             time_line = TimeLine(float(deadline), deadline_type)
@@ -46,15 +65,7 @@ class BilateralSession:
 
             self.analysis_man = CreateObjectByPath.get_object(ANALYSIS_PATH,
                                                               analysis_man_name,
-                                                              self.party1,
-                                                              self.party2,
-                                                              nego_table,
-                                                              self.preference1,
-                                                              self.preference2,
-                                                              self.party1.get_opponent_model(),
-                                                              self.party2.get_opponent_model(),
-                                                              self.party1.get_user_model(),
-                                                              self.party2.get_user_model())
+                                                              nego_table)
 
             self.protocol = CreateObjectByPath.get_object(PROTOCOL_PATH,
                                                           protocol_name,

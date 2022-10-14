@@ -17,7 +17,7 @@ class TimeDependent(AbstractNegoParty):
         self.__k = 0.0
         self.__e = 1.0
 
-    def send_bid(self, protocol, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
@@ -26,7 +26,7 @@ class TimeDependent(AbstractNegoParty):
         opponent = list(filter(lambda party: party is not self, parties))[0]
         opponen_offer = protocol.get_offers_on_table(opponent)
 
-        t = timeline.get_time()
+        t = protocol.get_time()
 
         target_utility = self.get_target_utility(p_min=self.__p_min, p_max=self.__p_max, t=t, k=self.__k, e=self.__e)
         count = 500

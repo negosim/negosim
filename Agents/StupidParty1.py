@@ -15,7 +15,7 @@ class StupidParty1(NegoPartyInterface):
         self.preference = preference
         self.utility_space = UtilitySpace(self.preference)
 
-    def send_bid(self, protocol, timeline: TimeLine) -> Bid:
+    def send_bid(self, protocol) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid

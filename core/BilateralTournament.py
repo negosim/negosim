@@ -40,8 +40,8 @@ class BilateralTournament:
                                                                      analysis_man_name=self.__analysis_man_name,
                                                                      deadline=self.__deadline,
                                                                      deadline_type=self.__deadline_type,
-                                                                     first_preference_name=preference_permutations[0],
-                                                                     second_preference_name=preference_permutations[1],
+                                                                     first_preference=preference_permutations[0],
+                                                                     second_preference=preference_permutations[1],
                                                                      party1_name=party1_name,
                                                                      party2_name=party2_name,
                                                                      domain_name=domain_name)
