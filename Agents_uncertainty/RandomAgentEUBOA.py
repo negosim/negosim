@@ -6,7 +6,7 @@ from user_models.default_user_model import DefaultUserModel
 from core.ProtocolInterface import ProtocolInterface
 from acceptance_strategies.ACNext import ACNext
 from core.UserInterface import UserInterface
-from core.UtilitySpace import UtilitySpace
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.Preference import Preference
 from core.TimeLine import TimeLine
 from core.Bid import Bid
@@ -25,7 +25,7 @@ class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
         self.__opponent_model = DefaultOpponentModel(self.initial_preference_opponent_model)
         self.__bidding_strategy = RandomStrategy(opponent_model=self.__opponent_model,
                                                  preference=self.initial_preference_user_model)
-        self.__acceptance_strategy = ACNext(utility_space=UtilitySpace(self.initial_preference_user_model))
+        self.__acceptance_strategy = ACNext(utility_space=AdditiveUtilitySpace(self.initial_preference_user_model))
 
     def send_bid(self, protocol: ProtocolInterface) -> Bid:
         """

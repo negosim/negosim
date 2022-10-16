@@ -1,16 +1,16 @@
 from core.AcceptanceStrategyInterface import AcceptanceStrategyInterface
 from core.Offer import Offer
 from abc import ABC, abstractmethod
-from core.UtilitySpace import UtilitySpace
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.OpponentModelInterface import OpponentModelInterface
 from core.Bid import Bid
 
 
 class AbstractAcceptanceStrategy(AcceptanceStrategyInterface):
 
-    def __init__(self, utility_space: UtilitySpace):
-        if not isinstance(utility_space, UtilitySpace):
-            raise TypeError('utility_space argument must be an instance of UtilitySpace')
+    def __init__(self, utility_space: AdditiveUtilitySpace):
+        if not isinstance(utility_space, AdditiveUtilitySpace):
+            raise TypeError('utility_space argument must be an instance of AdditiveUtilitySpace')
         self.__utility_space = utility_space
 
     @abstractmethod

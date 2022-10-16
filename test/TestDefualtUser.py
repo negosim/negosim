@@ -4,14 +4,14 @@ from users.DefaultUser import DefaultUser
 from core.BidSpace import BidSpace
 import random
 from core.Offer import Offer
-from core.UtilitySpace import UtilitySpace
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class TestDefaultUser(unittest.TestCase):
 
     def setUp(self) -> None:
         self.preference = Preference('laptop', 'laptop_buyer_utility.xml')
-        self.u_space = UtilitySpace(self.preference)
+        self.u_space = AdditiveUtilitySpace(self.preference)
         self.user = DefaultUser(self.preference)
 
     def test_get_initial_bids_rank(self):

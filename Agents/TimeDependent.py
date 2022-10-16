@@ -2,7 +2,7 @@ from core.Preference import Preference
 from core.AbstractNegoParty import AbstractNegoParty
 from core.Bid import Bid
 from core.Offer import Offer
-from core.TimeLine import TimeLine
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class TimeDependent(AbstractNegoParty):
@@ -11,7 +11,8 @@ class TimeDependent(AbstractNegoParty):
     """
 
     def __init__(self, preference: Preference):
-        AbstractNegoParty.__init__(self, preference)
+        super().__init__(preference=preference)
+        self.__utility_space = AdditiveUtilitySpace(preference=preference)
         self.__p_min = 0.0
         self.__p_max = 1.0
         self.__k = 0.0
@@ -24,7 +25,7 @@ class TimeDependent(AbstractNegoParty):
         """
         parties = protocol.get_parties()
         opponent = list(filter(lambda party: party is not self, parties))[0]
-        opponen_offer = protocol.get_offers_on_table(opponent)
+        opponent_offer = protocol.get_offers_on_table(opponent)
 
         t = protocol.get_time()
 
@@ -33,7 +34,7 @@ class TimeDependent(AbstractNegoParty):
         bid = None
         while count > 0:
             bid = self.generate_random_bid()
-            if self.get_utility_space().get_utility_distinct(Offer(bid=bid, time=t)) >= target_utility:
+            if self.__utility_space.get_utility_distinct(Offer(bid=bid, time=t)) >= target_utility:
                 break
             count -= 1
             bid = None
@@ -41,10 +42,10 @@ class TimeDependent(AbstractNegoParty):
         if bid is None:
             bid = self.get_preference().get_best_bid()
 
-        if len(opponen_offer) > 0:
-            op_bid = opponen_offer[len(opponen_offer) - 1].get_bid()
-            if self.get_utility_space().get_utility(op_bid) >= self.get_utility_space().get_utility(
-                    bid) and self.get_utility_space().get_utility(op_bid) > 0.7:
+        if len(opponent_offer) > 0:
+            op_bid = opponent_offer[len(opponent_offer) - 1].get_bid()
+            if self.__utility_space.get_utility(op_bid) >= self.__utility_space.get_utility(
+                    bid) and self.__utility_space.get_utility(op_bid) > 0.7:
                 return op_bid
         return bid
 

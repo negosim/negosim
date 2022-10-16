@@ -1,7 +1,7 @@
 from core.Preference import Preference
 from core.Bid import Bid
 from acceptance_strategies.ACNext import ACNext
-from core.TimeLine import TimeLine
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 from opponent_models.DefaultOpponentModel import DefaultOpponentModel
 from bidding_strategies.RandomStrategy import RandomStrategy
 from core.AbstractNegoParty import AbstractNegoParty
@@ -13,11 +13,11 @@ class RandomParty2(AbstractNegoParty):
     """
 
     def __init__(self, preference: Preference):
-        super(RandomParty2, self).__init__(preference)
-        preference = self.get_preference()
+        super().__init__(preference=preference)
+        self.__utility_space = AdditiveUtilitySpace(preference=preference)
         self.opponent_model = DefaultOpponentModel(preference=preference.get_initial_preference())
         self.bidding_strategy = RandomStrategy(opponent_model=self.opponent_model, preference=preference)
-        self.acceptance_strategy = ACNext(utility_space=self.get_utility_space())
+        self.acceptance_strategy = ACNext(utility_space=self.__utility_space)
 
     def send_bid(self, protocol) -> Bid:
         """
@@ -26,11 +26,11 @@ class RandomParty2(AbstractNegoParty):
         """
         parties = protocol.get_parties()
         opponent = list(filter(lambda party: party is not self, parties))[0]
-        opponen_offers = protocol.get_offers_on_table(opponent)
+        opponent_offers = protocol.get_offers_on_table(opponent)
         timeline = protocol.get_time_line()
         bid = self.bidding_strategy.send_bid(timeline)
-        if len(opponen_offers) > 0:
-            op_offer = opponen_offers[len(opponen_offers) - 1]
+        if len(opponent_offers) > 0:
+            op_offer = opponent_offers[len(opponent_offers) - 1]
             self.opponent_model.update_preference(op_offer)
             if self.acceptance_strategy.is_acceptable(offer=op_offer, my_next_bid=bid,
                                                       opponent_model=self.opponent_model):

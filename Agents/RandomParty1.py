@@ -1,6 +1,6 @@
 from core.AbstractNegoParty import AbstractNegoParty
 from core.Bid import Bid
-from core.TimeLine import TimeLine
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class RandomParty1(AbstractNegoParty):
@@ -13,15 +13,17 @@ class RandomParty1(AbstractNegoParty):
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
         """
+        utility_space = AdditiveUtilitySpace(preference=self.get_preference())
+
         parties = protocol.get_parties()
         opponent = list(filter(lambda party: party is not self, parties))[0]
-        opponen_offer = protocol.get_offers_on_table(opponent)
+        opponent_offer = protocol.get_offers_on_table(opponent)
 
         bid = self.generate_random_bid()
-        if len(opponen_offer) > 0:
-            op_bid = opponen_offer[len(opponen_offer) - 1].get_bid()
-            if self.get_utility_space().get_utility(op_bid) >= self.get_utility_space().get_utility(
-                    bid) and self.get_utility_space().get_utility(op_bid) > 0.7:
+        if len(opponent_offer) > 0:
+            op_bid = opponent_offer[len(opponent_offer) - 1].get_bid()
+            if utility_space.get_utility(op_bid) >= utility_space.get_utility(
+                    bid) and utility_space.get_utility(op_bid) > 0.7:
                 return op_bid
         return bid
 

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from core.NegoPartyInterface import NegoPartyInterface
 from core.Preference import Preference
-from core.UtilitySpace import UtilitySpace
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.TimeLine import TimeLine
 from core.Bid import Bid
 from core.BidSpace import BidSpace
@@ -14,7 +14,7 @@ class AbstractNegoPartyUncertainCondition(NegoPartyInterface, ABC):
     def __init__(self, initial_preference: Preference, user: UserInterface):
         self.__initial_preference = initial_preference
         self.__user = user
-        self.__utility_space = UtilitySpace(self.__initial_preference)
+        self.__utility_space = AdditiveUtilitySpace(self.__initial_preference)
         self.__bid_space = BidSpace(self.__initial_preference)
 
     def get_user(self) -> UserInterface:

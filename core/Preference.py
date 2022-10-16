@@ -105,12 +105,6 @@ class Preference:
         max_value = max(float(x) for x in item_value_dict.values())
         return float(item_value_dict[item]), max_value
 
-    # def get_discount_factor(self):
-    #     return self.__preference_data_structure['discount_factor']
-    #
-    # def get_reservation(self):
-    #     return self.__preference_data_structure['reservation']
-
     def get_weights(self):
         '''
         this method returns all weights of preference

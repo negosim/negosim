@@ -1,32 +1,29 @@
 from abc import ABC, abstractmethod, abstractclassmethod
-from core.NegoPartyInterface import NegoPartyInterface
 from core.Preference import Preference
-from core.UtilitySpace import UtilitySpace
+from core.AbstractUtilitySpace import AbstractUtilitySpace
 from core.ProtocolInterface import ProtocolInterface
 from core.Bid import Bid
 from core.BidSpace import BidSpace
 import random
 
 
-class AbstractNegoParty(NegoPartyInterface, ABC):
+class AbstractNegoParty(ABC):
 
     def __init__(self, preference: Preference):
         self.__preference = preference
-        self.__utility_space = UtilitySpace(self.__preference)
+        # self.__utility_space = AdditiveUtilitySpace(self.__preference)
+        # self.__utility_space = utility_space
         self.__bid_space = BidSpace(self.__preference)
         # self.opponent_model = None
 
     def get_preference(self):
         return self.__preference
 
-    def get_utility_space(self):
-        return self.__utility_space
+    # def get_utility_space(self):
+    #     return self.__utility_space
 
     def get_bid_space(self) -> BidSpace:
         return self.__bid_space
-
-    # def get_opponent_model(self):
-    #     return self.opponent_model
 
     def generate_random_bid(self):
         issue_items = {}

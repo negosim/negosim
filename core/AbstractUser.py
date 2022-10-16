@@ -3,7 +3,7 @@ from abc import abstractmethod
 from core.Offer import Offer
 from core.UserInterface import UserInterface
 from core.Preference import Preference
-from core.UtilitySpace import UtilitySpace
+from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class AbstractUser(UserInterface):
@@ -20,7 +20,7 @@ class AbstractUser(UserInterface):
             raise TypeError('bothering argument must be a float')
         self.__bothering = bothering
         self.__preference = preference
-        self.__utility_space = UtilitySpace(preference)
+        self.__utility_space = AdditiveUtilitySpace(preference)
         self.__total_bothering = 0.0
 
     def get_bothering(self):
