@@ -1,6 +1,6 @@
 from core.AbstractNegoParty import AbstractNegoParty
 from core.Bid import Bid
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class RandomParty1(AbstractNegoParty):

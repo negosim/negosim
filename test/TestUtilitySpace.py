@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.Preference import Preference
 from core.Bid import Bid
 

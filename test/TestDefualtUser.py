@@ -4,7 +4,7 @@ from users.DefaultUser import DefaultUser
 from core.BidSpace import BidSpace
 import random
 from core.Offer import Offer
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class TestDefaultUser(unittest.TestCase):

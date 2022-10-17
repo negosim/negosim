@@ -1,7 +1,7 @@
 from core.AcceptanceStrategyInterface import AcceptanceStrategyInterface
 from core.Offer import Offer
-from abc import ABC, abstractmethod
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from abc import abstractmethod
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.OpponentModelInterface import OpponentModelInterface
 from core.Bid import Bid
 

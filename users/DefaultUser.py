@@ -1,6 +1,5 @@
 from core.Offer import Offer
 from core.Preference import Preference
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.AbstractUser import AbstractUser
 from core.BidSpace import BidSpace
 import math

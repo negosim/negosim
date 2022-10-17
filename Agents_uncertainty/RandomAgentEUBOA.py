@@ -6,9 +6,8 @@ from user_models.default_user_model import DefaultUserModel
 from core.ProtocolInterface import ProtocolInterface
 from acceptance_strategies.ACNext import ACNext
 from core.UserInterface import UserInterface
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.Preference import Preference
-from core.TimeLine import TimeLine
 from core.Bid import Bid
 
 

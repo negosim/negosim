@@ -1,7 +1,6 @@
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 import itertools
 from core.Bid import Bid
-import operator
 
 
 class BidSpace:

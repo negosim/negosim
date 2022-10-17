@@ -1,7 +1,7 @@
 from abc import ABC
 
 from core.AbstractNegoParty import AbstractNegoParty
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.Bid import Bid
 import random
 

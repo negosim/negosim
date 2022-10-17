@@ -1,4 +1,4 @@
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.AbstractAnalysisMan import AbstractAnalysisMan
 
 class AnalysisMan1(AbstractAnalysisMan):

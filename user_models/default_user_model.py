@@ -1,5 +1,5 @@
 from core.Preference import Preference
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.AbstractUserModel import AbstractUserModel
 from core.Offer import Offer
 

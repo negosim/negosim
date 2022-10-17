@@ -3,7 +3,7 @@ from abc import abstractmethod
 from core.Offer import Offer
 from core.UserInterface import UserInterface
 from core.Preference import Preference
-from core.AdditiveUtilitySpace import AdditiveUtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class AbstractUser(UserInterface):
