@@ -2,7 +2,7 @@ from core.Preference import Preference
 from core.AbstractNegoParty import AbstractNegoParty
 from core.Bid import Bid
 from core.Offer import Offer
-from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
+from core.AbstractUtilitySpace import AbstractUtilitySpace
 
 
 class TimeDependent(AbstractNegoParty):
@@ -10,9 +10,9 @@ class TimeDependent(AbstractNegoParty):
     Bilateral TimeDependent Agent (linear conceder)
     """
 
-    def __init__(self, preference: Preference):
-        super().__init__(preference=preference)
-        self.__utility_space = AdditiveUtilitySpace(preference=preference)
+    def __init__(self, utility_space: AbstractUtilitySpace):
+        super().__init__(utility_space=utility_space)
+        self.__utility_space = utility_space
         self.__p_min = 0.0
         self.__p_max = 1.0
         self.__k = 0.0

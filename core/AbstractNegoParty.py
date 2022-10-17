@@ -9,18 +9,17 @@ import random
 
 class AbstractNegoParty(ABC):
 
-    def __init__(self, preference: Preference):
-        self.__preference = preference
-        # self.__utility_space = AdditiveUtilitySpace(self.__preference)
-        # self.__utility_space = utility_space
+    def __init__(self, utility_space: AbstractUtilitySpace):
+        self.__preference = utility_space.get_preference()
+        self.__utility_space = utility_space
         self.__bid_space = BidSpace(self.__preference)
         # self.opponent_model = None
 
     def get_preference(self):
         return self.__preference
 
-    # def get_utility_space(self):
-    #     return self.__utility_space
+    def get_utility_space(self):
+        return self.__utility_space
 
     def get_bid_space(self) -> BidSpace:
         return self.__bid_space

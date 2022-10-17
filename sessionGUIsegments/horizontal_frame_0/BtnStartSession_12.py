@@ -10,7 +10,7 @@ from core.Preference import Preference
 PARTY_PREFERENCE_SEPERATOR = ' -> '
 
 
-class BtnStartSession_11(AbstractGUISegment):
+class BtnStartSession_12(AbstractGUISegment):
 
     def get_widget(self) -> tuple:
         self.__first_clicked = False
@@ -28,22 +28,22 @@ class BtnStartSession_11(AbstractGUISegment):
         analysis_stringVar = self.get_special_StringVar(2, 0)
         self.analysis_name = analysis_stringVar.get()
 
-        deadline_var = self.get_special_StringVar(10, 0)
+        deadline_var = self.get_special_StringVar(11, 0)
         deadline = deadline_var.get()
 
-        deadline_type_var = self.get_special_StringVar(10, 1)
+        deadline_type_var = self.get_special_StringVar(11, 1)
         deadline_type = deadline_type_var.get()
 
         message = self.check_errors()
         if message != 'Please select ':
             return messagebox.showerror('Error', message)
 
-        listbox_party_preference = self.get_special_widget(0, 8, 0)
+        listbox_party_preference = self.get_special_widget(0, 9, 0)
         party_preference1_txt = self.get_text_from_listbox(listbox_party_preference, 0)
-        self.party1_name, self.party1_preference_name = self.party_preference_text_separator(party_preference1_txt)
+        self.party1_name, self.party1_preference_name, utility_space_name1 = self.party_preference_utilityspace_text_separator(party_preference1_txt)
 
         party_preference2_txt = self.get_text_from_listbox(listbox_party_preference, 1)
-        self.party2_name, self.party2_preference_name = self.party_preference_text_separator(party_preference2_txt)
+        self.party2_name, self.party2_preference_name, utility_space_name2 = self.party_preference_utilityspace_text_separator(party_preference2_txt)
 
         self.bilateral_session = BilateralSession(protocol_name=self.protocol_name,
                                                   analysis_man_name=self.analysis_name,
@@ -53,7 +53,9 @@ class BtnStartSession_11(AbstractGUISegment):
                                                   second_preference=self.party2_preference_name,
                                                   party1_name=self.party1_name,
                                                   party2_name=self.party2_name,
-                                                  domain_name=self.domain_name)
+                                                  domain_name=self.domain_name,
+                                                  utility_space_name1=utility_space_name1,
+                                                  utility_space_name2=utility_space_name2)
 
         self.bilateral_session.start_session()
 
@@ -83,16 +85,16 @@ class BtnStartSession_11(AbstractGUISegment):
             message += 'Protocol, '
         if self.analysis_name == 'Select a AnalysisMan':
             message += 'AnalysisMan, '
-        m_participant_list = self.get_special_widget(0, 8, 0)
+        m_participant_list = self.get_special_widget(0, 9, 0)
         if m_participant_list.size() < 2:
             message += 'participant, '
         if self.domain_name == 'Select a Domain':
             message += 'Domain'
         return message
 
-    def party_preference_text_separator(self, party_preference_text: str) -> tuple:
+    def party_preference_utilityspace_text_separator(self, party_preference_text: str) -> tuple:
         temp = party_preference_text.split(PARTY_PREFERENCE_SEPERATOR)
-        return temp[0], temp[1]
+        return temp[0], temp[1], temp[2]
 
     def get_text_from_listbox(self, listbox_party_and_preference, row):
         text = listbox_party_and_preference.get(row)

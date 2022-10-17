@@ -10,7 +10,8 @@ class BilateralSession:
 
     def __init__(self, protocol_name: str, analysis_man_name: str, deadline, deadline_type: str,
                  first_preference, second_preference,
-                 party1_name: str, party2_name: str, domain_name: str):
+                 party1_name: str, party2_name: str, domain_name: str,
+                 utility_space_name1: str, utility_space_name2: str):
         """
 
         :param protocol_name:
@@ -26,37 +27,43 @@ class BilateralSession:
 
 
         if not isinstance(protocol_name, str):
-            raise TypeError('protocol_name must be string')
+            raise TypeError('protocol_name must be a string')
         if not isinstance(analysis_man_name, str):
-            raise TypeError('analysis_man_name must be string')
+            raise TypeError('analysis_man_name must be a string')
         if not isinstance(deadline, str):
-            raise TypeError('deadline must be string')
+            raise TypeError('deadline must be a string')
         if not isinstance(deadline_type, str):
             print(type(deadline_type))
-            raise TypeError('deadline_type must be string')
+            raise TypeError('deadline_type must be a string')
         if not (isinstance(first_preference, str) or isinstance(first_preference, Preference)):
-            raise TypeError('first_preference_name must be string')
+            raise TypeError('first_preference_name must be a string')
         if not (isinstance(second_preference, str) or isinstance(second_preference, Preference)):
-            raise TypeError('second_preference_name must be string')
+            raise TypeError('second_preference_name must be a string')
         if not isinstance(party1_name, str):
-            raise TypeError('party1_name must be string')
+            raise TypeError('party1_name must be a string')
         if not isinstance(party2_name, str):
-            raise TypeError('party2_name must be string')
+            raise TypeError('party2_name must be a string')
         if not isinstance(domain_name, str):
-            raise TypeError('domain_name must be string')
+            raise TypeError('domain_name must be a string')
+        if not isinstance(utility_space_name1, str):
+            raise TypeError('utility_space_name1 must be a string')
+        if not isinstance(utility_space_name2, str):
+            raise TypeError('utility_space_name2 must be a string')
 
         try:
             if isinstance(first_preference, str):
                 self.preference1 = Preference(domain_name, first_preference)
             else:
                 self.preference1 = first_preference
-            self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, self.preference1)
+            utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference1)
+            self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, utility_space1)
 
             if isinstance(second_preference, str):
                 self.preference2 = Preference(domain_name, second_preference)
             else:
                 self.preference2 = second_preference
-            self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, self.preference2)
+            utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name2, self.preference2)
+            self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, utility_space2)
 
             time_line = TimeLine(float(deadline), deadline_type)
             state_info = StateInfo(time_line=time_line, my_agent_offers=[], opponent_offers={})

@@ -2,9 +2,9 @@ from GUI.AbstractGUISegment import AbstractGUISegment
 import tkinter as tk
 
 
-class ParticipantsListbox_8(AbstractGUISegment):
+class ParticipantsListbox_9(AbstractGUISegment):
 
     def get_widget(self) -> tuple:
-        listbox_participant = tk.Listbox(master=self.get_frame(), width=42)
+        listbox_participant = tk.Listbox(master=self.get_frame(), width=50)
         return listbox_participant,
 

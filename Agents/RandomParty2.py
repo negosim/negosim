@@ -1,7 +1,7 @@
 from core.Preference import Preference
 from core.Bid import Bid
 from acceptance_strategies.ACNext import ACNext
-from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
+from core.AbstractUtilitySpace import AbstractUtilitySpace
 from opponent_models.DefaultOpponentModel import DefaultOpponentModel
 from bidding_strategies.RandomStrategy import RandomStrategy
 from core.AbstractNegoParty import AbstractNegoParty
@@ -12,9 +12,10 @@ class RandomParty2(AbstractNegoParty):
     Bilateral Random Agent (Using BOA framework)
     """
 
-    def __init__(self, preference: Preference):
-        super().__init__(preference=preference)
-        self.__utility_space = AdditiveUtilitySpace(preference=preference)
+    def __init__(self, utility_space: AbstractUtilitySpace):
+        super().__init__(utility_space=utility_space)
+        self.__utility_space = self.get_utility_space()
+        preference = self.__utility_space.get_preference()
         self.opponent_model = DefaultOpponentModel(preference=preference.get_initial_preference())
         self.bidding_strategy = RandomStrategy(opponent_model=self.opponent_model, preference=preference)
         self.acceptance_strategy = ACNext(utility_space=self.__utility_space)

@@ -18,6 +18,10 @@ class Controller:
         protocols = self.model.fetch_protocols()
         return protocols
 
+    def fetch_utility_spaces(self):
+        utility_spaces = self.model.fetch_utility_spaces()
+        return utility_spaces
+
     def fetch_agents(self):
         agents = self.model.fetch_agents()
         return agents

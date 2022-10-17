@@ -13,7 +13,7 @@ class StupidParty1(AbstractNegoParty, ABC):
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
         """
-        utility_space = AdditiveUtilitySpace(preference=self.get_preference())
+        utility_space = self.get_utility_space()
 
         parties = protocol.get_parties()
         opponent = list(filter(lambda party: party is not self, parties))[0]

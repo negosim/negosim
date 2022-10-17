@@ -28,6 +28,15 @@ class GUIContent:
             protocol_list.remove('__pycache_')
         return protocol_list
 
+    def fetch_utility_spaces(self):
+        utility_space_list = [f for f in listdir(
+            UTILITY_SPACE_PATH) if isfile(join(UTILITY_SPACE_PATH, f))]
+        if utility_space_list.count('__init__.py') > 0:
+            utility_space_list.remove('__init__.py')
+        if utility_space_list.count('__pycache__') > 0:
+            utility_space_list.remove('__pycache_')
+        return utility_space_list
+
     def fetch_agents(self):
         party_list = [f for f in listdir(
             PARTY_PATH) if isfile(join(PARTY_PATH, f))]
@@ -190,7 +199,8 @@ class PreferenceXMLParser:
 
 if __name__ == '__main__':
     model = GUIContent()
-    print(model.fetch_acceptance_strategies())
+    # print(model.fetch_acceptance_strategies())
+    print(model.fetch_utility_spaces())
     # print(model.fetch_users())
     # preferenceXMLParser = PreferenceXMLParser('laptop', 'laptop_buyer_utility.xml')
     # print(preferenceXMLParser.get_preference_data_structure())
