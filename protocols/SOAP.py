@@ -1,4 +1,5 @@
 from core.AbstractProtocl import AbstractProtocol
+from core.AbstractNegoParty import EndNegotiation
 from core.Offer import Offer
 
 
@@ -19,6 +20,9 @@ class SOAP(AbstractProtocol):
                     self.get_nego_table().get_state_info().set_negotiation_state(-1)
                 if self.get_nego_table().get_state_info().get_negotiation_state() == 0:
                     bid = party.send_bid(self)
+                    if isinstance(bid, EndNegotiation):
+                        print(f"{party.get_name()} ended the negotiation session")
+                        self.get_nego_table().get_state_info().set_negotiation_state(-1)
                     offer = Offer(bid, self.get_time())
                     self.get_nego_table().add_offer(party, offer)
                     print(party.get_name(), ' -> ', offer)

@@ -87,8 +87,8 @@ class BilateralSession:
 
     def start_session(self):
         print('----------------- Negotiation Session -----------------')
-        print(self.preference1.get_domain_name(), ',', self.preference2.get_domain_name(), ' -> ', self.party1, '(',
-              self.preference1.get_preference_name(), ')', ' Vs ', self.party2, '(',
+        print(self.preference1.get_domain_name(), ',', self.preference2.get_domain_name(), ' -> ', self.party1.get_name(), '(',
+              self.preference1.get_preference_name(), ')', ' Vs ', self.party2.get_name(), '(',
               self.preference2.get_preference_name(), ')')
         print('-------------------------------------------------------')
         self.protocol.negotiate()

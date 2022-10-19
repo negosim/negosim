@@ -35,6 +35,9 @@ class AbstractNegoParty(ABC):
         bid = Bid(issue_items)
         return bid
 
+    def end_negotiation_bid(self):
+        return EndNegotiation()
+
     @abstractmethod
     def send_bid(self, protocol: ProtocolInterface) -> Bid:
         """
@@ -73,3 +76,8 @@ class AbstractNegoParty(ABC):
         :return: user model
         """
         raise NotImplementedError()
+
+
+class EndNegotiation(Bid):
+    def __init__(self):
+        super().__init__({})
