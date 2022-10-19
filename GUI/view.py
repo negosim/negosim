@@ -182,6 +182,7 @@ class View:
 
         # frame_domain_set = ttk.Frame(notebook_component)
         self.frame_domain = ttk.Frame(notebook_component)
+        frame_agents = ttk.Frame(notebook_component)
         frame_user = ttk.Frame(notebook_component)
         frame_euboa = ttk.Frame(notebook_component)
         frame_protocol = ttk.Frame(notebook_component)
@@ -207,6 +208,13 @@ class View:
             listbox_user.insert(i, item)
             i += 1
         listbox_user.pack(fill='both')
+
+        listbox_agents = tk.Listbox(frame_agents)
+        i = 1
+        for item in self.controller.fetch_agents():
+            listbox_agents.insert(i, item)
+            i += 1
+        listbox_agents.pack(fill='both')
 
         listbox_euboa = tk.Listbox(frame_euboa)
         i = 1
@@ -255,9 +263,10 @@ class View:
         listbox_tournament_plugins.pack(fill='both')
 
         # notebook_component.add(frame_domain_set, text=' Domain Set ')
-        notebook_component.add(self.frame_domain, text=' Domain ')
-        notebook_component.add(frame_user, text=' User ')
-        notebook_component.add(frame_euboa, text=' EUBOA Component')
+        notebook_component.add(self.frame_domain, text=' Domains ')
+        notebook_component.add(frame_agents, text=' Agents ')
+        notebook_component.add(frame_user, text=' Users ')
+        notebook_component.add(frame_euboa, text=' EUBOA Components')
         notebook_component.add(frame_protocol, text=' Protocols ')
         notebook_component.add(frame_analyses, text=' Analyses ')
         notebook_component.add(frame_plugins, text='Session theme plugins')

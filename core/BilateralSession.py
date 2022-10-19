@@ -11,7 +11,7 @@ class BilateralSession:
     def __init__(self, protocol_name: str, analysis_man_name: str, deadline, deadline_type: str,
                  first_preference, second_preference,
                  party1_name: str, party2_name: str, domain_name: str,
-                 utility_space_name1: str, utility_space_name2: str):
+                 utility_space_name1: str, utility_space_name2: str = None):
         """
 
         :param protocol_name:
@@ -24,7 +24,6 @@ class BilateralSession:
         :param party2_name:
         :param domain_name:
         """
-
 
         if not isinstance(protocol_name, str):
             raise TypeError('protocol_name must be a string')
@@ -47,7 +46,7 @@ class BilateralSession:
             raise TypeError('domain_name must be a string')
         if not isinstance(utility_space_name1, str):
             raise TypeError('utility_space_name1 must be a string')
-        if not isinstance(utility_space_name2, str):
+        if not isinstance(utility_space_name2, str) and utility_space_name2 is not None:
             raise TypeError('utility_space_name2 must be a string')
 
         try:
@@ -62,7 +61,10 @@ class BilateralSession:
                 self.preference2 = Preference(domain_name, second_preference)
             else:
                 self.preference2 = second_preference
-            utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name2, self.preference2)
+            if utility_space_name2 is None:
+                utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference2)
+            else:
+                utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name2, self.preference2)
             self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, utility_space2)
 
             time_line = TimeLine(float(deadline), deadline_type)

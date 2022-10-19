@@ -26,7 +26,14 @@ class BtnAddParty_8(AbstractGUISegment):
         utility_space_name = utility_space_string_var.get()
 
         if listbox_party_and_preference.size() >= 2:
-            return messagebox.showerror('Error', 'it is Bilateral Negotiation and You ha already two participant')
+            return messagebox.showerror('Error', 'it is Bilateral Negotiation and You have already two participant')
+
+        if party_name == 'Select a Party':
+            return messagebox.showerror('Error', 'You have to select a Party')
+        if preference_name == 'Select a Preference':
+            return messagebox.showerror('Error', 'You have to select a Preference')
+        if utility_space_name == 'Select a utility space':
+            return messagebox.showerror('Error', 'You have to select a utility space')
 
         listbox_party_and_preference.insert(tk.END, party_name+PARTY_PREFERENCE_SEPERATOR+preference_name+PARTY_PREFERENCE_SEPERATOR+utility_space_name)
 

@@ -40,10 +40,10 @@ class BtnStartSession_12(AbstractGUISegment):
 
         listbox_party_preference = self.get_special_widget(0, 9, 0)
         party_preference1_txt = self.get_text_from_listbox(listbox_party_preference, 0)
-        self.party1_name, self.party1_preference_name, utility_space_name1 = self.party_preference_utilityspace_text_separator(party_preference1_txt)
+        self.party1_name, self.party1_preference_name, self.utility_space_name1 = self.party_preference_utilityspace_text_separator(party_preference1_txt)
 
         party_preference2_txt = self.get_text_from_listbox(listbox_party_preference, 1)
-        self.party2_name, self.party2_preference_name, utility_space_name2 = self.party_preference_utilityspace_text_separator(party_preference2_txt)
+        self.party2_name, self.party2_preference_name, self.utility_space_name2 = self.party_preference_utilityspace_text_separator(party_preference2_txt)
 
         self.bilateral_session = BilateralSession(protocol_name=self.protocol_name,
                                                   analysis_man_name=self.analysis_name,
@@ -54,8 +54,8 @@ class BtnStartSession_12(AbstractGUISegment):
                                                   party1_name=self.party1_name,
                                                   party2_name=self.party2_name,
                                                   domain_name=self.domain_name,
-                                                  utility_space_name1=utility_space_name1,
-                                                  utility_space_name2=utility_space_name2)
+                                                  utility_space_name1=self.utility_space_name1,
+                                                  utility_space_name2=self.utility_space_name2)
 
         self.bilateral_session.start_session()
 

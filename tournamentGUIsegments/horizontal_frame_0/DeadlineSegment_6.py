@@ -9,7 +9,7 @@ INITIAL_DEADLINE_TIME = 1
 MAX_DEADLINE_TIME = 3600000
 
 
-class DeadlineSegment_5(AbstractGUISegment, ABC):
+class DeadlineSegment_6(AbstractGUISegment, ABC):
 
     def get_widget(self):
         frame = self.get_frame()
@@ -26,4 +26,4 @@ class DeadlineSegment_5(AbstractGUISegment, ABC):
         return lebel1, spinbox_deadline, time_type
 
     def get_name(self):
-        return 5
+        return 6

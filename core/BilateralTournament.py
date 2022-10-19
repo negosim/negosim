@@ -9,7 +9,7 @@ class BilateralTournament:
 
     def __init__(self, protocol_name: str, analysis_man_name: str, Tournament_analysis_name: str,
                  deadline: str, deadline_type: str, agent_names: list, opponent_names: list, domain_names: list,
-                 tournament_repetition: str):
+                 tournament_repetition: str, utility_space_names: list):
 
         self.__domain_names = domain_names
         self.__agent_names = agent_names
@@ -21,6 +21,7 @@ class BilateralTournament:
         self.__tournament_analysis_man = CreateObjectByPath.get_object(ANALYSIS_TOURNAMENT_PATH,
                                                                        Tournament_analysis_name,
                                                                        agent_names)
+        self.__utility_space_names = utility_space_names
         self.__tournament_repetition = int(tournament_repetition)
         self.__avg_all_tournament_analysis_data = {}
 
@@ -36,19 +37,21 @@ class BilateralTournament:
                     for party1_name in self.__agent_names:
                         for party2_name in self.__opponent_names:
                             if party1_name != party2_name:
-                                bilateral_session = BilateralSession(protocol_name=self.__protocol_name,
-                                                                     analysis_man_name=self.__analysis_man_name,
-                                                                     deadline=self.__deadline,
-                                                                     deadline_type=self.__deadline_type,
-                                                                     first_preference=preference_permutations[0],
-                                                                     second_preference=preference_permutations[1],
-                                                                     party1_name=party1_name,
-                                                                     party2_name=party2_name,
-                                                                     domain_name=domain_name)
+                                for utility_space in self.__utility_space_names:
+                                    bilateral_session = BilateralSession(protocol_name=self.__protocol_name,
+                                                                         analysis_man_name=self.__analysis_man_name,
+                                                                         deadline=self.__deadline,
+                                                                         deadline_type=self.__deadline_type,
+                                                                         first_preference=preference_permutations[0],
+                                                                         second_preference=preference_permutations[1],
+                                                                         party1_name=party1_name,
+                                                                         party2_name=party2_name,
+                                                                         domain_name=domain_name,
+                                                                         utility_space_name1=utility_space)
 
-                                bilateral_session.start_session()
-                                self.__tournament_analysis_man.add_session_analysis_data(
-                                    bilateral_session.get_analysis_man().get_analysis_data())
+                                    bilateral_session.start_session()
+                                    self.__tournament_analysis_man.add_session_analysis_data(
+                                        bilateral_session.get_analysis_man().get_analysis_data())
 
             self.cal_avg()
             # tournament_analysis_data = self.__tournament_analysis_man.get_tournament_analysis_data()

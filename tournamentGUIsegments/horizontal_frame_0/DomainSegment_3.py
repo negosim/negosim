@@ -10,7 +10,7 @@ class DomainSegment_3(AbstractGUISegment, ABC):
         ctrl = Controller()
         frame = self.get_frame()
         scroll_bar = Scrollbar(master=frame)
-        listbox_domain = Listbox(master=frame, width=50, selectmode="multiple", exportselection=0, yscrollcommand=scroll_bar.set)
+        listbox_domain = Listbox(master=frame, width=50, selectmode="multiple", exportselection=0, yscrollcommand=scroll_bar.set, height=6)
         list_domain = ctrl.fetch_domains()
         listbox_domain.insert(END, *list_domain)
 
