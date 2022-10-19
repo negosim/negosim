@@ -10,7 +10,7 @@ import pandas as pd
 NOTSELECTIONMESSAGE = 'Please select '
 
 
-class StartTournamentButtonSegment_7(AbstractGUISegment):
+class StartTournamentButtonSegment_8(AbstractGUISegment):
 
     def get_widget(self) -> tuple:
         self.__first_clicked = False
@@ -20,7 +20,7 @@ class StartTournamentButtonSegment_7(AbstractGUISegment):
         return btn_start,
 
     def get_name(self):
-        return '7'
+        return '8'
 
     def start_tournament(self):
 
@@ -43,7 +43,7 @@ class StartTournamentButtonSegment_7(AbstractGUISegment):
         if selected_tournament_analysis == 'Select a Tournament Analysis':
             message += 'Tournament Analysis, '
 
-        print(row_widgets)
+        # print(row_widgets)
         listbox_domain = row_widgets[3][1]  # widget in row=3 and col=1
         domain_indexes = listbox_domain.curselection()
         selected_domains = []
@@ -54,7 +54,7 @@ class StartTournamentButtonSegment_7(AbstractGUISegment):
             message += 'Domain(s), '
 
         agent1_names = []
-        listbox_agent1 = row_widgets[4][1]  # widget in row=3 and col=1
+        listbox_agent1 = row_widgets[5][1]  # widget in row=3 and col=1
         agent1_indexes = listbox_agent1.curselection()
         if len(agent1_indexes) > 0:
             for agent1_index in agent1_indexes:
@@ -64,7 +64,7 @@ class StartTournamentButtonSegment_7(AbstractGUISegment):
             message += 'Agent(s), '
 
         opponent_names = []
-        listbox_opponent = row_widgets[4][4]  # widget in row=3 and col=1
+        listbox_opponent = row_widgets[5][4]  # widget in row=3 and col=1
         opponent_indexes = listbox_opponent.curselection()
         if len(opponent_indexes) > 0:
             for opponent_index in opponent_indexes:
@@ -83,6 +83,15 @@ class StartTournamentButtonSegment_7(AbstractGUISegment):
         tournament_repetition_var = self.get_special_StringVar(6, 0)
         tournament_repetition = tournament_repetition_var.get()
 
+        listbox_utility_space = row_widgets[4][1]
+        utility_space_indexes = listbox_utility_space.curselection()
+        selected_utility_spaces = []
+        if len(utility_space_indexes) > 0:
+            for index in utility_space_indexes:
+                selected_utility_spaces.append(listbox_utility_space.get(index))
+        else:
+            message += 'Utility Space(s), '
+
         if message != NOTSELECTIONMESSAGE:
             return messagebox.showerror('Error', message)
 
@@ -94,7 +103,8 @@ class StartTournamentButtonSegment_7(AbstractGUISegment):
                                                         agent_names=agent1_names,
                                                         opponent_names=opponent_names,
                                                         domain_names=selected_domains,
-                                                        tournament_repetition=tournament_repetition)
+                                                        tournament_repetition=tournament_repetition,
+                                                        utility_space_names=selected_utility_spaces)
 
         self.bilateral_tournament.start_tournament()
 

@@ -2,7 +2,7 @@ from core.ProtocolInterface import ProtocolInterface
 from abc import abstractmethod
 from core.TimeLine import TimeLine
 from core.NegoTable import NegoTable
-from core.NegoPartyInterface import NegoPartyInterface
+from core.AbstractNegoParty import AbstractNegoParty
 from core.AbstractAnalysisMan import AbstractAnalysisMan
 
 

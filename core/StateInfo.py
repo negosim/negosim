@@ -1,6 +1,6 @@
 from core.TimeLine import TimeLine
 from core.Offer import Offer
-from core.NegoPartyInterface import NegoPartyInterface
+from core.AbstractNegoParty import AbstractNegoParty
 
 
 class StateInfo:

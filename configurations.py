@@ -4,6 +4,7 @@ WIDTH_GUI = 300
 AGENTS_PACKAGE_NAME = 'Agents'
 
 PARTY_PATH = '../Agents'
+UTILITY_SPACE_PATH = '../utility_spaces'
 DOMAIN_PATH = '../Domains'
 USER_PATH = '../users'
 PROTOCOL_PATH = '../protocols'

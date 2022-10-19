@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock
-from core.UtilitySpace import UtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.Preference import Preference
 from core.Bid import Bid
 
@@ -44,7 +44,7 @@ class TestUtilitySpace(unittest.TestCase):
         preference.get_issue_weight = Mock(side_effect=get_issue_weight_func)
         preference.get_issue_item_value = Mock(side_effect=get_issue_item_value_func)
 
-        utility_space = UtilitySpace(preference)
+        utility_space = AdditiveUtilitySpace(preference)
         self.assertEqual(1, utility_space.get_utility(bid))
 
 

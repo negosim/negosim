@@ -1,7 +1,6 @@
-from core.UtilitySpace import UtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 import itertools
 from core.Bid import Bid
-import operator
 
 
 class BidSpace:
@@ -15,7 +14,7 @@ class BidSpace:
 
     def __init__(self, preference):
         self.__preference = preference
-        self.__utility_space = UtilitySpace(preference)
+        self.__utility_space = AdditiveUtilitySpace(preference)
 
     # ////////////////////////////////////////////////////////////////////////////
     def get_number_of_bids(self):

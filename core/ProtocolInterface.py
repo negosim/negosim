@@ -9,7 +9,7 @@
 #######################################################
 from core.TimeLine import TimeLine
 from abc import ABC, abstractmethod
-import core.NegoPartyInterface as NegoPartyInterface
+import core.AbstractNegoParty as AbstractNegoParty
 
 
 class ProtocolInterface(ABC):
@@ -45,7 +45,7 @@ class ProtocolInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_parties(self) -> NegoPartyInterface:
+    def get_parties(self) -> AbstractNegoParty:
         raise NotImplementedError()
 
     @abstractmethod

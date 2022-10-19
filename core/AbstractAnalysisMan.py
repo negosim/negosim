@@ -7,7 +7,7 @@ from core.UserModelInterface import UserModelInterface
 from core.Preference import Preference
 from core.OpponentModelInterface import OpponentModelInterface
 from core.NegoTable import NegoTable
-from core.NegoPartyInterface import NegoPartyInterface
+from core.AbstractNegoParty import AbstractNegoParty
 
 
 class AbstractAnalysisMan(ABC):

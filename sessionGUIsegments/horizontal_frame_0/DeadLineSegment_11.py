@@ -6,7 +6,7 @@ INITIAL_DEADLINE_TIME = 60
 MAX_DEADLINE_TIME = 3600000
 
 
-class DeadLineSegment_10(AbstractGUISegment):
+class DeadLineSegment_11(AbstractGUISegment):
 
     def get_widget(self) -> tuple:
         my_dict = self.get_current_horizontal_frame_var_dict()
@@ -23,4 +23,4 @@ class DeadLineSegment_10(AbstractGUISegment):
         return label, spinbox_deadline, time_type
 
     def get_name(self):
-        return 10
+        return 11

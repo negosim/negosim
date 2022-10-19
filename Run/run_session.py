@@ -11,5 +11,7 @@ bilateral_session = BilateralSession(protocol_name='SOAP',
                                      second_preference='Jobs_util2.xml',
                                      party1_name='Boulware',
                                      party2_name='Conceder',
-                                     domain_name='Job')
+                                     domain_name='Job',
+                                     utility_space_name1='AdditiveUtilitySpace',
+                                     utility_space_name2='AdditiveUtilitySpace')
 bilateral_session.start_session()

@@ -1,6 +1,5 @@
 from core.Offer import Offer
 from core.Preference import Preference
-from core.UtilitySpace import UtilitySpace
 from core.AbstractUser import AbstractUser
 from core.BidSpace import BidSpace
 import math
@@ -62,7 +61,7 @@ class DefaultUser(AbstractUser):
         """This method should returns exact utility of an offer
         but DefaultUser instead of returning exact utility returns -1.0
         """
-        # utility_space = UtilitySpace(self.preference)
+        # utility_space = AdditiveUtilitySpace(self.preference)
         # return utility_space.get_utility(offer.get_bid())
         return -1.0
 

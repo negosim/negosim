@@ -3,7 +3,7 @@ from GUI.AbstractGUISegment import AbstractGUISegment
 INITIAL_DEADLINE_TIME = 1
 MAX_DEADLINE_TIME = 100
 
-class RepetitionSegment_6(AbstractGUISegment):
+class RepetitionSegment_7(AbstractGUISegment):
 
     def get_widget(self) -> tuple:
         frame = self.get_frame()
@@ -16,4 +16,4 @@ class RepetitionSegment_6(AbstractGUISegment):
         return label1, spinbox_deadline, label2
 
     def get_name(self):
-        return 6
+        return 7

@@ -1,5 +1,5 @@
 from core.Preference import Preference
-from core.UtilitySpace import UtilitySpace
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.AbstractUserModel import AbstractUserModel
 from core.Offer import Offer
 
@@ -20,7 +20,7 @@ class DefaultUserModel(AbstractUserModel):
         return self.generate_preference(ranked_bids=initial_ranked_bids)
 
     def get_utility(self, offer: Offer) -> float:
-        utility_space: UtilitySpace = UtilitySpace(preference=self.initial_preference)
+        utility_space: AdditiveUtilitySpace = AdditiveUtilitySpace(preference=self.initial_preference)
         return utility_space.get_utility_distinct(offer=offer)
 
     def update_preference(self, ranked_bids: list) -> Preference:
