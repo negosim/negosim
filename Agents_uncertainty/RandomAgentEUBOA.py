@@ -7,14 +7,14 @@ from core.ProtocolInterface import ProtocolInterface
 from acceptance_strategies.ACNext import ACNext
 from core.UserInterface import UserInterface
 from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
-from core.Preference import Preference
+from core.AbstractUtilitySpace import AbstractUtilitySpace
 from core.Bid import Bid
 
 
 class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
 
-    def __init__(self, initial_preference: Preference, user: UserInterface):
-        super(RandomAgentEUBOA, self).__init__(initial_preference=initial_preference, user=user)
+    def __init__(self, utility_space: AbstractUtilitySpace, user: UserInterface):
+        super(RandomAgentEUBOA, self).__init__(utility_space=utility_space, user=user)
         self.__user = self.get_user()
         self.initial_preference_user_model = self.get_initial_preference()
         self.initial_preference_opponent_model = self.initial_preference_user_model.__copy__()
@@ -73,7 +73,6 @@ class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
         :return: user model
         """
         return self.__user_model
-
 
     def get_preference(self):
         return self.get_user_model().get_preference()

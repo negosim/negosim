@@ -5,14 +5,15 @@ from core.Bid import Bid
 from core.BidSpace import BidSpace
 from core.UserInterface import UserInterface
 import random
+from core.AbstractUtilitySpace import AbstractUtilitySpace
 
 
 class AbstractNegoPartyUncertainCondition(ABC):
 
-    def __init__(self, initial_preference: Preference, user: UserInterface):
-        self.__initial_preference = initial_preference
+    def __init__(self, utility_space: AbstractUtilitySpace, user: UserInterface):
+        self.__utility_space = utility_space
+        self.__initial_preference = self.__utility_space.get_preference()
         self.__user = user
-        self.__utility_space = AdditiveUtilitySpace(self.__initial_preference)
         self.__bid_space = BidSpace(self.__initial_preference)
 
     def get_user(self) -> UserInterface:

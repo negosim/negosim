@@ -41,7 +41,9 @@ class AbstractNegoParty(ABC):
     @abstractmethod
     def send_bid(self, protocol: ProtocolInterface) -> Bid:
         """
-        send new bid, send same bid refer to accept, send {} refer to end negotiation
+        send new bid,
+        send same bid refer to accept,
+        send an instance of EndNegotiation refer to end negotiation
         :return: Bid
         """
         raise NotImplementedError()

@@ -8,6 +8,7 @@ from core.TimeLine import TimeLine
 from core.NegoTable import NegoTable
 from core.StateInfo import StateInfo
 from analysis.Analysis_man0 import Analysis_man0
+from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 
 
 class MyTestCase(unittest.TestCase):
@@ -15,11 +16,13 @@ class MyTestCase(unittest.TestCase):
     def setUp(self) -> None:
         preference1 = Preference('laptop', 'laptop_buyer_utility.xml')
         initial_preference_1 = preference1.get_initial_preference()
+        utility_space1 = AdditiveUtilitySpace(preference=initial_preference_1)
         preference2 = Preference('laptop', 'laptop_seller_utility.xml')
+        utility_space2 = AdditiveUtilitySpace(preference=preference2)
         user = DefaultUser(preference=preference1)
         self.time_line = TimeLine(1.0, 's')
-        self.party1 = RandomAgentEUBOA(initial_preference=initial_preference_1, user=user)
-        party2 = RandomParty1(preference2)
+        self.party1 = RandomAgentEUBOA(utility_space=utility_space1, user=user)
+        party2 = RandomParty1(utility_space2)
         parties = (self.party1, party2)
         state_info = StateInfo(self.time_line, [], {})
         nego_table = NegoTable(parties, state_info)

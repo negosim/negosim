@@ -10,6 +10,7 @@
 from core.Offer import Offer
 from core.StateInfo import StateInfo
 from core.AbstractNegoParty import AbstractNegoParty
+from core.AbstractNegoPartyUncertainCondition import AbstractNegoPartyUncertainCondition
 
 
 class NegoTable:
@@ -25,7 +26,7 @@ class NegoTable:
         if not isinstance(parties, tuple):
             raise TypeError('parties argument must be the tuple (tuple of NegoPartyInterface)!')
         for party in parties:
-            if not isinstance(party, AbstractNegoParty):
+            if not (isinstance(party, AbstractNegoParty) or isinstance(party, AbstractNegoPartyUncertainCondition)):
                 raise TypeError('parties argument must be the tuple of NegoPartyInterface!')
         if not isinstance(state_info, StateInfo):
             raise TypeError('state_info argument must be instance of StateInfo!')
@@ -46,7 +47,7 @@ class NegoTable:
         return self.__parties
 
     def add_offer(self, party: AbstractNegoParty, offer: Offer):
-        if not isinstance(party, AbstractNegoParty):
+        if not (isinstance(party, AbstractNegoParty) or isinstance(party, AbstractNegoPartyUncertainCondition)):
             raise TypeError('party argument must be an instance of NegoPartyInterface')
         if not isinstance(offer, Offer):
             raise TypeError('offer argument must be an instance of Offer')
