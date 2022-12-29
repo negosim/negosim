@@ -2,10 +2,10 @@ from core.Preference import Preference
 from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.AbstractUserModel import AbstractUserModel
 from core.Offer import Offer
+from core.Bid import Bid
 
 
 class DefaultUserModel(AbstractUserModel):
-
     """
     this class implements very simple user model
     which adds 1 to a value of item in spacial issue
@@ -19,9 +19,13 @@ class DefaultUserModel(AbstractUserModel):
         self.initial_preference = self.get_initial_preference()
         return self.generate_preference(ranked_bids=initial_ranked_bids)
 
-    def get_utility(self, offer: Offer) -> float:
+    def get_utility_distinct(self, offer: Offer) -> float:
         utility_space: AdditiveUtilitySpace = AdditiveUtilitySpace(preference=self.initial_preference)
         return utility_space.get_utility_distinct(offer=offer)
+
+    def get_utility(self, bid: Bid) -> float:
+        utility_space: AdditiveUtilitySpace = AdditiveUtilitySpace(preference=self.initial_preference)
+        return utility_space.get_utility(bid)
 
     def update_preference(self, ranked_bids: list) -> Preference:
         return self.generate_preference(ranked_bids=ranked_bids)
@@ -55,9 +59,12 @@ class DefaultUserModel(AbstractUserModel):
         """
         num_of_bids = len(ranked_bids)
         for i in range(num_of_bids):
-            bid = ranked_bids[-1*(i+1)]
+            bid = ranked_bids[-1 * (i + 1)]
             for issue, item in bid.get_issues_items().items():
                 old_value, _ = self.initial_preference.get_issue_item_value(issue=issue, item=item)
                 new_value = old_value + 1
                 self.initial_preference.update_value(new_value=new_value, issue=issue, item=item)
         return self.initial_preference
+
+    def get_name(self) -> str:
+        return "DefaultUserModel"

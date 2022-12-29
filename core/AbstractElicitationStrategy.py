@@ -59,6 +59,14 @@ class AbstractElicitationStrategy(ElicitationStrategyInterface):
         """
         raise NotImplementedError()
 
+    @abstractmethod
+    def get_name(self) -> str:
+        """
+        this method must return the name of elicitation strategy
+        :return: the name of elicitation strategy
+        """
+        raise NotImplementedError()
+
     def ask_offer_rank_from_user(self, offer: Offer) -> list:
         """This method returns a list of ranked bids
         """

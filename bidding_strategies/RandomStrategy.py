@@ -7,3 +7,6 @@ class RandomStrategy(AbstractBiddingStrategy):
 
     def send_bid(self, timeline: TimeLine) -> Bid:
         return self.generate_random_bid()
+
+    def get_name(self) -> str:
+        return "RandomStrategy"

@@ -30,7 +30,9 @@ class DefaultElicitationStrategy(AbstractElicitationStrategy, ABC):
                 ranked_bids = self.get_ranked_bids()
                 user_model.update_preference(ranked_bids=ranked_bids)
 
-            offers_from_elicitation_strategy = self.simple_elicitation_strategy(user=self.get_user(), user_model=self.get_user_model(), state_info=state_info)
+            offers_from_elicitation_strategy = self.simple_elicitation_strategy(user=self.get_user(),
+                                                                                user_model=self.get_user_model(),
+                                                                                state_info=state_info)
             for offer in offers_from_elicitation_strategy:
                 self.ask_offer_rank_from_user(offer=offer)
             ranked_bids = self.get_ranked_bids()
@@ -53,3 +55,6 @@ class DefaultElicitationStrategy(AbstractElicitationStrategy, ABC):
                 time = state_info.get_time_line().get_time()
                 random_offer = Offer(random_bid, time)
                 return [random_offer, ]
+
+    def get_name(self) -> str:
+        return "DefaultElicitationStrategy"

@@ -25,9 +25,9 @@ class EUBOAParty(AbstractNegoPartyUncertainCondition, ABC):
         self.__user_model = CreateObjectByPath.get_object(USER_MODEL_PATH, user_model, self.initial_preference_user_model)
         self.__elicitation_strategy = CreateObjectByPath.get_object(ELICITATION_STRATEGIES_PATH, elicitation_strategy, self.__user, self.__user_model)
         self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model, self.initial_preference_opponent_model)
-        self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, self.initial_preference_user_model)
+        self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, None, self.__user_model)
 
-        self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, AdditiveUtilitySpace(self.initial_preference_user_model))
+        self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, None, self.__user_model)
 
 
 
