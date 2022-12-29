@@ -1,5 +1,5 @@
 import unittest
-from Agents_uncertainty.RandomAgentEUBOA import RandomAgentEUBOA
+from Agents_uncertainty.RandomAgentEUBOA2 import RandomAgentEUBOA2
 from Agents.RandomParty1 import RandomParty1
 from users.DefaultUser import DefaultUser
 from core.Preference import Preference
@@ -20,8 +20,8 @@ class MyTestCase(unittest.TestCase):
         preference2 = Preference('laptop', 'laptop_seller_utility.xml')
         utility_space2 = AdditiveUtilitySpace(preference=preference2)
         user = DefaultUser(preference=preference1)
-        self.time_line = TimeLine(1.0, 's')
-        self.party1 = RandomAgentEUBOA(utility_space=utility_space1, user=user)
+        self.time_line = TimeLine(5.0, 's')
+        self.party1 = RandomAgentEUBOA2(utility_space=utility_space1, user=user)
         party2 = RandomParty1(utility_space2)
         parties = (self.party1, party2)
         state_info = StateInfo(self.time_line, [], {})
