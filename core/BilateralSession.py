@@ -11,7 +11,8 @@ class BilateralSession:
     def __init__(self, protocol_name: str, analysis_man_name: str, deadline, deadline_type: str,
                  first_preference, second_preference,
                  party1_name: str, party2_name: str, domain_name: str,
-                 utility_space_name1: str, utility_space_name2: str = None):
+                 utility_space_name1: str, utility_space_name2: str = None,
+                 user1: str = None, user2: str = None):
         """
 
         :param protocol_name:
@@ -23,6 +24,8 @@ class BilateralSession:
         :param party1_name:
         :param party2_name:
         :param domain_name:
+        :param user1:
+        :param user2:
         """
 
         if not isinstance(protocol_name, str):
@@ -47,25 +50,68 @@ class BilateralSession:
         if not isinstance(utility_space_name1, str):
             raise TypeError('utility_space_name1 must be a string')
         if not isinstance(utility_space_name2, str) and utility_space_name2 is not None:
-            raise TypeError('utility_space_name2 must be a string')
+            raise TypeError('utility_space_name2 must be a string or None')
+        if not isinstance(user1, str) and user1 is not None:
+            raise TypeError('user1 must be a string or None')
+        if not isinstance(user2, str) and user2 is not None:
+            raise TypeError('user2 must be a string or None')
 
         try:
             if isinstance(first_preference, str):
                 self.preference1 = Preference(domain_name, first_preference)
             else:
                 self.preference1 = first_preference
-            utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference1)
-            self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, utility_space1)
+
+
+            # if user1 is not None:
+            #     self.__User1 = CreateObjectByPath.get_object(USER_PATH, user1, self.preference1)
+            #     self.__initial_preference1 = self.preference1.get_initial_preference()
+            #     self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, self.__initial_preference1, self.__User1)
+            # else:
+            #     utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference1)
+            #     self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, utility_space1)
+
+            try:
+                utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference1)
+                self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, utility_space1)
+            except:
+                if user1 is None:
+                    raise ValueError("You selected first agent with uncertainty but there is no User!")
+                self.__User1 = CreateObjectByPath.get_object(USER_PATH, user1, self.preference1)
+                self.__initial_preference1 = self.preference1.get_initial_preference()
+                self.party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, self.__initial_preference1, self.__User1)
+
 
             if isinstance(second_preference, str):
                 self.preference2 = Preference(domain_name, second_preference)
             else:
                 self.preference2 = second_preference
-            if utility_space_name2 is None:
-                utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference2)
-            else:
-                utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name2, self.preference2)
-            self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, utility_space2)
+
+            # if user2 is not None:
+            #     self.__User2 = CreateObjectByPath.get_object(USER_PATH, user2, self.preference2)
+            #     self.__initial_preference2 = self.preference2.get_initial_preference()
+            #     self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, self.__initial_preference2, self.__User2)
+            # else:
+            #     if utility_space_name2 is None:
+            #         utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference2)
+            #     else:
+            #         utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name2, self.preference2)
+            #     self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, utility_space2)
+
+
+
+            try:
+                if utility_space_name2 is None:
+                    utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name1, self.preference2)
+                else:
+                    utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space_name2, self.preference2)
+                self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, utility_space2)
+            except:
+                if user2 is None:
+                    raise ValueError("You selected second agent with uncertainty but there is no User!")
+                self.__User2 = CreateObjectByPath.get_object(USER_PATH, user2, self.preference2)
+                self.__initial_preference2 = self.preference2.get_initial_preference()
+                self.party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, self.__initial_preference2, self.__User2)
 
             time_line = TimeLine(float(deadline), deadline_type)
             state_info = StateInfo(time_line=time_line, my_agent_offers=[], opponent_offers={})

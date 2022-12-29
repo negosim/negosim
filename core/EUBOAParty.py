@@ -5,19 +5,19 @@ from core.AbstractUtilitySpace import AbstractUtilitySpace
 from core.UserInterface import UserInterface
 import CreateObjectByPath
 from configurations import *
-from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
+from core.Preference import Preference
 
 
 class EUBOAParty(AbstractNegoPartyUncertainCondition, ABC):
 
-    def __init__(self, utility_space: AbstractUtilitySpace, user: UserInterface,
+    def __init__(self, preference: Preference, user: UserInterface,
                  user_model: str,
                  elicitation_strategy: str,
                  opponent_model: str,
                  bidding_strategy: str,
                  acceptance_strategy: str):
 
-        super(EUBOAParty, self).__init__(utility_space=utility_space, user=user)
+        super(EUBOAParty, self).__init__(preference=preference, user=user)
         self.__user = self.get_user()
         self.initial_preference_user_model = self.get_initial_preference()
         self.initial_preference_opponent_model = self.initial_preference_user_model.__copy__()
