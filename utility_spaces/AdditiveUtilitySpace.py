@@ -19,7 +19,7 @@ class AdditiveUtilitySpace(AbstractUtilitySpace):
     This class must be extended later
     """
 
-    def __init__(self, preference: Preference):
+    def __init__(self, preference: Preference = None):
         super().__init__(preference)
 
     def get_utility(self, bid: Bid) -> float:

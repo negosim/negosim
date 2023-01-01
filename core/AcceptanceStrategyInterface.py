@@ -11,6 +11,8 @@ from core.Offer import Offer
 from abc import ABC, abstractmethod
 from core.Bid import Bid
 from core.OpponentModelInterface import OpponentModelInterface
+from core.AbstractUtilitySpace import AbstractUtilitySpace
+from core.UserModelInterface import UserModelInterface
 
 
 class AcceptanceStrategyInterface(ABC):
@@ -20,4 +22,20 @@ class AcceptanceStrategyInterface(ABC):
         """this method returns 0 refer to reject opponent's offer or 1 refer to accept
         opponent offer.
         """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_name(self) -> str:
+        """
+        this method must return the name of acceptance strategy
+        :return: name of acceptance strategy
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_utility_space(self, utility_space: AbstractUtilitySpace):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_user_model(self, user_model: UserModelInterface):
         raise NotImplementedError()

@@ -7,12 +7,22 @@ from core.Bid import Bid
 
 class AbstractUserModel(UserModelInterface):
 
-    def __init__(self, initial_preference: Preference):
-        if not isinstance(initial_preference, Preference):
-            raise TypeError('initial_preference must be instance of Preference class')
+    def __init__(self, initial_preference: Preference = None):
+        if not isinstance(initial_preference, Preference) and initial_preference is not None:
+            raise TypeError('initial_preference must be instance of Preference class or None')
+        # if initial_preference is not None:
         self.__initial_preference = initial_preference
         self.__preference = initial_preference
         self.__must_be_asked_offers = []  # user model can ask one or more than one bid
+
+    def set_initial_preference(self, initial_preference: Preference):
+        if not isinstance(initial_preference, Preference):
+            raise TypeError('initial_preference must be instance of Preference class')
+        # if self.__initial_preference is None:
+        self.__initial_preference = initial_preference
+        self.__preference = initial_preference
+        # else:
+        #     raise ValueError("initial_preference was set before!")
 
     @abstractmethod
     def generate_initial_preference(self, initial_ranked_bids) -> Preference:

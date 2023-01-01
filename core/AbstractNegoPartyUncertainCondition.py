@@ -10,23 +10,69 @@ from core.Preference import Preference
 
 class AbstractNegoPartyUncertainCondition(ABC):
 
-    def __init__(self, preference: Preference, user: UserInterface):
+    def __init__(self, preference: Preference = None, user: UserInterface = None):
+        """
+
+        :param preference: initial preferences with equal weights and values
+        :param user:
+        """
         self.__preference = preference
-        self.__initial_preference = self.__preference.__copy__()
+
+        self.__initial_preference = None
+        if preference is not None:
+            self.__initial_preference = self.__preference.__copy__()
+
         self.__user = user
-        self.__bid_space = BidSpace(self.__initial_preference)
+
+        self.__bid_space = None
+        if preference is not None:
+            self.__bid_space = BidSpace(self.__initial_preference)
+
+    def get_p(self):
+        """
+        an uncertain agent needs an initial preference
+        (an initial preference is the preference with weights equal to 1/n and evaluation of value is equal to 1)
+        this method returns None if the initial preference was not set and returns the initial preference if it was set
+        :return: None if the initial preference was not set | returns the initial preference if it was set
+        """
+        return self.__preference
+
+    def set_preference(self, preference: Preference):
+        if self.__preference is None:
+            self.__preference = preference
+            self.__initial_preference = self.__preference.__copy__()
+
+    def set_user(self, user):
+        if self.__user is None:
+            self.__user = user
+        else:
+            raise ValueError("user was not set!")
 
     def get_user(self) -> UserInterface:
         return self.__user
 
     def get_initial_preference(self):
-        return self.__initial_preference
+        if self.__initial_preference is not None:
+            return self.__initial_preference
+        else:
+            if self.__preference is not None:
+                self.__initial_preference = self.__preference.__copy__()
+                return self.__initial_preference
+            else:
+                raise ValueError("the preference was not set!")
 
     # def get_utility_space(self):
     #     return self.__utility_space
 
     def get_bid_space(self) -> BidSpace:
-        return self.__bid_space
+        if self.__bid_space is not None:
+            return self.__bid_space
+        else:
+            if self.__preference is not None:
+                self.__bid_space = BidSpace(self.__initial_preference)
+                return self.__bid_space
+            else:
+                raise ValueError("the preference was not set!")
 
     # def get_opponent_model(self):
     #     return self.opponent_model

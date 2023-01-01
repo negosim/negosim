@@ -10,6 +10,7 @@
 from core.Preference import Preference
 from abc import ABC, abstractmethod
 from core.Offer import Offer
+from core.Bid import Bid
 
 
 class UserModelInterface(ABC):
@@ -19,7 +20,11 @@ class UserModelInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_utility(self, offer: Offer) -> float:
+    def get_utility(self, bid: Bid) -> float:
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_utility_distinct(self, offer: Offer) -> float:
         raise NotImplementedError()
 
     @abstractmethod
@@ -36,4 +41,16 @@ class UserModelInterface(ABC):
 
     @abstractmethod
     def get_preference(self):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_name(self) -> str:
+        """
+        this method must return the name of user_model
+        :return: the name of user_model
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_initial_preference(self, initial_preference: Preference):
         raise NotImplementedError()

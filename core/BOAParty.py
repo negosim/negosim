@@ -16,12 +16,9 @@ class BOAParty(AbstractNegoParty):
 
         preference = utility_space.get_preference()
         self.initial_preference_opponent_model = preference.get_initial_preference()
-        self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model,
-                                                              self.initial_preference_opponent_model)
-        self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy,
-                                                                self.__opponent_model, utility_space, None)
-        self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy,
-                                                                   utility_space, None)
+        self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model, self.initial_preference_opponent_model)
+        self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, utility_space, None)
+        self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, utility_space, None)
 
     def send_bid(self, protocol) -> Bid:
         """

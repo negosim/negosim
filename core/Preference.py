@@ -32,8 +32,8 @@ class Preference:
             'Brand': [0.45, {'Lenovo': 10, 'Assus': 20, 'Mac': 30}],
             'Monitor': [0.18, {'15': 30, '10': 25, '11': 20}],
             'HDD': [0.38, {'1T': 25, '2T': 32, '3T': 35}],
-            'discount factor = 1,
-            'reservation value = 0
+            'discount_factor = 1,
+            'reservation = 0
         }
         :param domain_name:
         :param preference_name:

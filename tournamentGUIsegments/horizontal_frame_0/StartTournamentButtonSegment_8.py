@@ -95,6 +95,11 @@ class StartTournamentButtonSegment_8(AbstractGUISegment):
         if message != NOTSELECTIONMESSAGE:
             return messagebox.showerror('Error', message)
 
+        if len(agent1_indexes) == 1 and len(opponent_indexes) == 1:
+            if agent1_indexes == opponent_indexes:
+                return messagebox.showerror('Error', 'you have selected one agent and one opponent which are the '
+                                                     'same! (in a tournamen a party does not negotiate against itself)')
+
         self.bilateral_tournament = BilateralTournament(protocol_name=selected_protocol,
                                                         analysis_man_name=selected_analysis,
                                                         Tournament_analysis_name=selected_tournament_analysis,

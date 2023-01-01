@@ -8,10 +8,11 @@ from core.UserModelInterface import UserModelInterface
 
 class AbstractElicitationStrategy(ElicitationStrategyInterface):
 
-    def __init__(self, user: UserInterface, user_model: UserModelInterface):
-        if not isinstance(user, UserInterface):
+    def __init__(self, user: UserInterface = None, user_model: UserModelInterface = None):
+
+        if not isinstance(user, UserInterface) and user is not None:
             raise TypeError('user argument must be an instance of UserInterface')
-        if not isinstance(user_model, UserModelInterface):
+        if not isinstance(user_model, UserModelInterface) and user_model is not None:
             raise TypeError('user_model argument must be an instance of UserModelInterface')
         self.__user = user
         self.__user_model = user_model
@@ -20,10 +21,21 @@ class AbstractElicitationStrategy(ElicitationStrategyInterface):
         self.__initial_preference = None
         self.__preference = None
 
-    # def set_user_model(self, user_model: UserModelInterface):
-    #     if not isinstance(user_model, UserModelInterface):
-    #         raise TypeError('user_model argument must be an instance of UserModelInterface')
-    #     self.__user_model = user_model
+    def set_user_model(self, user_model: UserModelInterface):
+        if not isinstance(user_model, UserModelInterface):
+            raise TypeError('user_model argument must be an instance of UserModelInterface')
+        if self.__user_model is None:
+            self.__user_model = user_model
+        else:
+            raise ValueError("user_model was set before!")
+
+    def set_user(self, user: UserInterface):
+        if not isinstance(user, UserInterface):
+            raise TypeError('user_model argument must be an instance of UserModelInterface')
+        # if self.__user is None:
+        self.__user = user
+        # else:
+        #     raise ValueError("user was set before!")
 
     def get_user_model(self) -> UserModelInterface:
         return self.__user_model

@@ -10,6 +10,8 @@
 from core.Offer import Offer
 from abc import ABC, abstractmethod
 from core.StateInfo import StateInfo
+from core.UserModelInterface import UserModelInterface
+from core.UserInterface import UserInterface
 
 
 class ElicitationStrategyInterface(ABC):
@@ -39,4 +41,21 @@ class ElicitationStrategyInterface(ABC):
 
     @abstractmethod
     def ask_offer_utility_from_user(self, offer: Offer) -> float:
+        raise NotImplementedError()
+
+
+    @abstractmethod
+    def get_name(self) -> str:
+        """
+        this method must return the name of elicitation strategy
+        :return: the name of elicitation strategy
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_user_model(self, user_model: UserModelInterface):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_user(self, user: UserInterface):
         raise NotImplementedError()

@@ -72,4 +72,8 @@ highest cost." value="Catering" cost="250.0" evaluation="10">
 <weight index="6" value="0.04566997584585289"> 
 </weight> 
 </objective> 
-</utility_space> 
+<discount_factor value="1.0">
+</discount_factor>
+<reservation value="0.0">
+</reservation>
+</utility_space>

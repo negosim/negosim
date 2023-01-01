@@ -12,6 +12,15 @@ class BilateralTournament:
                  deadline: str, deadline_type: str, agent_names: list, opponent_names: list, domain_names: list,
                  tournament_repetition: str, utility_space_names: list, users: list = None):
 
+        sample_preference_data_structure = {
+            'Brand': [0.45, {'Lenovo': 10, 'Assus': 20, 'Mac': 30}],
+            'Monitor': [0.18, {'15': 30, '10': 25, '11': 20}],
+            'HDD': [0.38, {'1T': 25, '2T': 32, '3T': 35}],
+            'discount_factor': 1,
+            'reservation': 0
+        }
+        self.__test_preference1 = Preference(domain_name='laptop', preference_data_structure=sample_preference_data_structure)
+
         self.__users = users
         self.__domain_names = domain_names
         self.__agent_names = agent_names
@@ -38,7 +47,7 @@ class BilateralTournament:
                 for preference_permutations in permutations(preferences_of_domain, 2):
                     for party1_name in self.__agent_names:
                         for party2_name in self.__opponent_names:
-                            if party1_name != party2_name:
+                            if party1_name != party2_name: # this line of code does not let two same agents negotiate each other
                                 # for utility_space1 in self.__utility_space_names:
                                 count_of_utility_spaces = len(self.__utility_space_names)
                                 for i in range(count_of_utility_spaces):
@@ -48,8 +57,7 @@ class BilateralTournament:
 
                                         uncertainty_bool_party1 = False
                                         try:
-                                            test_preference1 = Preference(domain_name='laptop', xml_file_name='laptop_buyer_utility.xml')
-                                            test_utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space1, test_preference1)
+                                            test_utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space1, self.__test_preference1)
                                             test_party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, test_utility_space1)
                                             uncertainty_bool_party1 = False
                                         except:
@@ -59,8 +67,7 @@ class BilateralTournament:
 
                                         uncertainty_bool_party2 = False
                                         try:
-                                            test_preference2 = Preference(domain_name='laptop', xml_file_name='laptop_buyer_utility.xml')
-                                            test_utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space2, test_preference2)
+                                            test_utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space2, self.__test_preference1)
                                             test_party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, test_utility_space2)
                                             uncertainty_bool_party2 = False
                                         except:

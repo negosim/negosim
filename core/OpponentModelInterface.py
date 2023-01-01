@@ -25,3 +25,15 @@ class OpponentModelInterface(ABC):
     @abstractmethod
     def update_preference(self, offer: Offer) -> Preference:
         pass
+
+    @abstractmethod
+    def get_name(self) -> str:
+        """
+        This method must return the name of opponent model
+        :return: the name of opponent model
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_preference(self, preference: Preference):
+        raise NotImplementedError()

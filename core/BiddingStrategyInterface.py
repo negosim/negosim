@@ -10,10 +10,28 @@
 from core.Bid import Bid
 from abc import ABC, abstractmethod
 from core.TimeLine import TimeLine
+from core.UserModelInterface import UserModelInterface
+from core.AbstractUtilitySpace import AbstractUtilitySpace
 
 
 class BiddingStrategyInterface(ABC):
 
     @abstractmethod
     def send_bid(self, timeline: TimeLine) -> Bid:
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_name(self) -> str:
+        """
+        This method must return the name of bidding strategy
+        :return: the name of bidding strategy
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_utility_space(self, utility_space: AbstractUtilitySpace):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def set_user_model(self, user_model: UserModelInterface):
         raise NotImplementedError()
