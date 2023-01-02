@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.UserModelInterface import UserModelInterface
 from core.Preference import Preference
-from core.OpponentModelInterface import OpponentModelInterface
+from core.AbstractNegoPartyUncertainCondition import AbstractNegoPartyUncertainCondition
 from core.NegoTable import NegoTable
 from core.AbstractNegoParty import AbstractNegoParty
 
@@ -40,10 +40,37 @@ class AbstractAnalysisMan(ABC):
         #     raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
 
         self.__nego_table = nego_table
-        self.__party1: NegoPartyInterface = nego_table.get_parties()[0]
-        self.__party2: NegoPartyInterface = nego_table.get_parties()[1]
-        self.__preference_of_party1 = self.__party1.get_preference()
-        self.__preference_of_party2 = self.__party2.get_preference()
+
+        if isinstance(nego_table.get_parties()[0], AbstractNegoParty):
+            self.__party1: AbstractNegoParty = nego_table.get_parties()[0]
+            self.__utility_space_of_party1 = self.__party1.get_utility_space()
+        elif isinstance(nego_table.get_parties()[0], AbstractNegoPartyUncertainCondition):
+            self.__party1: AbstractNegoPartyUncertainCondition = nego_table.get_parties()[0]
+            self.__utility_space_of_party1 = self.__party1.get_user().get_utility_space()
+            if self.__utility_space_of_party1 is None:
+                raise ValueError("This AbstractAnalysisMan was implemented in the way that it analyzes the agent if "
+                                 "the user know the exact utility_space but it seems that the user of Party1 does not "
+                                 "know the exact utility space, please select another analysis_man")
+        else:
+            raise ValueError("This AbstractAnalysisMan can analyze the performance of the agents which are the "
+                             "instance of AbstractNegoParty or AbstractNegoPartyUncertainCondition, it seems the "
+                             "party2 is not an instance of AbstractNegoParty or AbstractNegoPartyUncertainCondition")
+
+        if isinstance(nego_table.get_parties()[1], AbstractNegoParty):
+            self.__party2: AbstractNegoParty = nego_table.get_parties()[1]
+            self.__utility_space_of_party2 = self.__party2.get_utility_space()
+        elif isinstance(nego_table.get_parties()[1], AbstractNegoPartyUncertainCondition):
+            self.__party2: AbstractNegoPartyUncertainCondition = nego_table.get_parties()[1]
+            self.__utility_space_of_party2 = self.__party2.get_user().get_utility_space()
+            if self.__utility_space_of_party2 is None:
+                raise ValueError("This AbstractAnalysisMan was implemented in the way that it analyzes the agent if "
+                                 "the user know the exact utility_space but it seems that the user of Party2 does not "
+                                 "know the exact utility space, please select another analysis_man")
+        else:
+            raise ValueError("This AbstractAnalysisMan can analyze the performance of the agents which are the "
+                             "instance of AbstractNegoParty or AbstractNegoPartyUncertainCondition, it seems the "
+                             "party2 is not an instance of AbstractNegoParty or AbstractNegoPartyUncertainCondition")
+
         self.__opponent_model_party1 = self.__party1.get_opponent_model()
         self.__opponent_model_party2 = self.__party2.get_opponent_model()
         self.__user_model_party1 = self.__party1.get_user_model()
@@ -61,10 +88,16 @@ class AbstractAnalysisMan(ABC):
         return self.__nego_table
 
     def get_preference_of_party1(self):
-        return self.__preference_of_party1
+        return self.__utility_space_of_party1.get_preference()
 
     def get_preference_of_party2(self):
-        return self.__preference_of_party2
+        return self.__utility_space_of_party2.get_preference()
+
+    def get_utility_space_of_party1(self):
+        return self.__utility_space_of_party1
+
+    def get_utility_space_of_party2(self):
+        return self.__utility_space_of_party2
 
     def get_opponent_model_party1(self):
         return self.__opponent_model_party1

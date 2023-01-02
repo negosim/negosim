@@ -33,10 +33,10 @@ class AbstractAcceptanceStrategy(AcceptanceStrategyInterface):
     def set_utility_space(self, utility_space: AbstractUtilitySpace):
         if not isinstance(utility_space, AbstractUtilitySpace):
             raise TypeError("utility_space must be an instance of AbstractUtilitySpace")
-        if self.__utility_space is None and self.__user_model is None:
-            self.__utility_space = utility_space
-        else:
-            raise ValueError("One of the utility_space or user_model was set before!")
+        # if self.__utility_space is None and self.__user_model is None:
+        self.__utility_space = utility_space
+        # else:
+        #     raise ValueError("One of the utility_space or user_model was set before!")
 
     def set_user_model(self, user_model):
         if not isinstance(user_model, UserModelInterface):

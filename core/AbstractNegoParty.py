@@ -12,6 +12,9 @@ class AbstractNegoParty(ABC):
     def __init__(self, utility_space: AbstractUtilitySpace = None):
         if not isinstance(utility_space, AbstractUtilitySpace) and utility_space is not None:
             raise TypeError("utility_space must be an instance of AbstractUtilitySpace or None")
+        self.__preference = None
+        self.__utility_space = None
+        self.__bid_space = None
         if utility_space is not None:
             self.__preference = utility_space.get_preference()
             self.__utility_space = utility_space

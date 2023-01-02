@@ -5,7 +5,9 @@ from controller import Controller
 from configurations import *
 from core.Preference import Preference
 from core.CreateAllAgentsUsingEUBOAComponents import CreateAllAgentsUsingEUBOAComponents
+from core.CreateAllAgentsUsingBOAComponents import CreateAllAgentsUsingBOAComponents
 from core.EUBOAParty import EUBOAParty
+from core.BOAParty import BOAParty
 
 
 class BilateralTournament:
@@ -19,7 +21,8 @@ class BilateralTournament:
                  bidding_strategies: list = None,
                  opponent_models: list = None,
                  acceptance_strategies: list = None,
-                 EUBOA_is_agent_side: bool = False, EUBOA_is_opponent_side: bool = False):
+                 EUBOA_is_agent_side: bool = False, EUBOA_is_opponent_side: bool = False,
+                 BOA_is_agent_side: bool = False, BOA_is_opponent_side: bool = False):
 
         # if not (elicitation_strategies is None
         #         and user_models is None
@@ -30,135 +33,145 @@ class BilateralTournament:
         #         "You have to set all EUBOA components to None or select at least one component for each EUBOA "
         #         "components")
 
-        if elicitation_strategies is not None:
-            if len(elicitation_strategies) < 1:
-                raise ValueError(
-                    "You have to set elicitation_strategies None or a list of strategies with at least size equal "
-                    "to 1")
-            if len(elicitation_strategies) >= 1:
-                if user_models is None or len(user_models) < 1:
-                    raise ValueError(
-                        "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
-                        "set elicitation_strategies to None")
-            if len(elicitation_strategies) >= 1:
-                if bidding_strategies is None or len(bidding_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
-                        "set elicitation_strategies to None")
-            if len(elicitation_strategies) >= 1:
-                if opponent_models is None or len(opponent_models) < 1:
-                    raise ValueError(
-                        "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
-                        "set elicitation strategies to None")
-            if len(elicitation_strategies) >= 1:
-                if acceptance_strategies is None or len(acceptance_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
-                        "set elicitation strategies to None")
+        if BOA_is_agent_side or BOA_is_opponent_side:
+            if (bidding_strategies is None or len(bidding_strategies) < 1) or (opponent_models is None or len(opponent_models) < 1) or (acceptance_strategies is None or len(acceptance_strategies) < 1):
+                raise ValueError("BOA_is_agent_side or BOA_is_opponent_side were set True, So you have to send at "
+                                 "least a bidding_strategy and an opponent_models and an acceptance_strategies")
+            else:
+                self.__all_boa_agents = CreateAllAgentsUsingBOAComponents(bidding_strategies=bidding_strategies,
+                                                                          opponent_models=opponent_models,
+                                                                          acceptance_strategies=acceptance_strategies).create_agents()
 
-        if user_models is not None:
-            if len(user_models) < 1:
-                raise ValueError(
-                    "You have to set user_models None or a list of models with at least size equal "
-                    "to 1")
-            if len(user_models) >= 1:
-                if elicitation_strategies is None or len(elicitation_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more user_models, so you have to set all EUBOA components or "
-                        "set user_models to None")
-            if len(user_models) >= 1:
-                if bidding_strategies is None or len(bidding_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more user_models, so you have to set all EUBOA components or "
-                        "set user_models to None")
-            if len(user_models) >= 1:
-                if opponent_models is None or len(opponent_models) < 1:
-                    raise ValueError(
-                        "You selected an or more user_models, so you have to set all EUBOA components or "
-                        "set user_models to None")
-            if len(user_models) >= 1:
-                if acceptance_strategies is None or len(acceptance_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more user_models, so you have to set all EUBOA components or "
-                        "set user_models to None")
 
-        if bidding_strategies is not None:
-            if len(bidding_strategies) < 1:
-                raise ValueError(
-                    "You have to set bidding_strategies None or a list of strategies with at least size equal "
-                    "to 1")
-            if len(bidding_strategies) >= 1:
-                if elicitation_strategies is None or len(elicitation_strategies) < 1:
-                    raise ValueError(
-                        "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
-                        "set bidding_strategies to None")
-            if len(bidding_strategies) >= 1:
-                if user_models is None or len(user_models) < 1:
-                    raise ValueError(
-                        "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
-                        "set bidding_strategies to None")
-            if len(bidding_strategies) >= 1:
-                if opponent_models is None or len(opponent_models) < 1:
-                    raise ValueError(
-                        "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
-                        "set bidding_strategies to None")
-            if len(bidding_strategies) >= 1:
-                if acceptance_strategies is None or len(acceptance_strategies) < 1:
-                    raise ValueError(
-                        "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
-                        "set bidding_strategies to None")
-
-        if opponent_models is not None:
-            if len(opponent_models) < 1:
-                raise ValueError(
-                    "You have to set opponent_models None or a list of models with at least size equal "
-                    "to 1")
-            if len(opponent_models) >= 1:
-                if elicitation_strategies is None or len(elicitation_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more opponent_models, so you have to set all EUBOA components or "
-                        "set opponent_models to None")
-            if len(opponent_models) >= 1:
-                if user_models is None or len(user_models) < 1:
-                    raise ValueError(
-                        "You selected an or more opponent_models, so you have to set all EUBOA components or "
-                        "set opponent_models to None")
-            if len(opponent_models) >= 1:
-                if bidding_strategies is None or len(bidding_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more opponent_models, so you have to set all EUBOA components or "
-                        "set opponent_models to None")
-            if len(opponent_models) >= 1:
-                if acceptance_strategies is None or len(acceptance_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more opponent_models, so you have to set all EUBOA components or "
-                        "set opponent_models to None")
-
-        if acceptance_strategies is not None:
-            if len(acceptance_strategies) < 1:
-                raise ValueError(
-                    "You have to set acceptance_strategies None or a list of strategies with at least size equal "
-                    "to 1")
-            if len(acceptance_strategies) >= 1:
-                if elicitation_strategies is None or len(elicitation_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
-                        "set acceptance_strategies to None")
-            if len(acceptance_strategies) >= 1:
-                if user_models is None or len(user_models) < 1:
-                    raise ValueError(
-                        "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
-                        "set acceptance_strategies to None")
-            if len(acceptance_strategies) >= 1:
-                if bidding_strategies is None or len(bidding_strategies) < 1:
-                    raise ValueError(
-                        "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
-                        "set acceptance_strategies to None")
-            if len(acceptance_strategies) >= 1:
-                if opponent_models is None or len(opponent_models) < 1:
-                    raise ValueError(
-                        "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
-                        "set acceptance_strategies to None")
+        # if elicitation_strategies is not None:
+        #     if len(elicitation_strategies) < 1:
+        #         raise ValueError(
+        #             "You have to set elicitation_strategies None or a list of strategies with at least size equal "
+        #             "to 1")
+        #     if len(elicitation_strategies) >= 1:
+        #         if user_models is None or len(user_models) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
+        #                 "set elicitation_strategies to None")
+        #     if len(elicitation_strategies) >= 1:
+        #         if bidding_strategies is None or len(bidding_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
+        #                 "set elicitation_strategies to None")
+        #     if len(elicitation_strategies) >= 1:
+        #         if opponent_models is None or len(opponent_models) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
+        #                 "set elicitation strategies to None")
+        #     if len(elicitation_strategies) >= 1:
+        #         if acceptance_strategies is None or len(acceptance_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more elicitation strategies, so you have to set all EUBOA components or "
+        #                 "set elicitation strategies to None")
+        #
+        # if user_models is not None:
+        #     if len(user_models) < 1:
+        #         raise ValueError(
+        #             "You have to set user_models None or a list of models with at least size equal "
+        #             "to 1")
+        #     if len(user_models) >= 1:
+        #         if elicitation_strategies is None or len(elicitation_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more user_models, so you have to set all EUBOA components or "
+        #                 "set user_models to None")
+        #     if len(user_models) >= 1:
+        #         if bidding_strategies is None or len(bidding_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more user_models, so you have to set all EUBOA components or "
+        #                 "set user_models to None")
+        #     if len(user_models) >= 1:
+        #         if opponent_models is None or len(opponent_models) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more user_models, so you have to set all EUBOA components or "
+        #                 "set user_models to None")
+        #     if len(user_models) >= 1:
+        #         if acceptance_strategies is None or len(acceptance_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more user_models, so you have to set all EUBOA components or "
+        #                 "set user_models to None")
+        #
+        # if bidding_strategies is not None:
+        #     if len(bidding_strategies) < 1:
+        #         raise ValueError(
+        #             "You have to set bidding_strategies None or a list of strategies with at least size equal "
+        #             "to 1")
+        #     if len(bidding_strategies) >= 1:
+        #         if elicitation_strategies is None or len(elicitation_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
+        #                 "set bidding_strategies to None")
+        #     if len(bidding_strategies) >= 1:
+        #         if user_models is None or len(user_models) < 1:
+        #             raise ValueError(
+        #                 "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
+        #                 "set bidding_strategies to None")
+        #     if len(bidding_strategies) >= 1:
+        #         if opponent_models is None or len(opponent_models) < 1:
+        #             raise ValueError(
+        #                 "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
+        #                 "set bidding_strategies to None")
+        #     if len(bidding_strategies) >= 1:
+        #         if acceptance_strategies is None or len(acceptance_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected a or more bidding_strategies, so you have to set all EUBOA components or "
+        #                 "set bidding_strategies to None")
+        #
+        # if opponent_models is not None:
+        #     if len(opponent_models) < 1:
+        #         raise ValueError(
+        #             "You have to set opponent_models None or a list of models with at least size equal "
+        #             "to 1")
+        #     if len(opponent_models) >= 1:
+        #         if elicitation_strategies is None or len(elicitation_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more opponent_models, so you have to set all EUBOA components or "
+        #                 "set opponent_models to None")
+        #     if len(opponent_models) >= 1:
+        #         if user_models is None or len(user_models) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more opponent_models, so you have to set all EUBOA components or "
+        #                 "set opponent_models to None")
+        #     if len(opponent_models) >= 1:
+        #         if bidding_strategies is None or len(bidding_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more opponent_models, so you have to set all EUBOA components or "
+        #                 "set opponent_models to None")
+        #     if len(opponent_models) >= 1:
+        #         if acceptance_strategies is None or len(acceptance_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more opponent_models, so you have to set all EUBOA components or "
+        #                 "set opponent_models to None")
+        #
+        # if acceptance_strategies is not None:
+        #     if len(acceptance_strategies) < 1:
+        #         raise ValueError(
+        #             "You have to set acceptance_strategies None or a list of strategies with at least size equal "
+        #             "to 1")
+        #     if len(acceptance_strategies) >= 1:
+        #         if elicitation_strategies is None or len(elicitation_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
+        #                 "set acceptance_strategies to None")
+        #     if len(acceptance_strategies) >= 1:
+        #         if user_models is None or len(user_models) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
+        #                 "set acceptance_strategies to None")
+        #     if len(acceptance_strategies) >= 1:
+        #         if bidding_strategies is None or len(bidding_strategies) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
+        #                 "set acceptance_strategies to None")
+        #     if len(acceptance_strategies) >= 1:
+        #         if opponent_models is None or len(opponent_models) < 1:
+        #             raise ValueError(
+        #                 "You selected an or more acceptance_strategies, so you have to set all EUBOA components or "
+        #                 "set acceptance_strategies to None")
 
         if (elicitation_strategies is not None and len(elicitation_strategies) >= 1) \
                 and (user_models is not None and len(user_models) >= 1) \
@@ -200,10 +213,19 @@ class BilateralTournament:
         self.__tournament_repetition = int(tournament_repetition)
         self.__avg_all_tournament_analysis_data = {}
 
+        # if EUBOA_is_agent_side is True then add all created euboa_agents to agents.
+        # if EUBOA_is_opponent_side is True then add all created euboa_agents to opponents
         if EUBOA_is_agent_side:
             self.__agent_names += self.__all_euboa_agents
         if EUBOA_is_opponent_side:
             self.__opponent_names += self.__all_euboa_agents
+
+        # if BOA_is_agent_side is True then add all created boa_agents to agents.
+        # if BOA_is_opponent_side is True then add all created boa_agents to opponents
+        if BOA_is_agent_side:
+            self.__agent_names += self.__all_boa_agents
+        if BOA_is_opponent_side:
+            self.__opponent_names += self.__all_boa_agents
 
     def get_tournament_analysis_man(self):
         return self.__tournament_analysis_man
@@ -223,13 +245,267 @@ class BilateralTournament:
                                     for j in range(i, count_of_utility_spaces):
                                         utility_space2 = self.__utility_space_names[j]
 
-                                        if isinstance(party1_name, EUBOAParty) and isinstance(party2_name, EUBOAParty):
-                                            # initial_preference1 = preference_permutations[0].get_initial_preference()
-                                            # party1_name.set_preference(preference=initial_preference1)
-                                            #
-                                            # initial_preference2 = preference_permutations[1].get_initial_preference()
-                                            # party2_name.set_preference(preference=initial_preference2)
+                                        ###############################################################################
+                                        # if isinstance(party1_name, EUBOAParty) and isinstance(party2_name, EUBOAParty):
+                                        #     # initial_preference1 = preference_permutations[0].get_initial_preference()
+                                        #     # party1_name.set_preference(preference=initial_preference1)
+                                        #     #
+                                        #     # initial_preference2 = preference_permutations[1].get_initial_preference()
+                                        #     # party2_name.set_preference(preference=initial_preference2)
+                                        #
+                                        #     count_of_users = len(self.__users)
+                                        #     for i in range(count_of_users):
+                                        #         user1 = self.__users[i]
+                                        #         for j in range(i, count_of_users):
+                                        #             user2 = self.__users[j]
+                                        #             bilateral_session = BilateralSession(
+                                        #                 protocol_name=self.__protocol_name,
+                                        #                 analysis_man_name=self.__analysis_man_name,
+                                        #                 deadline=self.__deadline,
+                                        #                 deadline_type=self.__deadline_type,
+                                        #                 first_preference=preference_permutations[0],
+                                        #                 second_preference=preference_permutations[1],
+                                        #                 party1_uncertain=None,
+                                        #                 party2_uncertain=None,
+                                        #                 domain_name=domain_name,
+                                        #                 utility_space_name1=utility_space1,
+                                        #                 utility_space_name2=utility_space2,
+                                        #                 user1=user1,
+                                        #                 user2=user2,
+                                        #                 party1_EUBOAParty=party1_name,
+                                        #                 party2_EUBOAParty=party2_name)
+                                        #
+                                        #             bilateral_session.start_session()
+                                        #             self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                 bilateral_session.get_analysis_man().get_analysis_data())
+                                        # elif isinstance(party1_name, EUBOAParty) and isinstance(party2_name, str):
+                                        #
+                                        #     # initial_preference1 = preference_permutations[0].get_initial_preference()
+                                        #     # party1_name.set_preference(preference=initial_preference1)
+                                        #
+                                        #     uncertainty_bool_party2 = self.detect_agent_type(party2_name, utility_space2)
+                                        #     if uncertainty_bool_party2:
+                                        #         count_of_users = len(self.__users)
+                                        #         for i in range(count_of_users):
+                                        #             user1 = self.__users[i]
+                                        #             for j in range(i, count_of_users):
+                                        #                 user2 = self.__users[j]
+                                        #                 bilateral_session = BilateralSession(
+                                        #                     protocol_name=self.__protocol_name,
+                                        #                     analysis_man_name=self.__analysis_man_name,
+                                        #                     deadline=self.__deadline,
+                                        #                     deadline_type=self.__deadline_type,
+                                        #                     first_preference=preference_permutations[0],
+                                        #                     second_preference=preference_permutations[1],
+                                        #                     party1_uncertain=None,
+                                        #                     party2_name=party2_name,
+                                        #                     domain_name=domain_name,
+                                        #                     utility_space_name1=utility_space1,
+                                        #                     utility_space_name2=utility_space2,
+                                        #                     user1=user1,
+                                        #                     user2=user2,
+                                        #                     party1_EUBOAParty=party1_name)
+                                        #
+                                        #                 bilateral_session.start_session()
+                                        #                 self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                     bilateral_session.get_analysis_man().get_analysis_data())
+                                        #     else:
+                                        #         for user1 in self.__users:
+                                        #             bilateral_session = BilateralSession(
+                                        #                 protocol_name=self.__protocol_name,
+                                        #                 analysis_man_name=self.__analysis_man_name,
+                                        #                 deadline=self.__deadline,
+                                        #                 deadline_type=self.__deadline_type,
+                                        #                 first_preference=preference_permutations[0],
+                                        #                 second_preference=preference_permutations[1],
+                                        #                 party1_uncertain=None,
+                                        #                 party2_name=party2_name,
+                                        #                 domain_name=domain_name,
+                                        #                 utility_space_name1=utility_space1,
+                                        #                 utility_space_name2=utility_space2,
+                                        #                 user1=user1,
+                                        #                 user2=None,
+                                        #                 party1_EUBOAParty=party1_name)
+                                        #
+                                        #             bilateral_session.start_session()
+                                        #             self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                 bilateral_session.get_analysis_man().get_analysis_data())
+                                        # elif isinstance(party1_name, str) and isinstance(party2_name, EUBOAParty):
+                                        #
+                                        #     # initial_preference2 = preference_permutations[1].get_initial_preference()
+                                        #     # party2_name.set_preference(preference=initial_preference2)
+                                        #
+                                        #     uncertainty_bool_party1 = self.detect_agent_type(party1_name, utility_space1)
+                                        #     if uncertainty_bool_party1:
+                                        #         count_of_users = len(self.__users)
+                                        #         for i in range(count_of_users):
+                                        #             user1 = self.__users[i]
+                                        #             for j in range(i, count_of_users):
+                                        #                 user2 = self.__users[j]
+                                        #                 bilateral_session = BilateralSession(
+                                        #                     protocol_name=self.__protocol_name,
+                                        #                     analysis_man_name=self.__analysis_man_name,
+                                        #                     deadline=self.__deadline,
+                                        #                     deadline_type=self.__deadline_type,
+                                        #                     first_preference=preference_permutations[0],
+                                        #                     second_preference=preference_permutations[1],
+                                        #                     party1_name=party1_name,
+                                        #                     party2_uncertain=None,
+                                        #                     domain_name=domain_name,
+                                        #                     utility_space_name1=utility_space1,
+                                        #                     utility_space_name2=utility_space2,
+                                        #                     user1=user1,
+                                        #                     user2=user2,
+                                        #                     party2_EUBOAParty=party2_name)
+                                        #
+                                        #                 bilateral_session.start_session()
+                                        #                 self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                     bilateral_session.get_analysis_man().get_analysis_data())
+                                        #     else:
+                                        #         for user2 in self.__users:
+                                        #             bilateral_session = BilateralSession(
+                                        #                 protocol_name=self.__protocol_name,
+                                        #                 analysis_man_name=self.__analysis_man_name,
+                                        #                 deadline=self.__deadline,
+                                        #                 deadline_type=self.__deadline_type,
+                                        #                 first_preference=
+                                        #                 preference_permutations[0],
+                                        #                 second_preference=
+                                        #                 preference_permutations[1],
+                                        #                 party1_name=party1_name,
+                                        #                 party2_uncertain=None,
+                                        #                 domain_name=domain_name,
+                                        #                 utility_space_name1=utility_space1,
+                                        #                 utility_space_name2=utility_space2,
+                                        #                 user1=None,
+                                        #                 user2=user2,
+                                        #                 party2_EUBOAParty=party2_name)
+                                        #
+                                        #             bilateral_session.start_session()
+                                        #             self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                 bilateral_session.get_analysis_man().get_analysis_data())
+                                        # elif isinstance(party1_name, str) and isinstance(party2_name, str):
+                                        #     uncertainty_bool_party1 = self.detect_agent_type(party1_name, utility_space1)
+                                        #     # try:
+                                        #     #     test_utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space1, self.__test_preference1)
+                                        #     #     test_party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, test_utility_space1)
+                                        #     #     uncertainty_bool_party1 = False
+                                        #     # except:
+                                        #     #     uncertainty_bool_party1 = True
+                                        #     #     if self.__users is None:
+                                        #     #         raise ValueError(
+                                        #     #             "You selected one or more agent with uncertainty situation but there is no user")
+                                        #
+                                        #     uncertainty_bool_party2 = self.detect_agent_type(party2_name,
+                                        #                                                      utility_space2)
+                                        #     # try:
+                                        #     #     test_utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH,
+                                        #     #                                                         utility_space2,
+                                        #     #                                                         self.__test_preference1)
+                                        #     #     test_party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name,
+                                        #     #                                                 test_utility_space2)
+                                        #     #     uncertainty_bool_party2 = False
+                                        #     # except:
+                                        #     #     uncertainty_bool_party2 = True
+                                        #     #     if self.__users is None:
+                                        #     #         raise ValueError(
+                                        #     #             "You selected one or more agent with uncertainty situation but there is no user")
+                                        #
+                                        #     if uncertainty_bool_party1 and not uncertainty_bool_party2:
+                                        #         for user1 in self.__users:
+                                        #             bilateral_session = BilateralSession(
+                                        #                 protocol_name=self.__protocol_name,
+                                        #                 analysis_man_name=self.__analysis_man_name,
+                                        #                 deadline=self.__deadline,
+                                        #                 deadline_type=self.__deadline_type,
+                                        #                 first_preference=preference_permutations[0],
+                                        #                 second_preference=preference_permutations[1],
+                                        #                 party1_name=party1_name,
+                                        #                 party2_name=party2_name,
+                                        #                 domain_name=domain_name,
+                                        #                 utility_space_name1=utility_space1,
+                                        #                 utility_space_name2=utility_space2,
+                                        #                 user1=user1,
+                                        #                 user2=None)
+                                        #
+                                        #             bilateral_session.start_session()
+                                        #             self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                 bilateral_session.get_analysis_man().get_analysis_data())
+                                        #
+                                        #     if not uncertainty_bool_party1 and uncertainty_bool_party2:
+                                        #         for user2 in self.__users:
+                                        #             bilateral_session = BilateralSession(
+                                        #                 protocol_name=self.__protocol_name,
+                                        #                 analysis_man_name=self.__analysis_man_name,
+                                        #                 deadline=self.__deadline,
+                                        #                 deadline_type=self.__deadline_type,
+                                        #                 first_preference=preference_permutations[0],
+                                        #                 second_preference=preference_permutations[1],
+                                        #                 party1_name=party1_name,
+                                        #                 party2_name=party2_name,
+                                        #                 domain_name=domain_name,
+                                        #                 utility_space_name1=utility_space1,
+                                        #                 utility_space_name2=utility_space2,
+                                        #                 user1=None,
+                                        #                 user2=user2)
+                                        #
+                                        #             bilateral_session.start_session()
+                                        #             self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                 bilateral_session.get_analysis_man().get_analysis_data())
+                                        #
+                                        #     if uncertainty_bool_party1 and uncertainty_bool_party2:
+                                        #         count_of_users = len(self.__users)
+                                        #         for i in range(count_of_users):
+                                        #             user1 = self.__users[i]
+                                        #             for j in range(i, count_of_users):
+                                        #                 user2 = self.__users[j]
+                                        #                 bilateral_session = BilateralSession(
+                                        #                     protocol_name=self.__protocol_name,
+                                        #                     analysis_man_name=self.__analysis_man_name,
+                                        #                     deadline=self.__deadline,
+                                        #                     deadline_type=self.__deadline_type,
+                                        #                     first_preference=preference_permutations[0],
+                                        #                     second_preference=preference_permutations[1],
+                                        #                     party1_name=party1_name,
+                                        #                     party2_name=party2_name,
+                                        #                     domain_name=domain_name,
+                                        #                     utility_space_name1=utility_space1,
+                                        #                     utility_space_name2=utility_space2,
+                                        #                     user1=user1,
+                                        #                     user2=user2)
+                                        #
+                                        #                 bilateral_session.start_session()
+                                        #                 self.__tournament_analysis_man.add_session_analysis_data(
+                                        #                     bilateral_session.get_analysis_man().get_analysis_data())
+                                        #
+                                        #     if not uncertainty_bool_party1 and not uncertainty_bool_party2:
+                                        #         bilateral_session = BilateralSession(protocol_name=self.__protocol_name,
+                                        #                                              analysis_man_name=self.__analysis_man_name,
+                                        #                                              deadline=self.__deadline,
+                                        #                                              deadline_type=self.__deadline_type,
+                                        #                                              first_preference=
+                                        #                                              preference_permutations[0],
+                                        #                                              second_preference=
+                                        #                                              preference_permutations[1],
+                                        #                                              party1_name=party1_name,
+                                        #                                              party2_name=party2_name,
+                                        #                                              domain_name=domain_name,
+                                        #                                              utility_space_name1=utility_space1,
+                                        #                                              utility_space_name2=utility_space2,
+                                        #                                              user1=None,
+                                        #                                              user2=None)
+                                        #
+                                        #         bilateral_session.start_session()
+                                        #         self.__tournament_analysis_man.add_session_analysis_data(
+                                        #             bilateral_session.get_analysis_man().get_analysis_data())
+                                        #
+                                        # else:
+                                        #     raise TypeError("Something went wrong! ("
+                                        #                     "BilateralTournament2.BilateralTournament)")
+                                        ###############################################################################
 
+                                        # /////////////////////////////////////////////////////////////////////////////
+                                        if isinstance(party1_name, EUBOAParty) and isinstance(party2_name, EUBOAParty):
                                             count_of_users = len(self.__users)
                                             for i in range(count_of_users):
                                                 user1 = self.__users[i]
@@ -255,12 +531,29 @@ class BilateralTournament:
                                                     bilateral_session.start_session()
                                                     self.__tournament_analysis_man.add_session_analysis_data(
                                                         bilateral_session.get_analysis_man().get_analysis_data())
+                                        elif isinstance(party1_name, EUBOAParty) and isinstance(party2_name, BOAParty):
+                                            for user1 in self.__users:
+                                                bilateral_session = BilateralSession(
+                                                    protocol_name=self.__protocol_name,
+                                                    analysis_man_name=self.__analysis_man_name,
+                                                    deadline=self.__deadline,
+                                                    deadline_type=self.__deadline_type,
+                                                    first_preference=preference_permutations[0],
+                                                    second_preference=preference_permutations[1],
+                                                    party1_uncertain=None,
+                                                    party2_uncertain=None,
+                                                    domain_name=domain_name,
+                                                    utility_space_name1=utility_space1,
+                                                    utility_space_name2=utility_space2,
+                                                    user1=user1,
+                                                    party1_EUBOAParty=party1_name,
+                                                    party2_BOAParty=party2_name)
+                                                bilateral_session.start_session()
+                                                self.__tournament_analysis_man.add_session_analysis_data(
+                                                    bilateral_session.get_analysis_man().get_analysis_data())
                                         elif isinstance(party1_name, EUBOAParty) and isinstance(party2_name, str):
-
-                                            # initial_preference1 = preference_permutations[0].get_initial_preference()
-                                            # party1_name.set_preference(preference=initial_preference1)
-
-                                            uncertainty_bool_party2 = self.detect_agent_type(party2_name, utility_space2)
+                                            uncertainty_bool_party2 = self.detect_agent_type(party2_name,
+                                                                                             utility_space2)
                                             if uncertainty_bool_party2:
                                                 count_of_users = len(self.__users)
                                                 for i in range(count_of_users):
@@ -307,12 +600,92 @@ class BilateralTournament:
                                                     bilateral_session.start_session()
                                                     self.__tournament_analysis_man.add_session_analysis_data(
                                                         bilateral_session.get_analysis_man().get_analysis_data())
+
+
+                                        elif isinstance(party1_name, BOAParty) and isinstance(party2_name, EUBOAParty):
+                                            for user2 in self.__users:
+                                                bilateral_session = BilateralSession(
+                                                    protocol_name=self.__protocol_name,
+                                                    analysis_man_name=self.__analysis_man_name,
+                                                    deadline=self.__deadline,
+                                                    deadline_type=self.__deadline_type,
+                                                    first_preference=preference_permutations[0],
+                                                    second_preference=preference_permutations[1],
+                                                    party1_uncertain=None,
+                                                    party2_uncertain=None,
+                                                    domain_name=domain_name,
+                                                    utility_space_name1=utility_space1,
+                                                    utility_space_name2=utility_space2,
+                                                    user2=user2,
+                                                    party1_BOAParty=party1_name,
+                                                    party2_EUBOAParty=party2_name)
+                                                bilateral_session.start_session()
+                                                self.__tournament_analysis_man.add_session_analysis_data(
+                                                    bilateral_session.get_analysis_man().get_analysis_data())
+                                        elif isinstance(party1_name, BOAParty) and isinstance(party2_name, BOAParty):
+
+                                            bilateral_session = BilateralSession(
+                                                protocol_name=self.__protocol_name,
+                                                analysis_man_name=self.__analysis_man_name,
+                                                deadline=self.__deadline,
+                                                deadline_type=self.__deadline_type,
+                                                first_preference=preference_permutations[0],
+                                                second_preference=preference_permutations[1],
+                                                party1_uncertain=None,
+                                                party2_uncertain=None,
+                                                domain_name=domain_name,
+                                                utility_space_name1=utility_space1,
+                                                utility_space_name2=utility_space2,
+                                                party1_BOAParty=party1_name,
+                                                party2_BOAParty=party2_name)
+
+                                            bilateral_session.start_session()
+                                            self.__tournament_analysis_man.add_session_analysis_data(
+                                                bilateral_session.get_analysis_man().get_analysis_data())
+                                        elif isinstance(party1_name, BOAParty) and isinstance(party2_name, str):
+                                            uncertainty_bool_party2 = self.detect_agent_type(party2_name, utility_space2)
+                                            if uncertainty_bool_party2:
+                                                for user2 in self.__users:
+                                                    bilateral_session = BilateralSession(
+                                                        protocol_name=self.__protocol_name,
+                                                        analysis_man_name=self.__analysis_man_name,
+                                                        deadline=self.__deadline,
+                                                        deadline_type=self.__deadline_type,
+                                                        first_preference=preference_permutations[0],
+                                                        second_preference=preference_permutations[1],
+                                                        party1_BOAParty=party1_name,
+                                                        party2_name=party2_name,
+                                                        domain_name=domain_name,
+                                                        utility_space_name1=utility_space1,
+                                                        utility_space_name2=utility_space2,
+                                                        user1=None,
+                                                        user2=user2)
+
+                                                    bilateral_session.start_session()
+                                                    self.__tournament_analysis_man.add_session_analysis_data(
+                                                        bilateral_session.get_analysis_man().get_analysis_data())
+                                            else:
+                                                bilateral_session = BilateralSession(
+                                                    protocol_name=self.__protocol_name,
+                                                    analysis_man_name=self.__analysis_man_name,
+                                                    deadline=self.__deadline,
+                                                    deadline_type=self.__deadline_type,
+                                                    first_preference=preference_permutations[0],
+                                                    second_preference=preference_permutations[1],
+                                                    party1_BOAParty=party1_name,
+                                                    party2_name=party2_name,
+                                                    domain_name=domain_name,
+                                                    utility_space_name1=utility_space1,
+                                                    utility_space_name2=utility_space2,
+                                                    user1=None,
+                                                    user2=None)
+
+                                                bilateral_session.start_session()
+                                                self.__tournament_analysis_man.add_session_analysis_data(
+                                                    bilateral_session.get_analysis_man().get_analysis_data())
                                         elif isinstance(party1_name, str) and isinstance(party2_name, EUBOAParty):
-
-                                            # initial_preference2 = preference_permutations[1].get_initial_preference()
-                                            # party2_name.set_preference(preference=initial_preference2)
-
-                                            uncertainty_bool_party1 = self.detect_agent_type(party1_name, utility_space1)
+                                            uncertainty_bool_party1 = self.detect_agent_type(party1_name,
+                                                                                             utility_space1)
                                             if uncertainty_bool_party1:
                                                 count_of_users = len(self.__users)
                                                 for i in range(count_of_users):
@@ -361,32 +734,51 @@ class BilateralTournament:
                                                     bilateral_session.start_session()
                                                     self.__tournament_analysis_man.add_session_analysis_data(
                                                         bilateral_session.get_analysis_man().get_analysis_data())
+
+                                        elif isinstance(party1_name, str) and isinstance(party2_name, BOAParty):
+                                            uncertainty_bool_party1 = self.detect_agent_type(party1_name, utility_space1)
+                                            if uncertainty_bool_party1:
+                                                for user1 in self.__users:
+                                                    bilateral_session = BilateralSession(
+                                                        protocol_name=self.__protocol_name,
+                                                        analysis_man_name=self.__analysis_man_name,
+                                                        deadline=self.__deadline,
+                                                        deadline_type=self.__deadline_type,
+                                                        first_preference=preference_permutations[0],
+                                                        second_preference=preference_permutations[1],
+                                                        party1_name=party1_name,
+                                                        party2_BOAParty=party2_name,
+                                                        domain_name=domain_name,
+                                                        utility_space_name1=utility_space1,
+                                                        utility_space_name2=utility_space2,
+                                                        user1=user1,
+                                                        user2=None)
+
+                                                    bilateral_session.start_session()
+                                                    self.__tournament_analysis_man.add_session_analysis_data(
+                                                        bilateral_session.get_analysis_man().get_analysis_data())
+                                            else:
+                                                bilateral_session = BilateralSession(
+                                                    protocol_name=self.__protocol_name,
+                                                    analysis_man_name=self.__analysis_man_name,
+                                                    deadline=self.__deadline,
+                                                    deadline_type=self.__deadline_type,
+                                                    first_preference=preference_permutations[0],
+                                                    second_preference=preference_permutations[1],
+                                                    party1_name=party1_name,
+                                                    party2_BOAParty=party2_name,
+                                                    domain_name=domain_name,
+                                                    utility_space_name1=utility_space1,
+                                                    utility_space_name2=utility_space2)
+
+                                                bilateral_session.start_session()
+                                                self.__tournament_analysis_man.add_session_analysis_data(
+                                                    bilateral_session.get_analysis_man().get_analysis_data())
+
                                         elif isinstance(party1_name, str) and isinstance(party2_name, str):
                                             uncertainty_bool_party1 = self.detect_agent_type(party1_name, utility_space1)
-                                            # try:
-                                            #     test_utility_space1 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH, utility_space1, self.__test_preference1)
-                                            #     test_party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, test_utility_space1)
-                                            #     uncertainty_bool_party1 = False
-                                            # except:
-                                            #     uncertainty_bool_party1 = True
-                                            #     if self.__users is None:
-                                            #         raise ValueError(
-                                            #             "You selected one or more agent with uncertainty situation but there is no user")
 
-                                            uncertainty_bool_party2 = self.detect_agent_type(party2_name,
-                                                                                             utility_space2)
-                                            # try:
-                                            #     test_utility_space2 = CreateObjectByPath.get_object(UTILITY_SPACE_PATH,
-                                            #                                                         utility_space2,
-                                            #                                                         self.__test_preference1)
-                                            #     test_party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name,
-                                            #                                                 test_utility_space2)
-                                            #     uncertainty_bool_party2 = False
-                                            # except:
-                                            #     uncertainty_bool_party2 = True
-                                            #     if self.__users is None:
-                                            #         raise ValueError(
-                                            #             "You selected one or more agent with uncertainty situation but there is no user")
+                                            uncertainty_bool_party2 = self.detect_agent_type(party2_name, utility_space2)
 
                                             if uncertainty_bool_party1 and not uncertainty_bool_party2:
                                                 for user1 in self.__users:
@@ -476,9 +868,14 @@ class BilateralTournament:
                                                 self.__tournament_analysis_man.add_session_analysis_data(
                                                     bilateral_session.get_analysis_man().get_analysis_data())
 
+
                                         else:
                                             raise TypeError("Something went wrong! ("
                                                             "BilateralTournament2.BilateralTournament)")
+                                        # /////////////////////////////////////////////////////////////////////////////
+
+
+
 
             self.cal_avg()
             # tournament_analysis_data = self.__tournament_analysis_man.get_tournament_analysis_data()

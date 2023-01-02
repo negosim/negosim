@@ -23,6 +23,10 @@ class AdditiveUtilitySpace(AbstractUtilitySpace):
         super().__init__(preference)
 
     def get_utility(self, bid: Bid) -> float:
+
+        if self.get_preference() is None:
+            raise ValueError("Preference is None!")
+
         weights = []
         scores_max_values = []
         issue_item = bid.get_issues_items()

@@ -33,5 +33,17 @@ class BiddingStrategyInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
+    def get_utility_space(self) -> AbstractUtilitySpace:
+        raise NotImplementedError()
+
+    @abstractmethod
     def set_user_model(self, user_model: UserModelInterface):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_preference(self):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_opponent_model(self):
         raise NotImplementedError()

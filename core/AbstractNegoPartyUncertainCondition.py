@@ -43,10 +43,10 @@ class AbstractNegoPartyUncertainCondition(ABC):
             self.__initial_preference = self.__preference.__copy__()
 
     def set_user(self, user):
-        if self.__user is None:
-            self.__user = user
-        else:
-            raise ValueError("user was not set!")
+        # if self.__user is None:
+        self.__user = user
+        # else:
+        #     raise ValueError("user was not set!")
 
     def get_user(self) -> UserInterface:
         return self.__user

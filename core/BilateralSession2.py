@@ -188,6 +188,7 @@ class BilateralSession:
                 # since in class of CreateAllAgentsUsingEUBOAComponents, we do not know about the selected user and
                 # preferences so we have to set a user for elicitation strategy and preference (initial preference) for
                 # the user model and opponent model
+
                 if user1 is None:
                     raise ValueError("You selected first agent with uncertainty but there is no User!")
                 else:
@@ -257,6 +258,7 @@ class BilateralSession:
             state_info = StateInfo(time_line=time_line, my_agent_offers=[], opponent_offers={})
 
             nego_table = NegoTable(parties=(self.__party1, self.__party2), state_info=state_info)
+
 
             self.analysis_man = CreateObjectByPath.get_object(ANALYSIS_PATH,
                                                               analysis_man_name,

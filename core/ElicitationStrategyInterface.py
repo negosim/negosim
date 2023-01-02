@@ -59,3 +59,6 @@ class ElicitationStrategyInterface(ABC):
     @abstractmethod
     def set_user(self, user: UserInterface):
         raise NotImplementedError()
+
+    def get_user(self) -> UserInterface:
+        raise NotImplementedError()

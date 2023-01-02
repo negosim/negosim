@@ -23,13 +23,14 @@ class EUBOAParty(AbstractNegoPartyUncertainCondition, ABC):
                  user: UserInterface = None):
 
         super(EUBOAParty, self).__init__(preference=preference, user=user)
-        self.__user = self.get_user()
+
+        self.__user = user
         if self.get_p() is not None:
             self.initial_preference_user_model = self.get_initial_preference()
             self.initial_preference_opponent_model = self.initial_preference_user_model.__copy__()
 
             self.__user_model = CreateObjectByPath.get_object(USER_MODEL_PATH, user_model, self.initial_preference_user_model)
-            self.__elicitation_strategy = CreateObjectByPath.get_object(ELICITATION_STRATEGIES_PATH, elicitation_strategy, self.__user, self.__user_model)
+            self.__elicitation_strategy: ElicitationStrategyInterface = CreateObjectByPath.get_object(ELICITATION_STRATEGIES_PATH, elicitation_strategy, self.__user, self.__user_model)
             self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model, self.initial_preference_opponent_model)
             self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, None, self.__user_model)
             self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, None, self.__user_model)
@@ -39,11 +40,14 @@ class EUBOAParty(AbstractNegoPartyUncertainCondition, ABC):
             self.initial_preference_opponent_model = None
 
             self.__user_model = CreateObjectByPath.get_object(USER_MODEL_PATH, user_model, self.initial_preference_user_model)
-            self.__elicitation_strategy = CreateObjectByPath.get_object(ELICITATION_STRATEGIES_PATH, elicitation_strategy, self.__user, self.__user_model)
+            self.__elicitation_strategy: ElicitationStrategyInterface = CreateObjectByPath.get_object(ELICITATION_STRATEGIES_PATH, elicitation_strategy, self.__user, self.__user_model)
             self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model, self.initial_preference_opponent_model)
             # self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, None, self.__user_model)
             self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, None, None)
             self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, None, self.__user_model)
+
+    def get_user(self) -> UserInterface:
+        return self.__elicitation_strategy.get_user()
 
     def get_elicitation_strategy(self) -> ElicitationStrategyInterface:
         return self.__elicitation_strategy

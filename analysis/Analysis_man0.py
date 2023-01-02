@@ -19,10 +19,12 @@ class Analysis_man0(AbstractAnalysisMan):
         self.analysis_data_structure = {}
 
         negotiation_state = self.get_nego_table().get_state_info().get_negotiation_state()
-        preference_party1 = self.get_preference_of_party1()
-        utility_space_party1 = AdditiveUtilitySpace(preference_party1)
-        preference_party2 = self.get_preference_of_party2()
-        utility_space_party2 = AdditiveUtilitySpace(preference_party2)
+        # preference_party1 = self.get_preference_of_party1()
+        # utility_space_party1 = AdditiveUtilitySpace(preference_party1)
+        utility_space_party1 = self.get_utility_space_of_party1()
+        # preference_party2 = self.get_preference_of_party2()
+        # utility_space_party2 = AdditiveUtilitySpace(preference_party2)
+        utility_space_party2 = self.get_utility_space_of_party2()
         party1 = self.get_party1()
         party2 = self.get_party2()
         offers_on_table = self.get_nego_table().get_offers_on_table()

@@ -23,10 +23,10 @@ class AbstractUtilitySpace(ABC):
     def set_preference(self, preference: Preference):
         if not isinstance(preference, Preference):
             raise TypeError("preference must be an instance of Preference")
-        if preference is None:
-            self.__preference = preference
-        else:
-            raise ValueError("preference was set before!")
+        # if preference is None:
+        self.__preference = preference
+        # else:
+        #     raise ValueError("preference was set before!")
 
     def get_preference(self) -> Preference:
         return self.__preference

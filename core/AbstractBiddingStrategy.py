@@ -50,11 +50,11 @@ class AbstractBiddingStrategy(BiddingStrategyInterface):
     def set_utility_space(self, utility_space: AbstractUtilitySpace):
         if not isinstance(utility_space, AbstractUtilitySpace):
             raise TypeError("utility_space must be an instance of AbstractUtilitySpace")
-        if self.__utility_space is None and self.__user_model is None:
-            self.__utility_space = utility_space
-            self.__preference = utility_space.get_preference()
-        else:
-            raise ValueError("One of the utility_space or user_model was set before!")
+        # if self.__utility_space is None and self.__user_model is None:
+        self.__utility_space = utility_space
+        self.__preference = utility_space.get_preference()
+        # else:
+        #     raise ValueError("One of the utility_space or user_model was set before!")
 
     def set_user_model(self, user_model: UserModelInterface):
         if not isinstance(user_model, UserModelInterface):
@@ -64,6 +64,9 @@ class AbstractBiddingStrategy(BiddingStrategyInterface):
         self.__preference = user_model.get_preference()
         # else:
         #     raise ValueError("One of the utility_space or user_model was set before!")
+
+    def get_utility_space(self) -> AbstractUtilitySpace:
+        return self.__utility_space
 
     @abstractmethod
     def send_bid(self, timeline: TimeLine) -> Bid:

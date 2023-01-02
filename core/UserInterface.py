@@ -10,6 +10,7 @@
 from core.Preference import Preference
 from core.Offer import Offer
 from abc import ABC, abstractmethod
+from core.AbstractUtilitySpace import AbstractUtilitySpace
 
 
 class UserInterface(ABC):
@@ -51,5 +52,20 @@ class UserInterface(ABC):
         """
         this method updates total bothering amount
         :return: new total bothering amount
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_preference(self) -> Preference:
+        """
+        return exact preference if the user know the exact preference otherwise return None
+        :return: preference or None
+        """
+        raise NotImplementedError()
+
+    def get_utility_space(self) -> AbstractUtilitySpace:
+        """
+        return exact utility space if the user know the exact utility space otherwise return None
+        :return: utility space or None
         """
         raise NotImplementedError()
