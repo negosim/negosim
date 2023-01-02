@@ -1,7 +1,6 @@
 import unittest
 from Agents.RandomPartyBOA import RandomPartyBOA
 from Agents.RandomParty1 import RandomParty1
-from users.DefaultUser import DefaultUser
 from core.Preference import Preference
 from protocols.SOAP import SOAP
 from core.TimeLine import TimeLine

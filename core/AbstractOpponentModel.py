@@ -32,6 +32,11 @@ class AbstractOpponentModel(OpponentModelInterface):
                         self.__preference_data_structure[issue][1][key] = 1
 
     def set_preference(self, preference: Preference):
+        """
+        opponent model needs an initial preference (an initial preference is the preference that the weights are equal
+        to 1/n and all evaluation of values are 1)
+        :param preference: an initial preference
+        """
         if not isinstance(preference, Preference):
             raise TypeError("preference must be an instance of Preference")
         # if self.__preference is None:

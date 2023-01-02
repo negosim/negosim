@@ -5,20 +5,32 @@ from core.AbstractUtilitySpace import AbstractUtilitySpace
 from configurations import *
 import CreateObjectByPath
 from core.Bid import Bid
+from core.OpponentModelInterface import OpponentModelInterface
+from core.BiddingStrategyInterface import BiddingStrategyInterface
+from core.AcceptanceStrategyInterface import AcceptanceStrategyInterface
 
 
 class BOAParty(AbstractNegoParty):
-    def __init__(self, utility_space: AbstractUtilitySpace,
+    def __init__(self,
                  opponent_model: str,
                  bidding_strategy: str,
-                 acceptance_strategy: str):
+                 acceptance_strategy: str,
+                 utility_space: AbstractUtilitySpace = None):
         super().__init__(utility_space=utility_space)
 
-        preference = utility_space.get_preference()
-        self.initial_preference_opponent_model = preference.get_initial_preference()
-        self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model, self.initial_preference_opponent_model)
-        self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, utility_space, None)
-        self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, utility_space, None)
+        if utility_space is not None:
+            preference = utility_space.get_preference()
+            self.initial_preference_opponent_model = preference.get_initial_preference()
+            self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model, self.initial_preference_opponent_model)
+            self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, utility_space, None)
+            self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, utility_space, None)
+        else:
+            preference = None
+            self.initial_preference_opponent_model = None
+            self.__opponent_model = CreateObjectByPath.get_object(OPPONENT_MODEL_PATH, opponent_model, self.initial_preference_opponent_model)
+            self.__bidding_strategy = CreateObjectByPath.get_object(BIDDING_STRATEGIES_PATH, bidding_strategy, self.__opponent_model, utility_space, None)
+            self.__acceptance_strategy = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, utility_space, None)
+
 
     def send_bid(self, protocol) -> Bid:
         """
@@ -45,14 +57,20 @@ class BOAParty(AbstractNegoParty):
         """
         raise NotImplementedError()
 
-    def get_opponent_model(self):
-        """
-        :return: opponent model
-        """
-        return self.__opponent_model
-
     def get_user_model(self):
         """
         :return: user model
         """
         return None
+
+    def get_bidding_strategy(self) -> BiddingStrategyInterface:
+        return self.__bidding_strategy
+
+    def get_opponent_model(self) -> OpponentModelInterface:
+        """
+        :return: opponent model
+        """
+        return self.__opponent_model
+
+    def get_acceptance_strategy(self) -> AcceptanceStrategyInterface:
+        return self.__acceptance_strategy

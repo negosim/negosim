@@ -7,6 +7,7 @@ from core.TimeLine import TimeLine
 from core.AbstractNegoParty import AbstractNegoParty
 from core.AbstractNegoPartyUncertainCondition import AbstractNegoPartyUncertainCondition
 from core.EUBOAParty import EUBOAParty
+from core.BOAParty import BOAParty
 
 
 class BilateralSession:
@@ -19,6 +20,7 @@ class BilateralSession:
                  party1: AbstractNegoParty = None, party2: AbstractNegoParty = None,
                  party1_uncertain: AbstractNegoPartyUncertainCondition = None, party2_uncertain: AbstractNegoPartyUncertainCondition = None,
                  party1_EUBOAParty: EUBOAParty = None, party2_EUBOAParty: EUBOAParty = None,
+                 party1_BOAParty: BOAParty = None, party2_BOAParty: BOAParty = None,
                  user1: str = None, user2: str = None):
 
 
@@ -37,26 +39,28 @@ class BilateralSession:
 
 
         """
-        
-        :param protocol_name: 
-        :param analysis_man_name: 
-        :param deadline: 
-        :param deadline_type: 
+
+        :param protocol_name:
+        :param analysis_man_name:
+        :param deadline:
+        :param deadline_type:
         :param first_preference: should be a name of preference or an preference object
         :param second_preference: should be a name of preference or an preference object
-        :param domain_name: 
-        :param utility_space_name1: 
-        :param utility_space_name2: 
-        :param party1_name: 
-        :param party2_name: 
-        :param party1: 
-        :param party2: 
-        :param party1_uncertain: 
-        :param party2_uncertain: 
-        :param party1_EUBOAParty: 
-        :param party2_EUBOAParty: 
-        :param user1: 
-        :param user2: 
+        :param domain_name:
+        :param utility_space_name1:
+        :param utility_space_name2:
+        :param party1_name:
+        :param party2_name:
+        :param party1:
+        :param party2:
+        :param party1_uncertain:
+        :param party2_uncertain:
+        :param party1_EUBOAParty:
+        :param party2_EUBOAParty:
+        :param party1_BOAParty:
+        :param party2_BOAParty:
+        :param user1:
+        :param user2:
         """
 
 
@@ -84,6 +88,10 @@ class BilateralSession:
             raise TypeError('party1_EUBOAParty must be an instance of EUBOAParty or None')
         if not isinstance(party2_EUBOAParty, EUBOAParty) and party2_EUBOAParty is not None:
             raise TypeError('party2_EUBOAParty must be an instance of EUBOAParty or None')
+        if not isinstance(party1_BOAParty, BOAParty) and party1_BOAParty is not None:
+            raise TypeError('party1_BOAParty must be an instance of BOAParty or None')
+        if not isinstance(party2_BOAParty, BOAParty) and party2_BOAParty is not None:
+            raise TypeError('party2_BOAParty must be an instance of BOAParty or None')
         if not isinstance(user1, str) and user1 is not None:
             raise TypeError('user1 must be a string or None')
         if not isinstance(user2, str) and user2 is not None:
@@ -104,22 +112,32 @@ class BilateralSession:
                 ((party1_name is not None and party2_name is not None) or
                 (party1_name is not None and party2 is not None) or
                 (party1_name is not None and party2_uncertain is not None) or
-                (party1_name is not None and party2_EUBOAParty is not None))
+                (party1_name is not None and party2_EUBOAParty is not None) or
+                (party1_name is not None and party2_BOAParty is not None))
                or
                ((party1 is not None and party2_name is not None) or
                 (party1 is not None and party2 is not None) or
                 (party1 is not None and party2_uncertain is not None) or
-                (party1 is not None and party2_EUBOAParty is not None))
+                (party1 is not None and party2_EUBOAParty is not None) or
+                (party1 is not None and party2_BOAParty is not None))
                or
                ((party1_uncertain is not None and party2_name is not None) or
                 (party1_uncertain is not None and party2 is not None) or
                 (party1_uncertain is not None and party2_uncertain) or
-                (party1_uncertain is not None and party2_EUBOAParty))
+                (party1_uncertain is not None and party2_EUBOAParty) or
+                (party1_uncertain is not None and party2_BOAParty))
                 or
                 ((party1_EUBOAParty is not None and party2_name is not None) or
                  (party1_EUBOAParty is not None and party2 is not None) or
                  (party1_EUBOAParty is not None and party2_uncertain) or
-                 (party1_EUBOAParty is not None and party2_EUBOAParty))
+                 (party1_EUBOAParty is not None and party2_EUBOAParty) or
+                 (party1_EUBOAParty is not None and party2_BOAParty))
+                or
+                ((party1_BOAParty is not None and party2_name is not None) or
+                 (party1_BOAParty is not None and party2 is not None) or
+                 (party1_BOAParty is not None and party2_uncertain) or
+                 (party1_BOAParty is not None and party2_EUBOAParty) or
+                 (party1_BOAParty is not None and party2_BOAParty))
         ):
             raise TypeError('Selected agents to negotiate each other are wrong! please read manual to select '
                             'correct combination of agents')
@@ -150,7 +168,7 @@ class BilateralSession:
             # fdfdfs
             # sfaasf
             # safsdf
-            if isinstance(party1_name, str) and party1 is None and party1_uncertain is None and party1_EUBOAParty is None:
+            if isinstance(party1_name, str) and party1 is None and party1_uncertain is None and party1_EUBOAParty is None and party1_BOAParty is None:
                 # party1_name is the name of first agent which is a string and can be the name of agent which works in
                 # certain condition or uncertain condition. this try-except block of code first tries to make an
                 # instant of the certain agent if attempt would failed, make an instance of uncertain agent
@@ -162,12 +180,12 @@ class BilateralSession:
                     self.__User1 = CreateObjectByPath.get_object(USER_PATH, user1, self.preference1)
                     self.__initial_preference1 = self.preference1.get_initial_preference()
                     self.__party1 = CreateObjectByPath.get_object(PARTY_PATH, party1_name, self.__initial_preference1, self.__User1)
-            elif party1_name is None and isinstance(party1, AbstractNegoParty) and party1_uncertain is None and party1_EUBOAParty is None:
+            elif party1_name is None and isinstance(party1, AbstractNegoParty) and party1_uncertain is None and party1_EUBOAParty is None and party1_BOAParty is None:
                 self.__party1 = party1
-            elif party1_name is None and party1 is None and isinstance(party1_uncertain, AbstractNegoPartyUncertainCondition) and party1_EUBOAParty is None:
+            elif party1_name is None and party1 is None and isinstance(party1_uncertain, AbstractNegoPartyUncertainCondition) and party1_EUBOAParty is None and party1_BOAParty is None:
                 self.__party1 = party1_uncertain
-            elif party1_name is None and party1 is None and party1_uncertain is None and isinstance(party1_EUBOAParty, EUBOAParty):
-                # since in class of CreateAllAgentsUsingComponents, we do not know about the selected user and
+            elif party1_name is None and party1 is None and party1_uncertain is None and isinstance(party1_EUBOAParty, EUBOAParty) and party1_BOAParty is None:
+                # since in class of CreateAllAgentsUsingEUBOAComponents, we do not know about the selected user and
                 # preferences so we have to set a user for elicitation strategy and preference (initial preference) for
                 # the user model and opponent model
                 if user1 is None:
@@ -180,6 +198,12 @@ class BilateralSession:
                 party1_EUBOAParty.get_bidding_strategy().set_user_model(party1_EUBOAParty.get_user_model())
                 party1_EUBOAParty.get_opponent_model().set_preference(preference=initial_preference)
                 self.__party1 = party1_EUBOAParty
+            elif party1_name is None and party1 is None and party1_uncertain is None and party1_EUBOAParty is None and isinstance(party1_BOAParty, BOAParty):
+                party1_BOAParty.get_bidding_strategy().set_utility_space(utility_space=utility_space1)
+                initial_preference = self.preference1.get_initial_preference()
+                party1_BOAParty.get_opponent_model().set_preference(preference=initial_preference)
+                party1_BOAParty.get_acceptance_strategy().set_utility_space(utility_space=utility_space1)
+                self.__party1 = party1_BOAParty
             else:
                 raise TypeError("One of the arguments party1_name or party1 or party1_uncertain should be set")
 
@@ -190,7 +214,7 @@ class BilateralSession:
             # ffdssaf
             # dfsafsf
             # saggfgf
-            if isinstance(party2_name, str) and party2 is None and party2_uncertain is None and party2_EUBOAParty is None:
+            if isinstance(party2_name, str) and party2 is None and party2_uncertain is None and party2_EUBOAParty is None and party2_BOAParty is None:
                 # party1_name is the name of first agent which is a string and can be the name of agent which works in
                 # certain condition or uncertain condition. this try-except block of code first tries to make an instant of
                 # the certain agent if attempt would failed, make an instance of uncertain agent
@@ -202,12 +226,12 @@ class BilateralSession:
                     self.__User2 = CreateObjectByPath.get_object(USER_PATH, user2, self.preference2)
                     self.__initial_preference2 = self.preference2.get_initial_preference()
                     self.__party2 = CreateObjectByPath.get_object(PARTY_PATH, party2_name, self.__initial_preference2, self.__User2)
-            elif party2_name is None and isinstance(party2, AbstractNegoParty) and party2_uncertain is None and party2_EUBOAParty is None:
+            elif party2_name is None and isinstance(party2, AbstractNegoParty) and party2_uncertain is None and party2_EUBOAParty is None and party2_BOAParty is None:
                 self.__party2 = party2
-            elif party2_name is None and party2 is None and isinstance(party2_uncertain, AbstractNegoPartyUncertainCondition) and party2_EUBOAParty is None:
+            elif party2_name is None and party2 is None and isinstance(party2_uncertain, AbstractNegoPartyUncertainCondition) and party2_EUBOAParty is None and party2_BOAParty is None:
                 self.__party2 = party2_uncertain
-            elif party2_name is None and party2 is None and party2_uncertain is None and isinstance(party2_EUBOAParty, EUBOAParty):
-                # since in class of CreateAllAgentsUsingComponents, we do not know about the selected user and
+            elif party2_name is None and party2 is None and party2_uncertain is None and isinstance(party2_EUBOAParty, EUBOAParty) and party2_BOAParty is None:
+                # since in class of CreateAllAgentsUsingEUBOAComponents, we do not know about the selected user and
                 # preferences so we have to set a user for elicitation strategy and preference (initial preference) for
                 # the user model and opponent model
                 if user2 is None:
@@ -220,6 +244,12 @@ class BilateralSession:
                 party2_EUBOAParty.get_bidding_strategy().set_user_model(party2_EUBOAParty.get_user_model())
                 party2_EUBOAParty.get_opponent_model().set_preference(preference=initial_preference)
                 self.__party2 = party2_EUBOAParty
+            elif party2_name is None and party2 is None and party2_uncertain is None and party2_EUBOAParty is None and isinstance(party2_BOAParty, BOAParty):
+                party2_BOAParty.get_bidding_strategy().set_utility_space(utility_space=utility_space2)
+                initial_preference = self.preference2.get_initial_preference()
+                party2_BOAParty.get_opponent_model().set_preference(preference=initial_preference)
+                party2_BOAParty.get_acceptance_strategy().set_utility_space(utility_space=utility_space2)
+                self.__party2 = party2_BOAParty
             else:
                 raise TypeError("One of the arguments party1_name or party1 or party1_uncertain or party1_EUBOAParty should be set")
 

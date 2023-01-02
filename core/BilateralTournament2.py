@@ -4,7 +4,7 @@ from core.BilateralSession2 import BilateralSession
 from controller import Controller
 from configurations import *
 from core.Preference import Preference
-from core.CreateAllAgentsUsingComponents import CreateAllAgentsUsingComponents
+from core.CreateAllAgentsUsingEUBOAComponents import CreateAllAgentsUsingEUBOAComponents
 from core.EUBOAParty import EUBOAParty
 
 
@@ -170,11 +170,11 @@ class BilateralTournament:
                     "if select at least one component for each EUBOA components, you have to set one or both "
                     "EUBOA_is_agent_side, EUBOA_is_opponent_side True")
             else:
-                self.__all_euboa_agents = CreateAllAgentsUsingComponents(elicitation_strategies=elicitation_strategies,
-                                                                         user_models=user_models,
-                                                                         bidding_strategies=bidding_strategies,
-                                                                         opponent_models=opponent_models,
-                                                                         acceptance_strategies=acceptance_strategies).create_agents()
+                self.__all_euboa_agents = CreateAllAgentsUsingEUBOAComponents(elicitation_strategies=elicitation_strategies,
+                                                                              user_models=user_models,
+                                                                              bidding_strategies=bidding_strategies,
+                                                                              opponent_models=opponent_models,
+                                                                              acceptance_strategies=acceptance_strategies).create_agents()
 
         sample_preference_data_structure = {
             'Brand': ['0.45', {'Lenovo': '10', 'Assus': '20', 'Mac': '30'}],

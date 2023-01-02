@@ -36,4 +36,9 @@ class OpponentModelInterface(ABC):
 
     @abstractmethod
     def set_preference(self, preference: Preference):
+        """
+        opponent model needs an initial preference (an initial preference is the preference that the weights are equal
+        to 1/n and all evaluation of values are 1)
+        :param preference: an initial preference
+        """
         raise NotImplementedError()

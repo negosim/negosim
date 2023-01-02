@@ -3,7 +3,7 @@ from core.Preference import Preference
 from core.UserInterface import UserInterface
 
 
-class CreateAllAgentsUsingComponents:
+class CreateAllAgentsUsingEUBOAComponents:
     def __init__(self,
                  elicitation_strategies: list,
                  user_models: list,
