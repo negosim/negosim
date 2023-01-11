@@ -84,18 +84,19 @@ class EUBOAParty(AbstractNegoPartyUncertainCondition, ABC):
         return self.get_user_model().get_preference()
 
 
-    def send_bid(self, protocol) -> Bid:
+    def send_bid(self) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
         """
-        state_info = protocol.get_state_info()
+        nego_table = self.get_nego_table()
+        state_info = nego_table.get_state_info()
         self.__elicitation_strategy.is_asking_time_from_user(state_info=state_info)
 
-        parties = protocol.get_parties()
-        opponent = list(filter(lambda party: party is not self, parties))[0]
-        opponent_offers = protocol.get_offers_on_table(opponent)
-        bid = self.__bidding_strategy.send_bid(protocol.get_time_line())
+        parties = nego_table.get_party_ids()
+        opponent_id = list(filter(lambda party: party is not self, parties))[0]
+        opponent_offers = nego_table.get_party_offers_on_table(opponent_id)
+        bid = self.__bidding_strategy.send_bid(nego_table.get_time_line())
         if len(opponent_offers) > 0:
             op_offer = opponent_offers[-1]
             self.__opponent_model.update_preference(op_offer)

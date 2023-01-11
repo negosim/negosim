@@ -46,7 +46,7 @@ class AbstractAnalysisMan(ABC):
         if isinstance(parties[0], AbstractNegoParty):
             self.__party1: AbstractNegoParty = parties[0]
             self.__utility_space_of_party1 = self.__party1.get_utility_space()
-        elif isinstance(nego_table.get_parties()[0], AbstractNegoPartyUncertainCondition):
+        elif isinstance(parties[0], AbstractNegoPartyUncertainCondition):
             self.__party1: AbstractNegoPartyUncertainCondition = parties[0]
             self.__utility_space_of_party1 = self.__party1.get_user().get_utility_space()
             if self.__utility_space_of_party1 is None:

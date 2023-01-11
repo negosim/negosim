@@ -116,17 +116,24 @@ class BilateralSession:
             time_line = TimeLine(float(deadline), deadline_type)
             state_info = StateInfo(time_line=time_line, my_agent_offers=[], opponent_offers={})
 
-            nego_table = NegoTable(parties=(self.party1, self.party2), state_info=state_info)
+            # nego_table = NegoTable(parties=(self.party1, self.party2), state_info=state_info)
+            nego_table = NegoTable(state_info, time_line, self.party1.get_id(), self.party2.get_id())
+            self.party1.set_nego_table(nego_table=nego_table)
+            self.party2.set_nego_table(nego_table=nego_table)
 
             self.analysis_man = CreateObjectByPath.get_object(ANALYSIS_PATH,
                                                               analysis_man_name,
-                                                              nego_table)
+                                                              nego_table,
+                                                              self.party1,
+                                                              self.party2)
 
             self.protocol = CreateObjectByPath.get_object(PROTOCOL_PATH,
                                                           protocol_name,
                                                           time_line,
                                                           nego_table,
-                                                          self.analysis_man)
+                                                          self.analysis_man,
+                                                          self.party1,
+                                                          self.party2)
 
         except (ImportError, AttributeError) as e:
             raise ImportError('NegoSim could not import :)', e)

@@ -28,7 +28,7 @@ class Analysis_man0(AbstractAnalysisMan):
         party1 = self.get_party1()
         party2 = self.get_party2()
         offers_on_table = self.get_nego_table().get_offers_on_table()
-        party1_offers = offers_on_table[party1]
+        party1_offers = offers_on_table[party1.get_id()]
         if len(party1_offers) > 0:
             last_offer = party1_offers[len(party1_offers)-1]
 
