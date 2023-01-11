@@ -2,7 +2,7 @@ from core.AbstractNegoParty import AbstractNegoParty
 from core.Bid import Bid
 
 
-class RandomParty1(AbstractNegoParty):
+class RandomParty2(AbstractNegoParty):
     """
     Bilateral Random Agent
     """

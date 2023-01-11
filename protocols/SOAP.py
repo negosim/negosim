@@ -14,17 +14,17 @@ class SOAP(AbstractProtocol):
            negotiation state will be -1 if the one of last parties' offer's Bid is {} or deadline was reached
         """
         while self.get_nego_table().get_state_info().get_negotiation_state() == 0:
-            parties = self.get_nego_table().get_parties()
+            parties = self.get_parties()
             for party in parties:
                 if self.get_time_line().is_time_ended():
                     self.get_nego_table().get_state_info().set_negotiation_state(-1)
                 if self.get_nego_table().get_state_info().get_negotiation_state() == 0:
-                    bid = party.send_bid(self)
+                    bid = party.send_bid()
                     if isinstance(bid, EndNegotiation):
                         print(f"{party.get_name()} ended the negotiation session")
                         self.get_nego_table().get_state_info().set_negotiation_state(-1)
                     offer = Offer(bid, self.get_time())
-                    self.get_nego_table().add_offer(party, offer)
+                    self.get_nego_table().add_offer(party.get_id(), offer)
                     print(party.get_name(), ' -> ', offer)
                     self.get_analysis_man().cal_estimation_analysis_data()
                 if self.is_agreement() is True:
@@ -40,7 +40,7 @@ class SOAP(AbstractProtocol):
         """
         :return: True if all parties lats offer is same
         """
-        parties = self.get_nego_table().get_parties()
+        parties = self.get_nego_table().get_party_ids()
         bids_issues_items = []
         for party in parties:
             party_offers = self.get_nego_table().get_offers_on_table()[party]

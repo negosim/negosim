@@ -8,34 +8,35 @@
 #
 #######################################################
 from core.Offer import Offer
+from core.TimeLine import TimeLine
 from core.StateInfo import StateInfo
-from core.AbstractNegoParty import AbstractNegoParty
-from core.AbstractNegoPartyUncertainCondition import AbstractNegoPartyUncertainCondition
 
 
 class NegoTable:
 
-    def __init__(self, parties: tuple, state_info: StateInfo):
+    def __init__(self, state_info: StateInfo, time_line: TimeLine, *party_ids):
         """
         In initializing of AbstractProtocol a data structure will be created
         in order to show offers_on_the_table. an example of this data structure was shown in the following:
         {party1:[offer1, offer2, ...], party2:[offer1, offer2, ...], ...}
-        :param parties: tuple of NegoPartyInterface object
+        :param parties: tuple of party's names (string)
         :param state_info:
         """
-        if not isinstance(parties, tuple):
-            raise TypeError('parties argument must be the tuple (tuple of NegoPartyInterface)!')
-        for party in parties:
-            if not (isinstance(party, AbstractNegoParty) or isinstance(party, AbstractNegoPartyUncertainCondition)):
-                raise TypeError('parties argument must be the tuple of NegoPartyInterface!')
+        for party_id in party_ids:
+            if not isinstance(party_id, str):
+                raise TypeError('parties argument must be the tuple of string!')
+
         if not isinstance(state_info, StateInfo):
             raise TypeError('state_info argument must be instance of StateInfo!')
+        if not isinstance(time_line, TimeLine):
+            raise TypeError('time_line argument must be instance of TimeLine!')
 
-        self.__parties = parties
+        self.__party_ids = party_ids
         self.__state_info = state_info
+        self.__time_line = time_line
         self.__offers_on_the_table = {}
-        for party in parties:
-            self.__offers_on_the_table[party] = []
+        for party_id in party_ids:
+            self.__offers_on_the_table[party_id] = []
 
     def get_state_info(self) -> StateInfo:
         return self.__state_info
@@ -43,15 +44,24 @@ class NegoTable:
     def get_offers_on_table(self):
         return self.__offers_on_the_table
 
-    def get_parties(self) -> tuple:
-        return self.__parties
+    def get_party_offers_on_table(self, party_id):
+        return self.__offers_on_the_table[party_id]
 
-    def add_offer(self, party: AbstractNegoParty, offer: Offer):
-        if not (isinstance(party, AbstractNegoParty) or isinstance(party, AbstractNegoPartyUncertainCondition)):
-            raise TypeError('party argument must be an instance of NegoPartyInterface')
+    def get_party_ids(self) -> tuple:
+        return self.__party_ids
+
+    def get_time(self) -> float:
+        return self.__time_line.get_time()
+
+    def get_time_line(self) -> TimeLine:
+        return self.__time_line
+
+    def add_offer(self, party_id: str, offer: Offer):
+        if not isinstance(party_id, str):
+            raise TypeError('party argument must be an instance of string')
         if not isinstance(offer, Offer):
             raise TypeError('offer argument must be an instance of Offer')
-        self.__offers_on_the_table[party].append(offer)
+        self.__offers_on_the_table[party_id].append(offer)
 
     def is_table_empty(self) -> bool:
         """
@@ -59,7 +69,7 @@ class NegoTable:
         offer on the table and vice versa
         :return: True|False
         """
-        for party in self.__parties:
+        for party in self.__party_ids:
             if self.__offers_on_the_table[party]:
                 return False
         return True

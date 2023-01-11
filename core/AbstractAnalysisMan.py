@@ -19,13 +19,11 @@ class AbstractAnalysisMan(ABC):
     }
     '''
 
-    def __init__(self, nego_table):
+    def __init__(self, nego_table, *parties):
         # if not isinstance(party1, NegoPartyInterface):
         #     raise TypeError('party1 argument must be an instance of NegoPartyInterface')
         # if not isinstance(party2, NegoPartyInterface):
         #     raise TypeError('party2 argument must be an instance of NegoPartyInterface')
-        if not isinstance(nego_table, NegoTable):
-            raise TypeError('offers_on_table argument must be an instance of dict')
         # if not isinstance(preference_of_party1, Preference):
         #     raise TypeError('preference_of_party1 argument must be an instance of NegoPartyInterface')
         # if not isinstance(preference_of_party2, Preference):
@@ -39,13 +37,17 @@ class AbstractAnalysisMan(ABC):
         # if not (isinstance(user_model_party2, UserModelInterface) or user_model_party2 == None):
         #     raise TypeError('estimated_preference_of_party2 argument must be an instance of Preference')
 
-        self.__nego_table = nego_table
+        if not isinstance(nego_table, NegoTable):
+            raise TypeError('nego_table argument must be an instance of NegoTable')
 
-        if isinstance(nego_table.get_parties()[0], AbstractNegoParty):
-            self.__party1: AbstractNegoParty = nego_table.get_parties()[0]
+        self.__nego_table = nego_table
+        self.__parties = parties
+
+        if isinstance(parties[0], AbstractNegoParty):
+            self.__party1: AbstractNegoParty = parties[0]
             self.__utility_space_of_party1 = self.__party1.get_utility_space()
         elif isinstance(nego_table.get_parties()[0], AbstractNegoPartyUncertainCondition):
-            self.__party1: AbstractNegoPartyUncertainCondition = nego_table.get_parties()[0]
+            self.__party1: AbstractNegoPartyUncertainCondition = parties[0]
             self.__utility_space_of_party1 = self.__party1.get_user().get_utility_space()
             if self.__utility_space_of_party1 is None:
                 raise ValueError("This AbstractAnalysisMan was implemented in the way that it analyzes the agent if "
@@ -56,11 +58,11 @@ class AbstractAnalysisMan(ABC):
                              "instance of AbstractNegoParty or AbstractNegoPartyUncertainCondition, it seems the "
                              "party2 is not an instance of AbstractNegoParty or AbstractNegoPartyUncertainCondition")
 
-        if isinstance(nego_table.get_parties()[1], AbstractNegoParty):
-            self.__party2: AbstractNegoParty = nego_table.get_parties()[1]
+        if isinstance(parties[1], AbstractNegoParty):
+            self.__party2: AbstractNegoParty = parties[1]
             self.__utility_space_of_party2 = self.__party2.get_utility_space()
-        elif isinstance(nego_table.get_parties()[1], AbstractNegoPartyUncertainCondition):
-            self.__party2: AbstractNegoPartyUncertainCondition = nego_table.get_parties()[1]
+        elif isinstance(parties[1], AbstractNegoPartyUncertainCondition):
+            self.__party2: AbstractNegoPartyUncertainCondition = parties[1]
             self.__utility_space_of_party2 = self.__party2.get_user().get_utility_space()
             if self.__utility_space_of_party2 is None:
                 raise ValueError("This AbstractAnalysisMan was implemented in the way that it analyzes the agent if "

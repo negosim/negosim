@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from core.Preference import Preference
-from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
+from core.NegoTable import NegoTable
 from core.Bid import Bid
 from core.BidSpace import BidSpace
 from core.UserInterface import UserInterface
@@ -10,12 +10,20 @@ from core.Preference import Preference
 
 class AbstractNegoPartyUncertainCondition(ABC):
 
-    def __init__(self, preference: Preference = None, user: UserInterface = None):
+    def __init__(self, nego_table: NegoTable, preference: Preference = None, user: UserInterface = None):
         """
-
+        :param nego_table:
         :param preference: initial preferences with equal weights and values
         :param user:
         """
+        if not isinstance(nego_table, NegoTable):
+            raise TypeError("nego_table must be an instance of NegoTable")
+        if not isinstance(preference, Preference) and preference is not None:
+            raise TypeError("preference must be an instance of Preference or None")
+        if not isinstance(user, UserInterface) and user is not None:
+            raise TypeError("user must be an instance of UserInterface or None")
+
+        self.__nego_table = nego_table
         self.__preference = preference
 
         self.__initial_preference = None

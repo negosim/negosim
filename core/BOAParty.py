@@ -8,6 +8,7 @@ from core.Bid import Bid
 from core.OpponentModelInterface import OpponentModelInterface
 from core.BiddingStrategyInterface import BiddingStrategyInterface
 from core.AcceptanceStrategyInterface import AcceptanceStrategyInterface
+from core.NegoTable import NegoTable
 
 
 class BOAParty(AbstractNegoParty):
@@ -32,15 +33,17 @@ class BOAParty(AbstractNegoParty):
             self.__acceptance_strategy: AcceptanceStrategyInterface = CreateObjectByPath.get_object(ACCEPTANCE_STRATEGIES_PATH, acceptance_strategy, utility_space, None)
 
 
-    def send_bid(self, protocol) -> Bid:
+    def send_bid(self) -> Bid:
         """
         send new bid, send same bid refer to accept, send {} refer to end negotiation
         :return: Bid
         """
-        parties = protocol.get_parties()
-        opponent = list(filter(lambda party: party is not self, parties))[0]
-        opponent_offers = protocol.get_offers_on_table(opponent)
-        timeline = protocol.get_time_line()
+        nego_table: NegoTable = self.get_nego_table()
+
+        parties = nego_table.get_party_ids()
+        opponent_id = list(filter(lambda party: party is not self.get_id(), parties))[0]
+        opponent_offers = nego_table.get_party_offers_on_table(opponent_id)
+        timeline = nego_table.get_time_line()
         bid = self.__bidding_strategy.send_bid(timeline)
         if len(opponent_offers) > 0:
             op_offer = opponent_offers[len(opponent_offers) - 1]

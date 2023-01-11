@@ -1,7 +1,6 @@
-from abc import ABC, abstractmethod, abstractclassmethod
-from core.Preference import Preference
+from abc import ABC, abstractmethod
 from core.AbstractUtilitySpace import AbstractUtilitySpace
-from core.ProtocolInterface import ProtocolInterface
+from core.NegoTable import NegoTable
 from core.Bid import Bid
 from core.BidSpace import BidSpace
 import random
@@ -12,6 +11,8 @@ class AbstractNegoParty(ABC):
     def __init__(self, utility_space: AbstractUtilitySpace = None):
         if not isinstance(utility_space, AbstractUtilitySpace) and utility_space is not None:
             raise TypeError("utility_space must be an instance of AbstractUtilitySpace or None")
+
+        self.__nego_table = None
         self.__preference = None
         self.__utility_space = None
         self.__bid_space = None
@@ -19,7 +20,15 @@ class AbstractNegoParty(ABC):
             self.__preference = utility_space.get_preference()
             self.__utility_space = utility_space
             self.__bid_space = BidSpace(self.__preference)
-        # self.opponent_model = None
+        self.opponent_model = None
+
+    def set_nego_table(self, nego_table: NegoTable):
+        if not isinstance(nego_table, NegoTable):
+            raise TypeError("nego_table must be an instance of NegoTable")
+        self.__nego_table = nego_table
+
+    def get_nego_table(self):
+        return self.__nego_table
 
     def set_utility_space(self, utility_space: AbstractUtilitySpace):
         if not isinstance(utility_space, AbstractUtilitySpace):
@@ -52,7 +61,7 @@ class AbstractNegoParty(ABC):
         return EndNegotiation()
 
     @abstractmethod
-    def send_bid(self, protocol: ProtocolInterface) -> Bid:
+    def send_bid(self) -> Bid:
         """
         send new bid,
         send same bid refer to accept,
@@ -67,6 +76,9 @@ class AbstractNegoParty(ABC):
         :return: Party Name
         """
         raise NotImplementedError()
+
+    def get_id(self):
+        return self.get_name()+str(self)
 
     @abstractmethod
     def get_opponent_model(self):

@@ -2,13 +2,12 @@ from core.ProtocolInterface import ProtocolInterface
 from abc import abstractmethod
 from core.TimeLine import TimeLine
 from core.NegoTable import NegoTable
-from core.AbstractNegoParty import AbstractNegoParty
 from core.AbstractAnalysisMan import AbstractAnalysisMan
 
 
 class AbstractProtocol(ProtocolInterface):
 
-    def __init__(self, time_line: TimeLine, nego_table: NegoTable, analysis_man: AbstractAnalysisMan):
+    def __init__(self, time_line: TimeLine, nego_table: NegoTable, analysis_man: AbstractAnalysisMan, *parties):
         if not isinstance(time_line, TimeLine):
             raise TypeError('time_line argument must be an instance of TimeLine')
         if not isinstance(nego_table, NegoTable):
@@ -18,6 +17,10 @@ class AbstractProtocol(ProtocolInterface):
         self.__time_line = time_line
         self.__nego_table = nego_table
         self.__analysis_man = analysis_man
+        self.__parties = parties
+
+    def get_parties(self) -> tuple:
+        return self.__parties
 
     @abstractmethod
     def negotiate(self):
@@ -50,7 +53,7 @@ class AbstractProtocol(ProtocolInterface):
     def get_nego_table(self) -> NegoTable:
         return self.__nego_table
 
-    def get_parties(self) -> tuple:
+    def get_party_names(self) -> tuple:
         return self.__nego_table.get_parties()
 
     def get_analysis_man(self):
