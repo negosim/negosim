@@ -16,17 +16,17 @@ class Analysis_man0(AbstractAnalysisMan):
                          }
         '''
 
-        self.analysis_data_structure = {}
+        analysis_data_structure = {}
 
         negotiation_state = self.get_nego_table().get_state_info().get_negotiation_state()
         # preference_party1 = self.get_preference_of_party1()
         # utility_space_party1 = AdditiveUtilitySpace(preference_party1)
-        utility_space_party1 = self.get_utility_space_of_party1()
+        utility_space_party1 = self.get_utility_space(index=0)
         # preference_party2 = self.get_preference_of_party2()
         # utility_space_party2 = AdditiveUtilitySpace(preference_party2)
-        utility_space_party2 = self.get_utility_space_of_party2()
-        party1 = self.get_party1()
-        party2 = self.get_party2()
+        utility_space_party2 = self.get_utility_space(index=1)
+        party1 = self.get_party(index=0)
+        party2 = self.get_party(index=1)
         offers_on_table = self.get_nego_table().get_offers_on_table()
         party1_offers = offers_on_table[party1.get_id()]
         if len(party1_offers) > 0:
@@ -37,11 +37,11 @@ class Analysis_man0(AbstractAnalysisMan):
 
             social_welfare = final_utility_party1 + final_utility_party2
 
-            self.analysis_data_structure['party1_'+party1.get_name()] = final_utility_party1
-            self.analysis_data_structure['party2_'+party2.get_name()] = final_utility_party2
-            self.analysis_data_structure[party1.get_name()+'_SocialWelfare'] = social_welfare
+            analysis_data_structure['party1_'+party1.get_name()] = final_utility_party1
+            analysis_data_structure['party2_'+party2.get_name()] = final_utility_party2
+            analysis_data_structure[party1.get_name()+'_SocialWelfare'] = social_welfare
 
-        return self.analysis_data_structure
+        return analysis_data_structure
 
     def save_analysis_data(self):
         pass
