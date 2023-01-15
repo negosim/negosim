@@ -38,7 +38,7 @@ class RandomAgentEUBOA(AbstractNegoPartyUncertainCondition):
 
         parties = nego_table.get_party_ids()
         opponent_id = list(filter(lambda party: party is not self.get_id(), parties))[0]
-        opponent_offers = nego_table.get_offers_on_table(opponent_id)
+        opponent_offers = nego_table.get_party_offers_on_table(opponent_id)
         bid = self.__bidding_strategy.send_bid(nego_table.get_time_line())
         if len(opponent_offers) > 0:
             op_offer = opponent_offers[-1]
