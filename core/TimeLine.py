@@ -8,33 +8,38 @@
 # 
 #######################################################
 import time
+from operator import itemgetter
 
 
-class TimeLine:
-    def __init__(self, deadline: float, deadline_type: str):
+class TimeLine(tuple):
+
+    __slots__ = []
+
+    def __new__(cls, deadline: float, deadline_type: str):
         if not isinstance(deadline, float):
             raise TypeError('deadline argument must be a float')
         if not isinstance(deadline_type, str):
-            raise TypeError('deadline_type argument must be a float')
-        self.__nan_to_second = (10 ** 9)
-        self.__beginning_time = time.time_ns()
-        self.__current_time = time.time_ns()
-        self.__deadline = deadline
-        self.__deadline_type = deadline_type
+            raise TypeError(
+                'deadline_type argument must be a string (s or ms)')
+        cls.__beginning_time = time.time_ns()
+        cls.__nan_to_second = (10 ** 9)
+        return tuple.__new__(cls, (deadline, deadline_type))
+
+    __deadline = property(itemgetter(0))
+    __deadline_type = property(itemgetter(1))
 
     def get_time(self) -> float:
-        self.__current_time = time.time_ns()
-        return (self.__current_time - self.__beginning_time) / (self.__deadline * self.__nan_to_second)
+        return (time.time_ns() - self.__beginning_time) / (self.__deadline * self.__nan_to_second)
 
     def is_time_ended(self):
         """
         :return: True if deadline has been reached
         """
-        self.__current_time = time.time_ns()
         if self.__deadline_type == 's':
             deadline = self.__deadline
         elif self.__deadline_type == 'ms':
-            deadline = self.__deadline/1000 # convert to ms
+            deadline = self.__deadline/1000  # convert to ms
         else:
             raise ValueError('deadline_type must be s or ms')
-        return ((self.__current_time - self.__beginning_time)/self.__nan_to_second) >= deadline
+        return ((time.time_ns() - self.__beginning_time)/self.__nan_to_second) >= deadline
+
