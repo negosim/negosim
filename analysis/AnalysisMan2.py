@@ -56,18 +56,20 @@ class AnalysisMan2(AbstractAnalysisMan):
 
         negotiation_state = self.get_nego_table().get_state_info().get_negotiation_state()
         preference_party1 = self.get_preference(index=0)
+        reservation_value_party1 = preference_party1.get_reservation()
         utility_space_party1 = AdditiveUtilitySpace(preference_party1)
         preference_party2 = self.get_preference(index=1)
+        reservation_value_party2 = preference_party2.get_reservation()
         utility_space_party2 = AdditiveUtilitySpace(preference_party2)
         party1 = self.get_party(index=0)
         party2 = self.get_party(index=1)
         offers_on_table = self.get_nego_table().get_offers_on_table()
-        party1_offers = offers_on_table[party1]
-        party2_offers = offers_on_table[party2]
+        party1_offers = offers_on_table[party1.get_id()]
+        party2_offers = offers_on_table[party2.get_id()]
         last_offer = party1_offers[len(party1_offers) - 1]
 
-        final_utility_party1 = utility_space_party1.get_utility_distinct(last_offer) if negotiation_state == 1 else 0.0
-        final_utility_party2 = utility_space_party2.get_utility_distinct(last_offer) if negotiation_state == 1 else 0.0
+        final_utility_party1 = utility_space_party1.get_utility_distinct(last_offer) if negotiation_state == 1 else reservation_value_party1
+        final_utility_party2 = utility_space_party2.get_utility_distinct(last_offer) if negotiation_state == 1 else reservation_value_party2
 
         social_welfare = final_utility_party1 + final_utility_party2
 

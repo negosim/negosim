@@ -1,5 +1,7 @@
 from utility_spaces.AdditiveUtilitySpace import AdditiveUtilitySpace
 from core.AbstractAnalysisMan import AbstractAnalysisMan
+from core.Preference import Preference
+
 
 class AnalysisMan1(AbstractAnalysisMan):
 
@@ -29,20 +31,32 @@ class AnalysisMan1(AbstractAnalysisMan):
         party1 = self.get_party(index=0)
         party2 = self.get_party(index=1)
         offers_on_table = self.get_nego_table().get_offers_on_table()
-        party1_offers = offers_on_table[party1]
+        party1_offers = offers_on_table[party1.get_id()]
+
+        party1_preference: Preference = party1.get_preference()
+        party1_reservation_value = party1_preference.get_reservation()
+
+        party2_preference: Preference = party2.get_preference()
+        party2_reservation_value = party2_preference.get_reservation()
+
         if len(party1_offers) > 0:
             last_offer = party1_offers[len(party1_offers) - 1]
 
-            final_utility_party1 = utility_space_party1.get_utility_distinct(
-                last_offer) if negotiation_state == 1 else 0.0
-            final_utility_party2 = utility_space_party2.get_utility_distinct(
-                last_offer) if negotiation_state == 1 else 0.0
+            final_utility_party1 = utility_space_party1.get_utility_distinct(last_offer) if negotiation_state == 1 else party1_reservation_value
+            final_utility_party2 = utility_space_party2.get_utility_distinct(last_offer) if negotiation_state == 1 else party2_reservation_value
+
 
             social_welfare = final_utility_party1 + final_utility_party2
 
             analysis_data_structure['party1_' + party1.get_name()] = final_utility_party1
             analysis_data_structure['party2_' + party2.get_name()] = final_utility_party2
             analysis_data_structure[party1.get_name() + '_SocialWelfare'] = social_welfare
+        else:
+            analysis_data_structure['party1_' + party1.get_name()] = party1_reservation_value
+            analysis_data_structure['party2_' + party2.get_name()] = party2_reservation_value
+            social_welfare = party1_reservation_value + party2_reservation_value
+            analysis_data_structure[party1.get_name() + '_SocialWelfare'] = social_welfare
+
 
         return analysis_data_structure
 

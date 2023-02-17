@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from core.Preference import Preference
+from core.NegoPartyInterface import NegoPartyInterface
 from core.NegoTable import NegoTable
 from core.Bid import Bid
 from core.BidSpace import BidSpace
@@ -8,7 +8,7 @@ import random
 from core.Preference import Preference
 
 
-class AbstractNegoPartyUncertainCondition(ABC):
+class AbstractNegoPartyUncertainCondition(NegoPartyInterface, ABC):
 
     def __init__(self, preference: Preference = None, user: UserInterface = None):
         """

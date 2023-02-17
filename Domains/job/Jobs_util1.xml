@@ -72,6 +72,6 @@
 	</objective>
 	<discount_factor value="1.0">
 	</discount_factor>
-	<reservation value="0.0">
+	<reservation value="0.6">
 	</reservation>
 </utility_space> 

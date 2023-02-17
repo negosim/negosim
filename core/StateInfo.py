@@ -1,3 +1,4 @@
+from core.NegoPartyInterface import NegoPartyInterface
 from core.TimeLine import TimeLine
 from core.Offer import Offer
 

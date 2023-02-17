@@ -4,9 +4,10 @@ from core.NegoTable import NegoTable
 from core.Bid import Bid
 from core.BidSpace import BidSpace
 import random
+from core.NegoPartyInterface import NegoPartyInterface
 
 
-class AbstractNegoParty(ABC):
+class AbstractNegoParty(NegoPartyInterface, ABC):
 
     def __init__(self, utility_space: AbstractUtilitySpace = None):
         if not isinstance(utility_space, AbstractUtilitySpace) and utility_space is not None:

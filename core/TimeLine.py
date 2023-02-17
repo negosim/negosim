@@ -21,6 +21,9 @@ class TimeLine(tuple):
         if not isinstance(deadline_type, str):
             raise TypeError(
                 'deadline_type argument must be a string (s or ms)')
+        if deadline == 0.0:
+            raise ValueError("deadline must be more than Zero!")
+
         cls.__beginning_time = time.time_ns()
         cls.__nan_to_second = (10 ** 9)
         return tuple.__new__(cls, (deadline, deadline_type))

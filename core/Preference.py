@@ -238,9 +238,6 @@ class Preference:
 
         return worst_bid
 
-
-
-
     def __repr__(self):
         s = '{'
         for issue, weight_item_value in self.__preference_data_structure.items():
